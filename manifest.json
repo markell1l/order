@@ -1,1 +1,15 @@
-
+{
+  "name": "Калькулятор доставки",
+  "short_name": "Калькулятор доставки",
+  "start_url": "/",  
+  "display": "standalone",  
+  "background_color": "#ffffff",  
+  "theme_color": "#000000",  
+  "icons": [
+    {
+      "src": "logo-512x512.png", 
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
