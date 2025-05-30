@@ -3,62 +3,1186 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Сайт временно недоступен</title>
+    <title>Калькулятор доставки</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        :root {
+            --primary: #4361ee;
+            --primary-dark: #3a0ca3;
+            --secondary: #f72585;
+            --success: #4cc9f0;
+            --warning: #f8961e;
+            --danger: #ef233c;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --gray: #6c757d;
+            --white: #ffffff;
+            --bg-gradient: linear-gradient(135deg, #4361ee 0%, #3a0ca3 100%);
+        }
+        
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
+            font-family: 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', sans-serif;
         }
         
         body {
+            background-color: #f5f7ff;
+            color: var(--dark);
+            min-height: 100vh;
             display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .app-container {
+            width: 100%;
+            max-width: 500px;
+            background-color: var(--white);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .app-header {
+            background: var(--bg-gradient);
+            color: var(--white);
+            padding: 20px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .app-header h1 {
+            font-size: 1.8rem;
+            margin-bottom: 5px;
+            font-weight: 700;
+        }
+        
+        .app-header p {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+        
+        .courier-info {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px 20px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            margin-top: 15px;
+        }
+        
+        .courier-info-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .courier-info-item i {
+            font-size: 1.2rem;
+        }
+        
+        .courier-info-text {
+            font-size: 0.9rem;
+        }
+        
+        .main-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            padding: 20px;
+        }
+        
+        .main-btn {
+            background: var(--white);
+            color: var(--primary);
+            border: 2px solid var(--primary);
+            padding: 15px;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 10px rgba(67, 97, 238, 0.1);
+        }
+        
+        .main-btn i {
+            font-size: 1.5rem;
+        }
+        
+        .main-btn:hover {
+            background: var(--primary);
+            color: var(--white);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(67, 97, 238, 0.2);
+        }
+        
+        .history-btn {
+            grid-column: span 2;
+            background: var(--light);
+            color: var(--gray);
+            border: none;
+            padding: 12px;
+            border-radius: 12px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .history-btn:hover {
+            background: #e9ecef;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            background-color: #f8f9fa;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 20px;
+            box-sizing: border-box;
         }
         
-        .maintenance-message {
-            text-align: center;
-            padding: 40px;
-            background-color: white;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            max-width: 800px;
-            width: 90%;
+        .modal-content {
+            background-color: var(--white);
+            width: 100%;
+            max-width: 400px;
+            border-radius: 20px;
+            overflow: hidden;
+            animation: modalFadeIn 0.3s;
+            max-height: 90vh;
+            overflow-y: auto;
         }
         
-        h1 {
-            color: #e74c3c;
-            font-size: 2.5rem;
-            margin-bottom: 20px;
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         
-        p {
-            color: #333;
+        .modal-header {
+            background: var(--bg-gradient);
+            color: var(--white);
+            padding: 15px 20px;
             font-size: 1.2rem;
-            line-height: 1.6;
-            margin-bottom: 30px;
+            font-weight: 600;
         }
         
-        .icon {
-            font-size: 4rem;
-            color: #e74c3c;
+        .modal-body {
+            padding: 20px;
+        }
+        
+        .form-group {
             margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--dark);
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #dee2e6;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+        
+        .select-wrapper {
+            position: relative;
+        }
+        
+        .select-wrapper::after {
+            content: '\f078';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray);
+            pointer-events: none;
+        }
+        
+        select.form-control {
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            padding-right: 40px;
+        }
+        
+        .btn {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary {
+            background: var(--primary);
+            color: var(--white);
+        }
+        
+        .btn-primary:hover {
+            background: var(--primary-dark);
+        }
+        
+        .btn-danger {
+            background: var(--danger);
+            color: var(--white);
+        }
+        
+        .btn-danger:hover {
+            background: #d90429;
+        }
+        
+        .btn-success {
+            background: var(--success);
+            color: var(--white);
+        }
+        
+        .btn-success:hover {
+            background: #00b4d8;
+        }
+        
+        .btn-sm {
+            padding: 6px 12px;
+            font-size: 0.8rem;
+        }
+        
+        .history-container {
+            padding: 20px;
+            display: none;
+        }
+        
+        .history-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .history-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+        
+        .history-list {
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 15px;
+        }
+        
+        .history-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 15px;
+            background-color: var(--light);
+            border-bottom: 1px solid #dee2e6;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        
+        .history-item:hover {
+            background-color: #e9ecef;
+        }
+        
+        .history-item:last-child {
+            border-bottom: none;
+        }
+        
+        .history-item-actions {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .history-total {
+            font-weight: 600;
+            text-align: right;
+            padding: 15px 0;
+            border-top: 2px solid var(--primary);
+            margin-top: 10px;
+        }
+        
+        .courier-types {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .courier-type {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            border-radius: 10px;
+            background-color: var(--light);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 2px solid transparent;
+        }
+        
+        .courier-type:hover {
+            background-color: #e9ecef;
+        }
+        
+        .courier-type.selected {
+            border-color: var(--primary);
+            background-color: rgba(67, 97, 238, 0.1);
+        }
+        
+        .courier-type i {
+            font-size: 1.5rem;
+            margin-right: 15px;
+            width: 30px;
+            text-align: center;
+        }
+        
+        .courier-type .fa-person-walking {
+            color: var(--success);
+        }
+        
+        .courier-type .fa-bicycle {
+            color: var(--primary);
+        }
+        
+        .courier-type .fa-car {
+            color: var(--danger);
+        }
+        
+        .courier-type-info {
+            flex-grow: 1;
+        }
+        
+        .courier-type-name {
+            font-weight: 600;
+            margin-bottom: 3px;
+        }
+        
+        .courier-type-desc {
+            font-size: 0.8rem;
+            color: var(--gray);
+        }
+        
+        .rate-info {
+            font-size: 0.8rem;
+            color: var(--gray);
+            margin-top: 5px;
+            padding-left: 10px;
+            border-left: 2px solid var(--primary);
+        }
+        
+        .order-inputs {
+            background-color: var(--light);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .order-number {
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+        
+        .order-details {
+            margin-top: 15px;
+            padding: 15px;
+            background-color: var(--light);
+            border-radius: 10px;
+        }
+        
+        .order-details-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+        
+        .order-details-label {
+            font-weight: 500;
+            color: var(--gray);
+        }
+        
+        .order-details-value {
+            font-weight: 600;
+        }
+        
+        @media (max-width: 480px) {
+            .main-buttons {
+                grid-template-columns: 1fr;
+            }
+            
+            .history-btn {
+                grid-column: span 1;
+            }
+            
+            .app-header h1 {
+                font-size: 1.5rem;
+            }
         }
     </style>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <div class="maintenance-message">
-        <div class="icon">
-            <i class="fas fa-exclamation-triangle"></i>
+    <div class="app-container">
+        <div class="app-header">
+            <h1>Калькулятор доставки</h1>
+            
+            <div class="courier-info">
+                <div class="courier-info-item" id="courierTypeDisplay">
+                    <i class="fas fa-user-tie"></i>
+                    <span class="courier-info-text">Пеший</span>
+                </div>
+                <div class="courier-info-item" id="ratingDisplay">
+                    <i class="fas fa-star"></i>
+                    <span class="courier-info-text" id="currentRatingText">0.00</span>
+                </div>
+            </div>
         </div>
-        <h1>Сайт временно недоступен</h1>
-        <p>В настоящее время сайт находится на техническом обслуживании. Приносим извинения за временные неудобства.</p>
-        <p>Пожалуйста, попробуйте зайти позже.</p>
+        
+        <div class="main-buttons">
+            <button class="main-btn" id="singleOrderBtn">
+                <i class="fas fa-box"></i>
+                <span>Одиночный заказ</span>
+            </button>
+            <button class="main-btn" id="multiOrderBtn">
+                <i class="fas fa-boxes-stacked"></i>
+                <span>Мультизаказ</span>
+            </button>
+            <button class="history-btn" id="historyBtn">
+                <i class="fas fa-history"></i>
+                <span>История заказов</span>
+            </button>
+        </div>
+        
+        <div class="history-container" id="historyContainer">
+            <div class="history-header">
+                <div class="history-title">История расчетов</div>
+                <button class="btn btn-danger" id="clearHistoryBtn" style="padding: 8px 12px; font-size: 0.8rem;">
+                    <i class="fas fa-trash"></i> Очистить
+                </button>
+            </div>
+            <div class="history-list" id="historyList"></div>
+            <div class="history-total" id="historyTotal">Итого: 0 руб.</div>
+        </div>
     </div>
+    
+    <!-- Модальное окно для рейтинга -->
+    <div class="modal" id="ratingModal">
+        <div class="modal-content">
+            <div class="modal-header">Ваш рейтинг</div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="ratingInput">Рейтинг курьера (1-5):</label>
+                    <input type="number" class="form-control" id="ratingInput" min="1" max="5" step="0.01" placeholder="Например, 4.75">
+                </div>
+                <button class="btn btn-primary" id="saveRatingBtn">Сохранить</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Модальное окно для выбора типа курьера -->
+    <div class="modal" id="courierTypeModal">
+        <div class="modal-content">
+            <div class="modal-header">Тип курьера</div>
+            <div class="modal-body">
+                <div class="courier-types">
+                    <div class="courier-type" data-type="pedestrian">
+                        <i class="fas fa-person-walking"></i>
+                        <div class="courier-type-info">
+                            <div class="courier-type-name">Пеший курьер</div>
+                            <div class="courier-type-desc">Доставка пешком</div>
+                            <div class="rate-info">
+                                Тариф: 4р/км, 2р/кг
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="courier-type" data-type="bicycle">
+                        <i class="fas fa-bicycle"></i>
+                        <div class="courier-type-info">
+                            <div class="courier-type-name">Велокурьер</div>
+                            <div class="courier-type-desc">Доставка на велосипеде</div>
+                            <div class="rate-info">
+                                Тариф: 15р/км, 2р/кг
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="courier-type" data-type="car">
+                        <i class="fas fa-car"></i>
+                        <div class="courier-type-info">
+                            <div class="courier-type-name">Автокурьер</div>
+                            <div class="courier-type-desc">Доставка на автомобиле</div>
+                            <div class="rate-info">
+                                Тариф: 19р/км, 2р/кг
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button class="btn btn-primary" id="saveCourierTypeBtn">Сохранить</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Модальное окно для одиночного заказа -->
+    <div class="modal" id="singleOrderModal">
+        <div class="modal-content">
+            <div class="modal-header">Одиночный заказ</div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="singleWeight">Вес заказа (кг):</label>
+                    <input type="number" class="form-control" id="singleWeight" min="0" step="0.1" placeholder="Введите вес">
+                </div>
+                <div class="form-group">
+                    <label for="singleDistance">Расстояние до клиента (км):</label>
+                    <input type="number" class="form-control" id="singleDistance" min="0" step="0.1" placeholder="Введите расстояние">
+                </div>
+                <div class="form-group">
+                    <label for="singleMultiplier">Коэффициент заказа:</label>
+                    <div class="select-wrapper">
+                        <select class="form-control" id="singleMultiplier">
+                            <option value="1">Обычный (1x)</option>
+                            <option value="1.1">Повышенный 1.1x</option>
+                            <option value="1.25">Повышенный 1.25x</option>
+                            <option value="1.5">Повышенный 1.5x</option>
+                        </select>
+                    </div>
+                </div>
+                <button class="btn btn-primary" id="calculateSingleBtn">Рассчитать</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Модальное окно для мультизаказа -->
+    <div class="modal" id="multiOrderModal">
+        <div class="modal-content">
+            <div class="modal-header">Мультизаказ</div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="orderCount">Количество заказов (2-10):</label>
+                    <div class="select-wrapper">
+                        <select class="form-control" id="orderCount">
+                            <option value="2">2 заказа</option>
+                            <option value="3">3 заказа</option>
+                            <option value="4">4 заказа</option>
+                            <option value="5">5 заказов</option>
+                            <option value="6">6 заказов</option>
+                            <option value="7">7 заказов</option>
+                            <option value="8">8 заказов</option>
+                            <option value="9">9 заказов</option>
+                            <option value="10">10 заказов</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="multiMultiplier">Коэффициент заказа:</label>
+                    <div class="select-wrapper">
+                        <select class="form-control" id="multiMultiplier">
+                            <option value="1">Обычный (1x)</option>
+                            <option value="1.1">Повышенный 1.1x</option>
+                            <option value="1.25">Повышенный 1.25x</option>
+                            <option value="1.5">Повышенный 1.5x</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div id="multiOrderInputs"></div>
+                
+                <button class="btn btn-primary" id="calculateMultiBtn">Рассчитать</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Модальное окно с результатом -->
+    <div class="modal" id="resultModal">
+        <div class="modal-content">
+            <div class="modal-header">Результат расчета</div>
+            <div class="modal-body">
+                <p id="resultText" style="margin-bottom: 20px; font-size: 1.1rem;"></p>
+                <button class="btn btn-success" id="closeResultBtn">Закрыть</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Модальное окно с деталями заказа -->
+    <div class="modal" id="orderDetailsModal">
+        <div class="modal-content">
+            <div class="modal-header">Детали заказа</div>
+            <div class="modal-body">
+                <div id="orderDetailsContent"></div>
+                <button class="btn btn-danger btn-sm" id="deleteOrderBtn" style="margin-top: 15px;">
+                    <i class="fas fa-trash"></i> Удалить заказ
+                </button>
+                <button class="btn btn-primary" id="closeDetailsBtn" style="margin-top: 10px;">Закрыть</button>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Элементы DOM
+        const ratingModal = document.getElementById('ratingModal');
+        const courierTypeModal = document.getElementById('courierTypeModal');
+        const singleOrderModal = document.getElementById('singleOrderModal');
+        const multiOrderModal = document.getElementById('multiOrderModal');
+        const resultModal = document.getElementById('resultModal');
+        const orderDetailsModal = document.getElementById('orderDetailsModal');
+        const singleOrderBtn = document.getElementById('singleOrderBtn');
+        const multiOrderBtn = document.getElementById('multiOrderBtn');
+        const historyBtn = document.getElementById('historyBtn');
+        const saveRatingBtn = document.getElementById('saveRatingBtn');
+        const saveCourierTypeBtn = document.getElementById('saveCourierTypeBtn');
+        const calculateSingleBtn = document.getElementById('calculateSingleBtn');
+        const calculateMultiBtn = document.getElementById('calculateMultiBtn');
+        const closeResultBtn = document.getElementById('closeResultBtn');
+        const closeDetailsBtn = document.getElementById('closeDetailsBtn');
+        const deleteOrderBtn = document.getElementById('deleteOrderBtn');
+        const clearHistoryBtn = document.getElementById('clearHistoryBtn');
+        const historyContainer = document.getElementById('historyContainer');
+        const historyList = document.getElementById('historyList');
+        const historyTotal = document.getElementById('historyTotal');
+        const courierTypes = document.querySelectorAll('.courier-type');
+        const orderCountSelect = document.getElementById('orderCount');
+        const multiOrderInputs = document.getElementById('multiOrderInputs');
+        const currentRatingText = document.getElementById('currentRatingText');
+        const courierTypeDisplay = document.getElementById('courierTypeDisplay');
+        const ratingDisplay = document.getElementById('ratingDisplay');
+        const orderDetailsContent = document.getElementById('orderDetailsContent');
+        
+        // Переменные приложения
+        let courierRating = null;
+        let courierType = 'pedestrian';
+        let ordersHistory = JSON.parse(localStorage.getItem('deliveryHistory')) || [];
+        let totalEarnings = parseFloat(localStorage.getItem('totalEarnings')) || 0;
+        let currentOrderIndex = -1;
+        
+        // Тарифы для каждого типа курьера
+        const rates = {
+            pedestrian: {
+                pickup: 60,
+                delivery: 81,
+                distance: 4,
+                weight: 2,
+                name: 'Пеший курьер'
+            },
+            bicycle: {
+                pickup: 60,
+                delivery: 81,
+                distance: 15,
+                weight: 2,
+                name: 'Велокурьер'
+            },
+            car: {
+                pickup: 60,
+                delivery: 81,
+                distance: 19,
+                weight: 2,
+                name: 'Автокурьер'
+            }
+        };
+        
+        // Инициализация приложения
+        function initApp() {
+            updateHistoryDisplay();
+            
+            // Проверяем, есть ли сохраненный рейтинг
+            const savedRating = localStorage.getItem('courierRating');
+            if (savedRating) {
+                courierRating = parseFloat(savedRating);
+                updateRatingDisplay();
+            } else {
+                ratingModal.style.display = 'flex';
+            }
+            
+            // Проверяем, есть ли сохраненный тип курьера
+            const savedCourierType = localStorage.getItem('courierType');
+            if (savedCourierType) {
+                courierType = savedCourierType;
+                updateSelectedCourierType();
+                updateCourierTypeDisplay();
+            }
+            
+            // Инициализация выбора количества заказов
+            orderCountSelect.addEventListener('change', updateMultiOrderInputs);
+            updateMultiOrderInputs();
+        }
+        
+        // Обновление отображения рейтинга
+        function updateRatingDisplay() {
+            if (courierRating !== null) {
+                currentRatingText.textContent = courierRating.toFixed(2);
+                ratingDisplay.style.display = 'flex';
+            }
+        }
+        
+        // Обновление отображения типа курьера
+        function updateCourierTypeDisplay() {
+            let typeName = '';
+            let iconClass = '';
+            
+            switch(courierType) {
+                case 'pedestrian':
+                    typeName = 'Пеший';
+                    iconClass = 'fa-person-walking';
+                    break;
+                case 'bicycle':
+                    typeName = 'Велокурьер';
+                    iconClass = 'fa-bicycle';
+                    break;
+                case 'car':
+                    typeName = 'Автокурьер';
+                    iconClass = 'fa-car';
+                    break;
+            }
+            
+            courierTypeDisplay.innerHTML = `<i class="fas ${iconClass}"></i><span class="courier-info-text">${typeName}</span>`;
+        }
+        
+        // Обновление полей для мультизаказа
+        function updateMultiOrderInputs() {
+            const orderCount = parseInt(orderCountSelect.value);
+            multiOrderInputs.innerHTML = '';
+            
+            for (let i = 1; i <= orderCount; i++) {
+                const orderDiv = document.createElement('div');
+                orderDiv.className = 'order-inputs';
+                orderDiv.innerHTML = `
+                    <div class="order-number">Заказ ${i}</div>
+                    <div class="form-group">
+                        <label for="multiWeight${i}">Вес заказа (кг):</label>
+                        <input type="number" class="form-control" id="multiWeight${i}" min="0" step="0.1" placeholder="Введите вес">
+                    </div>
+                    <div class="form-group">
+                        <label for="multiDistance${i}">Расстояние до клиента (км):</label>
+                        <input type="number" class="form-control" id="multiDistance${i}" min="0" step="0.1" placeholder="Введите расстояние">
+                    </div>
+                `;
+                multiOrderInputs.appendChild(orderDiv);
+            }
+        }
+        
+        // Обновление выбранного типа курьера
+        function updateSelectedCourierType() {
+            courierTypes.forEach(type => {
+                type.classList.remove('selected');
+                if (type.dataset.type === courierType) {
+                    type.classList.add('selected');
+                }
+            });
+        }
+        
+        // Обновление отображения истории
+        function updateHistoryDisplay() {
+            historyList.innerHTML = '';
+            
+            if (ordersHistory.length === 0) {
+                historyList.innerHTML = '<div style="text-align: center; padding: 20px; color: var(--gray);">Нет записей в истории</div>';
+            } else {
+                ordersHistory.forEach((order, index) => {
+                    const item = document.createElement('div');
+                    item.className = 'history-item';
+                    item.dataset.index = index;
+                    item.innerHTML = `
+                        <span>${order.type}</span>
+                        <span>${order.amount.toFixed(2)} руб.</span>
+                        <div class="history-item-actions">
+                            <button class="btn btn-sm" style="background: var(--primary); color: white; padding: 2px 8px;" data-index="${index}">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                    `;
+                    historyList.appendChild(item);
+                });
+            }
+            
+            historyTotal.textContent = `Итого: ${totalEarnings.toFixed(2)} руб.`;
+            
+            // Добавляем обработчики событий для кнопок просмотра
+            document.querySelectorAll('.history-item').forEach(item => {
+                item.addEventListener('click', (e) => {
+                    // Проверяем, не была ли нажата кнопка удаления
+                    if (e.target.closest('.btn-danger')) return;
+                    
+                    const index = parseInt(item.dataset.index);
+                    showOrderDetails(index);
+                });
+            });
+            
+            // Добавляем обработчики для кнопок просмотра (глаз)
+            document.querySelectorAll('.history-item-actions .btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const index = parseInt(btn.dataset.index);
+                    showOrderDetails(index);
+                });
+            });
+        }
+        
+        // Показать детали заказа
+        function showOrderDetails(index) {
+            if (index < 0 || index >= ordersHistory.length) return;
+            
+            const order = ordersHistory[index];
+            currentOrderIndex = index;
+            
+            let detailsHTML = `
+                <div class="order-details">
+                    <div class="order-details-row">
+                        <span class="order-details-label">Тип заказа:</span>
+                        <span class="order-details-value">${order.type}</span>
+                    </div>
+                    <div class="order-details-row">
+                        <span class="order-details-label">Сумма:</span>
+                        <span class="order-details-value">${order.amount.toFixed(2)} руб.</span>
+                    </div>
+                    <div class="order-details-row">
+                        <span class="order-details-label">Тип курьера:</span>
+                        <span class="order-details-value">${order.courierType || rates[order.courierTypeName || 'pedestrian'].name}</span>
+                    </div>
+                    <div class="order-details-row">
+                        <span class="order-details-label">Рейтинг:</span>
+                        <span class="order-details-value">${order.rating.toFixed(2)}</span>
+                    </div>
+                    <div class="order-details-row">
+                        <span class="order-details-label">Бонус за рейтинг:</span>
+                        <span class="order-details-value">${order.ratingBonus || 0} руб.</span>
+                    </div>
+                    <div class="order-details-row">
+                        <span class="order-details-label">Дата:</span>
+                        <span class="order-details-value">${new Date(order.timestamp).toLocaleString()}</span>
+                    </div>
+            `;
+            
+            if (order.orderType === 'single') {
+                detailsHTML += `
+                    <div style="margin-top: 15px; border-top: 1px solid #dee2e6; padding-top: 10px;">
+                        <div class="order-details-row">
+                            <span class="order-details-label">Вес:</span>
+                            <span class="order-details-value">${order.weight} кг</span>
+                        </div>
+                        <div class="order-details-row">
+                            <span class="order-details-label">Расстояние:</span>
+                            <span class="order-details-value">${order.distance} км</span>
+                        </div>
+                        <div class="order-details-row">
+                            <span class="order-details-label">Коэффициент:</span>
+                            <span class="order-details-value">${order.multiplier}x</span>
+                        </div>
+                    </div>
+                `;
+            } else if (order.orderType === 'multi') {
+                detailsHTML += `
+                    <div style="margin-top: 15px; border-top: 1px solid #dee2e6; padding-top: 10px;">
+                        <div class="order-details-row">
+                            <span class="order-details-label">Количество заказов:</span>
+                            <span class="order-details-value">${order.orderCount}</span>
+                        </div>
+                        <div class="order-details-row">
+                            <span class="order-details-label">Коэффициент:</span>
+                            <span class="order-details-value">${order.multiplier}x</span>
+                        </div>
+                `;
+                
+                if (order.orders && order.orders.length > 0) {
+                    detailsHTML += `<div style="margin-top: 10px;"><strong>Детали заказов:</strong></div>`;
+                    order.orders.forEach((o, i) => {
+                        detailsHTML += `
+                            <div style="margin-top: 8px; padding-left: 10px;">
+                                <div class="order-details-row">
+                                    <span class="order-details-label">Заказ ${i+1} - Вес:</span>
+                                    <span class="order-details-value">${o.weight} кг</span>
+                                </div>
+                                <div class="order-details-row">
+                                    <span class="order-details-label">Заказ ${i+1} - Расстояние:</span>
+                                    <span class="order-details-value">${o.distance} км</span>
+                                </div>
+                            </div>
+                        `;
+                    });
+                }
+                
+                detailsHTML += `</div>`;
+            }
+            
+            detailsHTML += `</div>`;
+            
+            orderDetailsContent.innerHTML = detailsHTML;
+            orderDetailsModal.style.display = 'flex';
+        }
+        
+        // Удалить заказ из истории
+        function deleteOrder(index) {
+            if (index < 0 || index >= ordersHistory.length) return;
+            
+            totalEarnings -= ordersHistory[index].amount;
+            ordersHistory.splice(index, 1);
+            
+            localStorage.setItem('deliveryHistory', JSON.stringify(ordersHistory));
+            localStorage.setItem('totalEarnings', totalEarnings.toString());
+            
+            updateHistoryDisplay();
+            orderDetailsModal.style.display = 'none';
+        }
+        
+        // Расчет стоимости заказа
+        function calculateOrder(weight, distance, multiplier = 1) {
+            const rate = rates[courierType];
+            const pickupFee = rate.pickup * multiplier;
+            const deliveryFee = rate.delivery * multiplier;
+            const distanceFee = distance * rate.distance * multiplier;
+            const weightFee = weight * rate.weight * multiplier;
+            
+            return pickupFee + deliveryFee + distanceFee + weightFee;
+        }
+        
+        // Расчет бонуса за рейтинг
+        function calculateRatingBonus(rating) {
+            if (rating >= 5.0) return 20;
+            if (rating >= 4.75) return 15;
+            if (rating >= 4.5) return 10;
+            if (rating >= 4.25) return 5;
+            return 0;
+        }
+        
+        // Сохранение заказа в историю
+        function saveToHistory(orderType, amount, details) {
+            const order = {
+                type: orderType,
+                amount: amount,
+                rating: courierRating,
+                ratingBonus: calculateRatingBonus(courierRating),
+                courierType: rates[courierType].name,
+                courierTypeName: courierType,
+                timestamp: new Date().getTime(),
+                ...details
+            };
+            
+            ordersHistory.push(order);
+            totalEarnings += amount;
+            
+            localStorage.setItem('deliveryHistory', JSON.stringify(ordersHistory));
+            localStorage.setItem('totalEarnings', totalEarnings.toString());
+            
+            updateHistoryDisplay();
+        }
+        
+        // Обработчики событий
+        courierTypeDisplay.addEventListener('click', () => {
+            courierTypeModal.style.display = 'flex';
+        });
+        
+        ratingDisplay.addEventListener('click', () => {
+            ratingModal.style.display = 'flex';
+            if (courierRating !== null) {
+                document.getElementById('ratingInput').value = courierRating;
+            }
+        });
+        
+        courierTypes.forEach(type => {
+            type.addEventListener('click', function() {
+                courierTypes.forEach(t => t.classList.remove('selected'));
+                this.classList.add('selected');
+                courierType = this.dataset.type;
+            });
+        });
+        
+        saveRatingBtn.addEventListener('click', () => {
+            const ratingInput = document.getElementById('ratingInput');
+            const rating = parseFloat(ratingInput.value);
+            
+            if (isNaN(rating) || rating < 1 || rating > 5) {
+                alert('Пожалуйста, введите корректный рейтинг от 1 до 5');
+                return;
+            }
+            
+            courierRating = rating;
+            localStorage.setItem('courierRating', rating.toString());
+            ratingModal.style.display = 'none';
+            updateRatingDisplay();
+        });
+        
+        saveCourierTypeBtn.addEventListener('click', () => {
+            localStorage.setItem('courierType', courierType);
+            courierTypeModal.style.display = 'none';
+            updateCourierTypeDisplay();
+        });
+        
+        singleOrderBtn.addEventListener('click', () => {
+            if (!courierRating) {
+                alert('Пожалуйста, сначала введите ваш рейтинг');
+                ratingModal.style.display = 'flex';
+                return;
+            }
+            
+            document.getElementById('singleWeight').value = '';
+            document.getElementById('singleDistance').value = '';
+            document.getElementById('singleMultiplier').value = '1';
+            singleOrderModal.style.display = 'flex';
+        });
+        
+        multiOrderBtn.addEventListener('click', () => {
+            if (!courierRating) {
+                alert('Пожалуйста, сначала введите ваш рейтинг');
+                ratingModal.style.display = 'flex';
+                return;
+            }
+            
+            orderCountSelect.value = '2';
+            document.getElementById('multiMultiplier').value = '1';
+            updateMultiOrderInputs();
+            multiOrderModal.style.display = 'flex';
+        });
+        
+        historyBtn.addEventListener('click', () => {
+            historyContainer.style.display = historyContainer.style.display === 'none' ? 'block' : 'none';
+        });
+        
+        calculateSingleBtn.addEventListener('click', () => {
+            const weight = parseFloat(document.getElementById('singleWeight').value);
+            const distance = parseFloat(document.getElementById('singleDistance').value);
+            const multiplier = parseFloat(document.getElementById('singleMultiplier').value);
+            
+            if (isNaN(weight) || isNaN(distance) || weight <= 0 || distance <= 0) {
+                alert('Пожалуйста, введите корректные данные');
+                return;
+            }
+            
+            const orderAmount = calculateOrder(weight, distance, multiplier);
+            const ratingBonus = calculateRatingBonus(courierRating);
+            const totalAmount = orderAmount + ratingBonus;
+            
+            document.getElementById('resultText').textContent = `Стоимость заказа: ${totalAmount.toFixed(2)} руб. (${multiplier}x, включая бонус за рейтинг: ${ratingBonus} руб.)`;
+            singleOrderModal.style.display = 'none';
+            resultModal.style.display = 'flex';
+            
+            saveToHistory(`Одиночный заказ (${multiplier}x)`, totalAmount, {
+                orderType: 'single',
+                weight: weight,
+                distance: distance,
+                multiplier: multiplier
+            });
+        });
+        
+        calculateMultiBtn.addEventListener('click', () => {
+            const orderCount = parseInt(orderCountSelect.value);
+            const multiplier = parseFloat(document.getElementById('multiMultiplier').value);
+            let isValid = true;
+            const orders = [];
+            
+            for (let i = 1; i <= orderCount; i++) {
+                const weight = parseFloat(document.getElementById(`multiWeight${i}`).value);
+                const distance = parseFloat(document.getElementById(`multiDistance${i}`).value);
+                
+                if (isNaN(weight) || isNaN(distance) || weight <= 0 || distance <= 0) {
+                    isValid = false;
+                    break;
+                }
+                
+                orders.push({ weight, distance });
+            }
+            
+            if (!isValid) {
+                alert('Пожалуйста, введите корректные данные для всех заказов');
+                return;
+            }
+            
+            let totalAmount = 0;
+            let isFirstOrder = true;
+            const rate = rates[courierType];
+            
+            for (const order of orders) {
+                if (isFirstOrder) {
+                    totalAmount += calculateOrder(order.weight, order.distance, multiplier);
+                    isFirstOrder = false;
+                } else {
+                    totalAmount += (rate.delivery * multiplier) + 
+                                  (order.distance * rate.distance * multiplier) + 
+                                  (order.weight * rate.weight * multiplier);
+                }
+            }
+            
+            const ratingBonus = calculateRatingBonus(courierRating);
+            totalAmount += ratingBonus;
+            
+            document.getElementById('resultText').textContent = 
+                `Стоимость ${orderCount} заказов (${multiplier}x): ${totalAmount.toFixed(2)} руб. (включая бонус за рейтинг: ${ratingBonus} руб.)`;
+            multiOrderModal.style.display = 'none';
+            resultModal.style.display = 'flex';
+            
+            saveToHistory(`Мультизаказ (${orderCount}, ${multiplier}x)`, totalAmount, {
+                orderType: 'multi',
+                orderCount: orderCount,
+                multiplier: multiplier,
+                orders: orders
+            });
+        });
+        
+        closeResultBtn.addEventListener('click', () => {
+            resultModal.style.display = 'none';
+        });
+        
+        closeDetailsBtn.addEventListener('click', () => {
+            orderDetailsModal.style.display = 'none';
+        });
+        
+        deleteOrderBtn.addEventListener('click', () => {
+            if (confirm('Вы уверены, что хотите удалить этот заказ из истории?')) {
+                deleteOrder(currentOrderIndex);
+            }
+        });
+        
+        clearHistoryBtn.addEventListener('click', () => {
+            if (confirm('Вы уверены, что хотите очистить историю?')) {
+                ordersHistory = [];
+                totalEarnings = 0;
+                localStorage.removeItem('deliveryHistory');
+                localStorage.removeItem('totalEarnings');
+                updateHistoryDisplay();
+            }
+        });
+        
+        window.addEventListener('click', (event) => {
+            if (event.target === ratingModal) {
+                if (courierRating === null) return;
+                ratingModal.style.display = 'none';
+            }
+            if (event.target === courierTypeModal) courierTypeModal.style.display = 'none';
+            if (event.target === singleOrderModal) singleOrderModal.style.display = 'none';
+            if (event.target === multiOrderModal) multiOrderModal.style.display = 'none';
+            if (event.target === resultModal) resultModal.style.display = 'none';
+            if (event.target === orderDetailsModal) orderDetailsModal.style.display = 'none';
+        });
+        
+        // Инициализация приложения
+        initApp();
+    </script>
 </body>
 </html>
