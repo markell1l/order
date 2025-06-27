@@ -434,6 +434,39 @@
         .order-details-value {
             font-weight: 600;
         }
+
+        .history-actions {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .return-btn {
+            background-color: var(--success);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .return-btn:hover {
+            background-color: #00b4d8;
+        }
+
+        .return-item {
+            background-color: rgba(76, 201, 240, 0.1);
+            border-left: 4px solid var(--success);
+        }
+
+        .return-item:hover {
+            background-color: rgba(76, 201, 240, 0.2);
+        }
         
         @media (max-width: 480px) {
             .main-buttons {
@@ -446,6 +479,10 @@
             
             .app-header h1 {
                 font-size: 1.5rem;
+            }
+
+            .history-actions {
+                flex-direction: column;
             }
         }
     </style>
@@ -485,8 +522,15 @@
         <div class="history-container" id="historyContainer">
             <div class="history-header">
                 <div class="history-title">История расчетов</div>
-                <button class="btn btn-danger" id="clearHistoryBtn" style="padding: 8px 12px; font-size: 0.8rem;">
-                    <i class="fas fa-trash"></i> Очистить
+                <div>
+                    <button class="btn btn-danger" id="clearHistoryBtn" style="padding: 8px 12px; font-size: 0.8rem;">
+                        <i class="fas fa-trash"></i> Очистить
+                    </button>
+                </div>
+            </div>
+            <div class="history-actions">
+                <button class="return-btn" id="addReturnBtn">
+                    <i class="fas fa-undo"></i> Добавить возврат
                 </button>
             </div>
             <div class="history-list" id="historyList"></div>
@@ -640,9 +684,28 @@
             <div class="modal-body">
                 <div id="orderDetailsContent"></div>
                 <button class="btn btn-danger btn-sm" id="deleteOrderBtn" style="margin-top: 15px; padding: 10px 15px; font-size: 0.9rem;">
-    <i class="fas fa-trash"></i> Удалить заказ
-</button>
+                    <i class="fas fa-trash"></i> Удалить заказ
+                </button>
                 <button class="btn btn-primary" id="closeDetailsBtn" style="margin-top: 10px;">Закрыть</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно для добавления возврата -->
+    <div class="modal" id="returnModal">
+        <div class="modal-content">
+            <div class="modal-header">Добавить возврат</div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="returnCount">Количество возвратов:</label>
+                    <input type="number" class="form-control" id="returnCount" min="1" value="1">
+                </div>
+                <div class="form-group">
+                    <p style="font-size: 0.9rem; color: var(--gray);">
+                        <i class="fas fa-info-circle"></i> За каждый возврат 141 руб.
+                    </p>
+                </div>
+                <button class="btn btn-primary" id="saveReturnBtn">Добавить</button>
             </div>
         </div>
     </div>
@@ -655,6 +718,7 @@
         const multiOrderModal = document.getElementById('multiOrderModal');
         const resultModal = document.getElementById('resultModal');
         const orderDetailsModal = document.getElementById('orderDetailsModal');
+        const returnModal = document.getElementById('returnModal');
         const singleOrderBtn = document.getElementById('singleOrderBtn');
         const multiOrderBtn = document.getElementById('multiOrderBtn');
         const historyBtn = document.getElementById('historyBtn');
@@ -666,6 +730,8 @@
         const closeDetailsBtn = document.getElementById('closeDetailsBtn');
         const deleteOrderBtn = document.getElementById('deleteOrderBtn');
         const clearHistoryBtn = document.getElementById('clearHistoryBtn');
+        const addReturnBtn = document.getElementById('addReturnBtn');
+        const saveReturnBtn = document.getElementById('saveReturnBtn');
         const historyContainer = document.getElementById('historyContainer');
         const historyList = document.getElementById('historyList');
         const historyTotal = document.getElementById('historyTotal');
@@ -676,6 +742,7 @@
         const courierTypeDisplay = document.getElementById('courierTypeDisplay');
         const ratingDisplay = document.getElementById('ratingDisplay');
         const orderDetailsContent = document.getElementById('orderDetailsContent');
+        const returnCountInput = document.getElementById('returnCount');
         
         // Переменные приложения
         let courierRating = null;
@@ -809,7 +876,11 @@
                 ordersHistory.forEach((order, index) => {
                     const item = document.createElement('div');
                     item.className = 'history-item';
+                    if (order.orderType === 'return') {
+                        item.classList.add('return-item');
+                    }
                     item.dataset.index = index;
+                    
                     item.innerHTML = `
                         <span>${order.type}</span>
                         <span>${order.amount.toFixed(2)} руб.</span>
@@ -823,6 +894,13 @@
                 });
             }
             
+            // Рассчитываем общую сумму
+            let total = 0;
+            ordersHistory.forEach(order => {
+                total += order.amount;
+            });
+            
+            totalEarnings = total;
             historyTotal.textContent = `Итого: ${totalEarnings.toFixed(2)} руб.`;
             
             // Добавляем обработчики событий для кнопок просмотра
@@ -853,86 +931,111 @@
             const order = ordersHistory[index];
             currentOrderIndex = index;
             
-            let detailsHTML = `
-                <div class="order-details">
-                    <div class="order-details-row">
-                        <span class="order-details-label">Тип заказа:</span>
-                        <span class="order-details-value">${order.type}</span>
-                    </div>
-                    <div class="order-details-row">
-                        <span class="order-details-label">Сумма:</span>
-                        <span class="order-details-value">${order.amount.toFixed(2)} руб.</span>
-                    </div>
-                    <div class="order-details-row">
-                        <span class="order-details-label">Тип курьера:</span>
-                        <span class="order-details-value">${order.courierType || rates[order.courierTypeName || 'pedestrian'].name}</span>
-                    </div>
-                    <div class="order-details-row">
-                        <span class="order-details-label">Рейтинг:</span>
-                        <span class="order-details-value">${order.rating.toFixed(2)}</span>
-                    </div>
-                    <div class="order-details-row">
-                        <span class="order-details-label">Бонус за рейтинг:</span>
-                        <span class="order-details-value">${order.ratingBonus || 0} руб.</span>
-                    </div>
-                    <div class="order-details-row">
-                        <span class="order-details-label">Дата:</span>
-                        <span class="order-details-value">${new Date(order.timestamp).toLocaleString()}</span>
-                    </div>
-            `;
+            let detailsHTML = '';
             
-            if (order.orderType === 'single') {
-                detailsHTML += `
-                    <div style="margin-top: 15px; border-top: 1px solid #dee2e6; padding-top: 10px;">
+            if (order.orderType === 'return') {
+                detailsHTML = `
+                    <div class="order-details">
                         <div class="order-details-row">
-                            <span class="order-details-label">Вес:</span>
-                            <span class="order-details-value">${order.weight} кг</span>
+                            <span class="order-details-label">Тип операции:</span>
+                            <span class="order-details-value">Возврат заказа</span>
                         </div>
                         <div class="order-details-row">
-                            <span class="order-details-label">Расстояние:</span>
-                            <span class="order-details-value">${order.distance} км</span>
+                            <span class="order-details-label">Сумма:</span>
+                            <span class="order-details-value">${order.amount.toFixed(2)} руб.</span>
                         </div>
                         <div class="order-details-row">
-                            <span class="order-details-label">Коэффициент:</span>
-                            <span class="order-details-value">${order.multiplier}x</span>
+                            <span class="order-details-label">Количество возвратов:</span>
+                            <span class="order-details-value">${order.count}</span>
+                        </div>
+                        <div class="order-details-row">
+                            <span class="order-details-label">Дата:</span>
+                            <span class="order-details-value">${new Date(order.timestamp).toLocaleString()}</span>
                         </div>
                     </div>
                 `;
-            } else if (order.orderType === 'multi') {
-                detailsHTML += `
-                    <div style="margin-top: 15px; border-top: 1px solid #dee2e6; padding-top: 10px;">
+            } else {
+                detailsHTML = `
+                    <div class="order-details">
                         <div class="order-details-row">
-                            <span class="order-details-label">Количество заказов:</span>
-                            <span class="order-details-value">${order.orderCount}</span>
+                            <span class="order-details-label">Тип заказа:</span>
+                            <span class="order-details-value">${order.type}</span>
                         </div>
                         <div class="order-details-row">
-                            <span class="order-details-label">Коэффициент:</span>
-                            <span class="order-details-value">${order.multiplier}x</span>
+                            <span class="order-details-label">Сумма:</span>
+                            <span class="order-details-value">${order.amount.toFixed(2)} руб.</span>
+                        </div>
+                        <div class="order-details-row">
+                            <span class="order-details-label">Тип курьера:</span>
+                            <span class="order-details-value">${order.courierType || rates[order.courierTypeName || 'pedestrian'].name}</span>
+                        </div>
+                        <div class="order-details-row">
+                            <span class="order-details-label">Рейтинг:</span>
+                            <span class="order-details-value">${order.rating.toFixed(2)}</span>
+                        </div>
+                        <div class="order-details-row">
+                            <span class="order-details-label">Бонус за рейтинг:</span>
+                            <span class="order-details-value">${order.ratingBonus || 0} руб.</span>
+                        </div>
+                        <div class="order-details-row">
+                            <span class="order-details-label">Дата:</span>
+                            <span class="order-details-value">${new Date(order.timestamp).toLocaleString()}</span>
                         </div>
                 `;
                 
-                if (order.orders && order.orders.length > 0) {
-                    detailsHTML += `<div style="margin-top: 10px;"><strong>Детали заказов:</strong></div>`;
-                    order.orders.forEach((o, i) => {
-                        detailsHTML += `
-                            <div style="margin-top: 8px; padding-left: 10px;">
-                                <div class="order-details-row">
-                                    <span class="order-details-label">Заказ ${i+1} - Вес:</span>
-                                    <span class="order-details-value">${o.weight} кг</span>
-                                </div>
-                                <div class="order-details-row">
-                                    <span class="order-details-label">Заказ ${i+1} - Расстояние:</span>
-                                    <span class="order-details-value">${o.distance} км</span>
-                                </div>
+                if (order.orderType === 'single') {
+                    detailsHTML += `
+                        <div style="margin-top: 15px; border-top: 1px solid #dee2e6; padding-top: 10px;">
+                            <div class="order-details-row">
+                                <span class="order-details-label">Вес:</span>
+                                <span class="order-details-value">${order.weight} кг</span>
                             </div>
-                        `;
-                    });
+                            <div class="order-details-row">
+                                <span class="order-details-label">Расстояние:</span>
+                                <span class="order-details-value">${order.distance} км</span>
+                            </div>
+                            <div class="order-details-row">
+                                <span class="order-details-label">Коэффициент:</span>
+                                <span class="order-details-value">${order.multiplier}x</span>
+                            </div>
+                        </div>
+                    `;
+                } else if (order.orderType === 'multi') {
+                    detailsHTML += `
+                        <div style="margin-top: 15px; border-top: 1px solid #dee2e6; padding-top: 10px;">
+                            <div class="order-details-row">
+                                <span class="order-details-label">Количество заказов:</span>
+                                <span class="order-details-value">${order.orderCount}</span>
+                            </div>
+                            <div class="order-details-row">
+                                <span class="order-details-label">Коэффициент:</span>
+                                <span class="order-details-value">${order.multiplier}x</span>
+                            </div>
+                    `;
+                    
+                    if (order.orders && order.orders.length > 0) {
+                        detailsHTML += `<div style="margin-top: 10px;"><strong>Детали заказов:</strong></div>`;
+                        order.orders.forEach((o, i) => {
+                            detailsHTML += `
+                                <div style="margin-top: 8px; padding-left: 10px;">
+                                    <div class="order-details-row">
+                                        <span class="order-details-label">Заказ ${i+1} - Вес:</span>
+                                        <span class="order-details-value">${o.weight} кг</span>
+                                    </div>
+                                    <div class="order-details-row">
+                                        <span class="order-details-label">Заказ ${i+1} - Расстояние:</span>
+                                        <span class="order-details-value">${o.distance} км</span>
+                                    </div>
+                                </div>
+                            `;
+                        });
+                    }
+                    
+                    detailsHTML += `</div>`;
                 }
                 
                 detailsHTML += `</div>`;
             }
-            
-            detailsHTML += `</div>`;
             
             orderDetailsContent.innerHTML = detailsHTML;
             orderDetailsModal.style.display = 'flex';
@@ -991,6 +1094,26 @@
             localStorage.setItem('deliveryHistory', JSON.stringify(ordersHistory));
             localStorage.setItem('totalEarnings', totalEarnings.toString());
             
+            updateHistoryDisplay();
+        }
+
+        // Добавление возврата в историю
+        function addReturn(count) {
+            const returnAmount = count * 141;
+            const returnOrder = {
+                type: `Возврат (${count} шт.)`,
+                amount: returnAmount,
+                orderType: 'return',
+                count: count,
+                timestamp: new Date().getTime()
+            };
+
+            ordersHistory.push(returnOrder);
+            totalEarnings += returnAmount;
+
+            localStorage.setItem('deliveryHistory', JSON.stringify(ordersHistory));
+            localStorage.setItem('totalEarnings', totalEarnings.toString());
+
             updateHistoryDisplay();
         }
         
@@ -1158,6 +1281,25 @@
                 deleteOrder(currentOrderIndex);
             }
         });
+
+        // Обработчик кнопки добавления возврата
+        addReturnBtn.addEventListener('click', () => {
+            returnCountInput.value = '1';
+            returnModal.style.display = 'flex';
+        });
+
+        // Обработчик сохранения возврата
+        saveReturnBtn.addEventListener('click', () => {
+            const count = parseInt(returnCountInput.value);
+            
+            if (isNaN(count) || count < 1) {
+                alert('Пожалуйста, введите корректное количество возвратов');
+                return;
+            }
+            
+            addReturn(count);
+            returnModal.style.display = 'none';
+        });
         
         clearHistoryBtn.addEventListener('click', () => {
             if (confirm('Вы уверены, что хотите очистить историю?')) {
@@ -1179,6 +1321,7 @@
             if (event.target === multiOrderModal) multiOrderModal.style.display = 'none';
             if (event.target === resultModal) resultModal.style.display = 'none';
             if (event.target === orderDetailsModal) orderDetailsModal.style.display = 'none';
+            if (event.target === returnModal) returnModal.style.display = 'none';
         });
         
         // Инициализация приложения
