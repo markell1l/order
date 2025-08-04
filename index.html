@@ -45,8 +45,89 @@
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             overflow: hidden;
             position: relative;
+            display: none; /* Скрываем основное приложение до входа */
         }
         
+        .login-container {
+            width: 100%;
+            max-width: 400px;
+            background-color: var(--white);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            animation: fadeIn 0.5s;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .login-header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        
+        .login-header h1 {
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+        
+        .login-header p {
+            color: var(--gray);
+        }
+        
+        .login-form .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .login-form label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--dark);
+        }
+        
+        .login-form input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #dee2e6;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+        
+        .login-form input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+        
+        .login-btn {
+            width: 100%;
+            padding: 12px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .login-btn:hover {
+            background: var(--primary-dark);
+        }
+        
+        .error-message {
+            color: var(--danger);
+            text-align: center;
+            margin-top: 15px;
+            font-size: 0.9rem;
+            display: none;
+        }
+        
+        /* Остальные стили из предыдущей версии */
         .app-header {
             background: var(--bg-gradient);
             color: var(--white);
@@ -488,7 +569,28 @@
     </style>
 </head>
 <body>
-    <div class="app-container">
+    <!-- Контейнер для входа -->
+    <div class="login-container" id="loginContainer">
+        <div class="login-header">
+            <h1>Вход в систему</h1>
+            <p>Введите ваш логин и проверочный код</p>
+        </div>
+        <form class="login-form" id="loginForm">
+            <div class="form-group">
+                <label for="loginInput">Логин:</label>
+                <input type="text" id="loginInput" placeholder="Введите ваш логин" required>
+            </div>
+            <div class="form-group">
+                <label for="codeInput">Проверочный код:</label>
+                <input type="password" id="codeInput" placeholder="Введите проверочный код" required>
+            </div>
+            <button type="submit" class="login-btn">Войти</button>
+            <div class="error-message" id="errorMessage">Неверный логин или проверочный код</div>
+        </form>
+    </div>
+    
+    <!-- Основное приложение (изначально скрыто) -->
+    <div class="app-container" id="appContainer">
         <div class="app-header">
             <h1>Калькулятор доставки</h1>
             
@@ -711,7 +813,15 @@
     </div>
     
     <script>
-        // Элементы DOM
+        // Элементы DOM для аутентификации
+        const loginContainer = document.getElementById('loginContainer');
+        const appContainer = document.getElementById('appContainer');
+        const loginForm = document.getElementById('loginForm');
+        const loginInput = document.getElementById('loginInput');
+        const codeInput = document.getElementById('codeInput');
+        const errorMessage = document.getElementById('errorMessage');
+        
+        // Остальные элементы DOM
         const ratingModal = document.getElementById('ratingModal');
         const courierTypeModal = document.getElementById('courierTypeModal');
         const singleOrderModal = document.getElementById('singleOrderModal');
@@ -776,6 +886,94 @@
             }
         };
         
+        // Проверка аутентификации
+        function checkAuth() {
+            const authData = localStorage.getItem('authData');
+            if (!authData) return false;
+            
+            const { login, code, expires } = JSON.parse(authData);
+            if (Date.now() > expires) {
+                localStorage.removeItem('authData');
+                return false;
+            }
+            
+            return true;
+        }
+        
+        // Загрузка данных пользователей из JSON файла
+        async function loadUsers() {
+            try {
+                // Используем URL к вашему файлу auth.json на GitHub
+                const response = await fetch('https://raw.githubusercontent.com/markell1l/order/main/auth.json');
+                if (!response.ok) throw new Error('Не удалось загрузить данные пользователей');
+                
+                const data = await response.json();
+                return data.users || [];
+            } catch (error) {
+                console.error('Ошибка загрузки пользователей:', error);
+                return [];
+            }
+        }
+        
+        // Аутентификация пользователя
+        async function authenticate(login, code) {
+            const users = await loadUsers();
+            const user = users.find(u => u.login === login && u.code === code);
+            
+            if (user) {
+                // Сохраняем данные аутентификации на 1 неделю
+                const authData = {
+                    login,
+                    code,
+                    expires: Date.now() + 7 * 24 * 60 * 60 * 1000 // 1 неделя
+                };
+                localStorage.setItem('authData', JSON.stringify(authData));
+                return true;
+            }
+            
+            return false;
+        }
+        
+        // Выход из системы
+        function logout() {
+            localStorage.removeItem('authData');
+            loginContainer.style.display = 'block';
+            appContainer.style.display = 'none';
+            loginInput.value = '';
+            codeInput.value = '';
+            errorMessage.style.display = 'none';
+        }
+        
+        // Проверка аутентификации при загрузке страницы
+        async function initAuth() {
+            if (checkAuth()) {
+                loginContainer.style.display = 'none';
+                appContainer.style.display = 'block';
+                initApp();
+            } else {
+                loginContainer.style.display = 'block';
+                appContainer.style.display = 'none';
+            }
+        }
+        
+        // Обработчик формы входа
+        loginForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const login = loginInput.value.trim();
+            const code = codeInput.value.trim();
+            
+            if (login && code) {
+                const isAuthenticated = await authenticate(login, code);
+                
+                if (isAuthenticated) {
+                    initAuth();
+                } else {
+                    errorMessage.style.display = 'block';
+                }
+            }
+        });
+        
         // Инициализация приложения
         function initApp() {
             updateHistoryDisplay();
@@ -800,6 +998,13 @@
             // Инициализация выбора количества заказов
             orderCountSelect.addEventListener('change', updateMultiOrderInputs);
             updateMultiOrderInputs();
+            
+            // Проверка аутентификации каждые 5 минут
+            setInterval(() => {
+                if (!checkAuth()) {
+                    logout();
+                }
+            }, 5 * 60 * 1000);
         }
         
         // Обновление отображения рейтинга
@@ -1324,8 +1529,8 @@
             if (event.target === returnModal) returnModal.style.display = 'none';
         });
         
-        // Инициализация приложения
-        initApp();
+        // Инициализация аутентификации при загрузке страницы
+        initAuth();
     </script>
 </body>
 </html>
