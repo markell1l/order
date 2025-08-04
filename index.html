@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Калькулятор доставки</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -27,11 +27,6 @@
             font-family: 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', sans-serif;
         }
         
-        html, body {
-            height: 100%;
-            width: 100%;
-        }
-        
         body {
             background-color: #f5f7ff;
             color: var(--dark);
@@ -42,87 +37,6 @@
             padding: 20px;
         }
         
-        .login-container {
-            width: 100%;
-            max-width: 400px;
-            background-color: var(--white);
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            padding: 30px;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-        
-        .login-header {
-            text-align: center;
-            margin-bottom: 15px;
-        }
-        
-        .login-header h1 {
-            color: var(--primary);
-            font-size: 1.8rem;
-            margin-bottom: 10px;
-        }
-        
-        .login-header p {
-            color: var(--gray);
-            font-size: 0.9rem;
-        }
-        
-        .form-group {
-            margin-bottom: 15px;
-        }
-        
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 500;
-            color: var(--dark);
-        }
-        
-        .form-control {
-            width: 100%;
-            padding: 12px 15px;
-            border: 1px solid #dee2e6;
-            border-radius: 10px;
-            font-size: 1rem;
-            transition: border-color 0.3s;
-        }
-        
-        .form-control:focus {
-            outline: none;
-            border-color: var(--primary);
-        }
-        
-        .btn {
-            width: 100%;
-            padding: 12px;
-            border: none;
-            border-radius: 10px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .btn-primary {
-            background: var(--primary);
-            color: var(--white);
-        }
-        
-        .btn-primary:hover {
-            background: var(--primary-dark);
-        }
-        
-        .error-message {
-            color: var(--danger);
-            text-align: center;
-            margin-top: 10px;
-            font-size: 0.9rem;
-            display: none;
-        }
-        
         .app-container {
             width: 100%;
             max-width: 500px;
@@ -131,8 +45,6 @@
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             overflow: hidden;
             position: relative;
-            display: none;
-            height: 100%;
         }
         
         .app-header {
@@ -275,6 +187,31 @@
             padding: 20px;
         }
         
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--dark);
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #dee2e6;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+        
         .select-wrapper {
             position: relative;
         }
@@ -296,6 +233,26 @@
             -webkit-appearance: none;
             -moz-appearance: none;
             padding-right: 40px;
+        }
+        
+        .btn {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary {
+            background: var(--primary);
+            color: var(--white);
+        }
+        
+        .btn-primary:hover {
+            background: var(--primary-dark);
         }
         
         .btn-danger {
@@ -531,24 +488,7 @@
     </style>
 </head>
 <body>
-    <div class="login-container" id="loginContainer">
-        <div class="login-header">
-            <h1>Вход в систему</h1>
-            <p>Введите ваш логин и проверочный код</p>
-        </div>
-        <div class="form-group">
-            <label for="loginInput">Логин:</label>
-            <input type="text" class="form-control" id="loginInput" placeholder="Введите ваш логин">
-        </div>
-        <div class="form-group">
-            <label for="codeInput">Проверочный код:</label>
-            <input type="password" class="form-control" id="codeInput" placeholder="Введите проверочный код">
-        </div>
-        <button class="btn btn-primary" id="loginBtn">Войти</button>
-        <div class="error-message" id="errorMessage">Неверный логин или проверочный код</div>
-    </div>
-    
-    <div class="app-container" id="appContainer">
+    <div class="app-container">
         <div class="app-header">
             <h1>Калькулятор доставки</h1>
             
@@ -772,13 +712,6 @@
     
     <script>
         // Элементы DOM
-        const loginContainer = document.getElementById('loginContainer');
-        const appContainer = document.getElementById('appContainer');
-        const loginBtn = document.getElementById('loginBtn');
-        const loginInput = document.getElementById('loginInput');
-        const codeInput = document.getElementById('codeInput');
-        const errorMessage = document.getElementById('errorMessage');
-        
         const ratingModal = document.getElementById('ratingModal');
         const courierTypeModal = document.getElementById('courierTypeModal');
         const singleOrderModal = document.getElementById('singleOrderModal');
@@ -842,22 +775,6 @@
                 name: 'Автокурьер'
             }
         };
-        
-        // Проверка авторизации
-        async function checkAuth(login, code) {
-            try {
-                const response = await fetch('auth.json');
-                if (!response.ok) throw new Error('Ошибка загрузки данных авторизации');
-                
-                const authData = await response.json();
-                const user = authData.users.find(u => u.login === login && u.code === code);
-                
-                return !!user;
-            } catch (error) {
-                console.error('Ошибка при проверке авторизации:', error);
-                return false;
-            }
-        }
         
         // Инициализация приложения
         function initApp() {
@@ -1200,29 +1117,6 @@
             updateHistoryDisplay();
         }
         
-        // Обработчик входа в систему
-        loginBtn.addEventListener('click', async () => {
-            const login = loginInput.value.trim();
-            const code = codeInput.value.trim();
-            
-            if (!login || !code) {
-                errorMessage.textContent = 'Пожалуйста, введите логин и проверочный код';
-                errorMessage.style.display = 'block';
-                return;
-            }
-            
-            const isValid = await checkAuth(login, code);
-            
-            if (isValid) {
-                loginContainer.style.display = 'none';
-                appContainer.style.display = 'block';
-                initApp();
-            } else {
-                errorMessage.textContent = 'Неверный логин или проверочный код';
-                errorMessage.style.display = 'block';
-            }
-        });
-        
         // Обработчики событий
         courierTypeDisplay.addEventListener('click', () => {
             courierTypeModal.style.display = 'flex';
@@ -1429,6 +1323,9 @@
             if (event.target === orderDetailsModal) orderDetailsModal.style.display = 'none';
             if (event.target === returnModal) returnModal.style.display = 'none';
         });
+        
+        // Инициализация приложения
+        initApp();
     </script>
 </body>
 </html>
