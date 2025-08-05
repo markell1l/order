@@ -50,12 +50,28 @@
         
         .login-container {
             width: 100%;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: var(--bg-gradient);
+            padding: 20px;
+            box-sizing: border-box;
+            z-index: 1000;
+            animation: fadeIn 0.5s;
+        }
+        
+        .login-content {
+            width: 100%;
             max-width: 400px;
             background-color: var(--white);
             border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             padding: 30px;
-            animation: fadeIn 0.5s;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
         }
         
         @keyframes fadeIn {
@@ -571,22 +587,24 @@
 <body>
     <!-- Контейнер для входа -->
     <div class="login-container" id="loginContainer">
-        <div class="login-header">
-            <h1>Вход в систему</h1>
-            <p>Введите ваш логин и проверочный код</p>
+        <div class="login-content">
+            <div class="login-header">
+                <h1>Вход в систему</h1>
+                <p>Введите ваш логин и проверочный код</p>
+            </div>
+            <form class="login-form" id="loginForm">
+                <div class="form-group">
+                    <label for="loginInput">Логин:</label>
+                    <input type="text" id="loginInput" placeholder="Введите ваш логин" required>
+                </div>
+                <div class="form-group">
+                    <label for="codeInput">Проверочный код:</label>
+                    <input type="password" id="codeInput" placeholder="Введите проверочный код" required>
+                </div>
+                <button type="submit" class="login-btn">Войти</button>
+                <div class="error-message" id="errorMessage">Неверный логин или проверочный код</div>
+            </form>
         </div>
-        <form class="login-form" id="loginForm">
-            <div class="form-group">
-                <label for="loginInput">Логин:</label>
-                <input type="text" id="loginInput" placeholder="Введите ваш логин" required>
-            </div>
-            <div class="form-group">
-                <label for="codeInput">Проверочный код:</label>
-                <input type="password" id="codeInput" placeholder="Введите проверочный код" required>
-            </div>
-            <button type="submit" class="login-btn">Войти</button>
-            <div class="error-message" id="errorMessage">Неверный логин или проверочный код</div>
-        </form>
     </div>
     
     <!-- Основное приложение (изначально скрыто) -->
@@ -937,7 +955,7 @@
         // Выход из системы
         function logout() {
             localStorage.removeItem('authData');
-            loginContainer.style.display = 'block';
+            loginContainer.style.display = 'flex';
             appContainer.style.display = 'none';
             loginInput.value = '';
             codeInput.value = '';
@@ -951,7 +969,7 @@
                 appContainer.style.display = 'block';
                 initApp();
             } else {
-                loginContainer.style.display = 'block';
+                loginContainer.style.display = 'flex';
                 appContainer.style.display = 'none';
             }
         }
