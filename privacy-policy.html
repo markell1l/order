@@ -1,60 +1,219 @@
-Политика конфиденциальности
-Последнее обновление: [10.08.2025 г.]
-
-1. Общие положения
-Настоящая Политика конфиденциальности описывает, как мы обрабатываем данные пользователей в нашем веб-приложении [Калькулятор доставки], размещённом на GitHub Pages.
-
-Используя это приложение, вы соглашаетесь с условиями данной политики.
-
-2. Какие данные мы собираем и храним?
-2.1. Данные для входа
-Приложение использует логин и проверочный код, которые хранятся в файле [auth.json] в репозитории GitHub.
-
-Эти данные не являются персональными (не привязаны к реальным лицам) и нужны только для доступа к приложению.
-
-2.2. Локальное хранение (localStorage)
-Приложение сохраняет в вашем браузере:
-
-- Историю расчетов,
-
-- Настройки (например, выбранный тип курьера),
-
-- Рейтинг и другие пользовательские данные.
-
-Эти данные не передаются нам и хранятся только на вашем устройстве.
-
-2.3. Подписки через Telegram
-При нажатии кнопку "Купить" вы переходите в Telegram, где можете связаться с нами для оплаты.
-
-Мы не храним ваши банковские реквизиты — платёж обрабатывается вручную через перевод на карту.
-
-3. Как мы используем данные?
-- Логины и коды — только для входа в приложение.
-
-- Данные в localStorage — для работы калькулятора и сохранения ваших настроек.
-
-- Сообщения в Telegram — только для оформления подписки.
-
-Мы не передаём ваши данные третьим лицам и не используем их для рекламы или аналитики.
-
-4. Безопасность данных
-- Логины и коды хранятся в открытом JSON-файле на GitHub (без доступа к персональным данным).
-
-- Данные в localStorage защищены стандартными механизмами браузера.
-
-- Telegram-переписка удаляется после обработки запроса.
-
-5. Ваши права
-Вы можете:
-
-- Очистить localStorage (данные удалятся без возможности восстановления),
-
-- Запросить удаление логина из JSON-файла (написать в Telegram),
-
-- Отказаться от подписки в любой момент.
-
-6. Изменения в политике
-Мы можем обновлять этот текст. Актуальная версия всегда будет доступна по этой ссылке.
-
-7. Контакты
-По вопросам конфиденциальности пишите: [@PCH1s].
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Политика конфиденциальности</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --primary-dark: #3a0ca3;
+            --secondary: #f72585;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --gray: #6c757d;
+            --white: #ffffff;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7ff;
+            color: var(--dark);
+            line-height: 1.6;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 30px 20px;
+        }
+        
+        .privacy-header {
+            background: linear-gradient(135deg, #4361ee 0%, #3a0ca3 100%);
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .privacy-header h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+        
+        .privacy-header p {
+            opacity: 0.9;
+            font-size: 1rem;
+        }
+        
+        .privacy-content {
+            background-color: var(--white);
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+        
+        h2 {
+            color: var(--primary);
+            margin: 25px 0 15px;
+            font-size: 1.5rem;
+            border-bottom: 2px solid var(--light);
+            padding-bottom: 8px;
+        }
+        
+        h3 {
+            color: var(--dark);
+            margin: 20px 0 10px;
+            font-size: 1.2rem;
+        }
+        
+        p, ul {
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+        
+        ul {
+            padding-left: 20px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+        }
+        
+        .highlight {
+            background-color: rgba(67, 97, 238, 0.1);
+            padding: 2px 5px;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+        
+        .contact-link {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.2s;
+        }
+        
+        .contact-link:hover {
+            color: var(--primary-dark);
+            text-decoration: underline;
+        }
+        
+        .back-btn {
+            display: inline-block;
+            margin-top: 30px;
+            background: var(--primary);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .back-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .back-btn i {
+            margin-right: 8px;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px 15px;
+            }
+            
+            .privacy-header {
+                padding: 25px 15px;
+            }
+            
+            .privacy-header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .privacy-content {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="privacy-header">
+        <h1>Политика конфиденциальности</h1>
+        <p>Последнее обновление: 10.08.2025 г.</p>
+    </div>
+    
+    <div class="container">
+        <div class="privacy-content">
+            <h2>1. Общие положения</h2>
+            <p>Настоящая Политика конфиденциальности описывает, как мы обрабатываем данные пользователей в нашем веб-приложении <span class="highlight">Калькулятор доставки</span>, размещённом на GitHub Pages.</p>
+            <p>Используя это приложение, вы соглашаетесь с условиями данной политики.</p>
+            
+            <h2>2. Какие данные мы собираем и храним?</h2>
+            
+            <h3>2.1. Данные для входа</h3>
+            <p>Приложение использует логин и проверочный код, которые хранятся в файле <span class="highlight">auth.json</span> в репозитории GitHub.</p>
+            <p>Эти данные не являются персональными (не привязаны к реальным лицам) и нужны только для доступа к приложению.</p>
+            
+            <h3>2.2. Локальное хранение (localStorage)</h3>
+            <p>Приложение сохраняет в вашем браузере:</p>
+            <ul>
+                <li>Историю расчетов,</li>
+                <li>Настройки (например, выбранный тип курьера),</li>
+                <li>Рейтинг и другие пользовательские данные.</li>
+            </ul>
+            <p>Эти данные не передаются нам и хранятся только на вашем устройстве.</p>
+            
+            <h3>2.3. Подписки через Telegram</h3>
+            <p>При нажатии кнопку "Купить" вы переходите в Telegram, где можете связаться с нами для оплаты.</p>
+            <p>Мы не храним ваши банковские реквизиты — платёж обрабатывается вручную через перевод на карту.</p>
+            
+            <h2>3. Как мы используем данные?</h2>
+            <ul>
+                <li>Логины и коды — только для входа в приложение.</li>
+                <li>Данные в localStorage — для работы калькулятора и сохранения ваших настроек.</li>
+                <li>Сообщения в Telegram — только для оформления подписки.</li>
+            </ul>
+            <p>Мы не передаём ваши данные третьим лицам и не используем их для рекламы или аналитики.</p>
+            
+            <h2>4. Безопасность данных</h2>
+            <ul>
+                <li>Логины и коды хранятся в открытом JSON-файле на GitHub (без доступа к персональным данным).</li>
+                <li>Данные в localStorage защищены стандартными механизмами браузера.</li>
+                <li>Telegram-переписка удаляется после обработки запроса.</li>
+            </ul>
+            
+            <h2>5. Ваши права</h2>
+            <p>Вы можете:</p>
+            <ul>
+                <li>Очистить localStorage (данные удалятся без возможности восстановления),</li>
+                <li>Запросить удаление логина из JSON-файла (написать в Telegram),</li>
+                <li>Отказаться от подписки в любой момент.</li>
+            </ul>
+            
+            <h2>6. Изменения в политике</h2>
+            <p>Мы можем обновлять этот текст. Актуальная версия всегда будет доступна по этой ссылке.</p>
+            
+            <h2>7. Контакты</h2>
+            <p>По вопросам конфиденциальности пишите: <a href="https://t.me/PCH1s" class="contact-link" target="_blank">@PCH1s</a>.</p>
+            
+            <a href="javascript:history.back()" class="back-btn">
+                <i class="fas fa-arrow-left"></i> Назад к приложению
+            </a>
+        </div>
+    </div>
+</body>
+</html>
