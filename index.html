@@ -142,6 +142,24 @@
             font-size: 0.9rem;
             display: none;
         }
+
+        .privacy-policy {
+            margin-top: 15px;
+            text-align: center;
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+
+        .privacy-policy a {
+            color: var(--primary);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .privacy-policy a:hover {
+            color: var(--primary-dark);
+            text-decoration: underline;
+        }
         
         /* Остальные стили из предыдущей версии */
         .app-header {
@@ -781,6 +799,9 @@
                 </div>
                 <button type="submit" class="login-btn">Войти</button>
                 <div class="error-message" id="errorMessage">Неверный логин или проверочный код</div>
+                <div class="privacy-policy">
+                    Входя в приложение, Вы принимаете <a href="https://github.com/markell1l/order/blob/main/privacy-policy.html" target="_blank">политику конфиденциальности</a>
+                </div>
             </form>
         </div>
     </div>
