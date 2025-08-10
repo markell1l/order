@@ -564,6 +564,150 @@
         .return-item:hover {
             background-color: rgba(76, 201, 240, 0.2);
         }
+
+        /* Новые стили для подписки */
+        .subscription-container {
+            padding: 20px;
+            background-color: var(--light);
+            border-radius: 10px;
+            margin: 20px;
+            border: 1px solid #dee2e6;
+        }
+
+        .subscription-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .subscription-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .subscription-status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .status-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .status-active {
+            background-color: var(--success);
+        }
+
+        .status-inactive {
+            background-color: var(--danger);
+        }
+
+        .subscription-plans {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .subscription-plan {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 15px;
+            background-color: var(--white);
+            border-radius: 8px;
+            border: 1px solid #dee2e6;
+        }
+
+        .plan-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .plan-name {
+            font-weight: 600;
+            margin-bottom: 3px;
+        }
+
+        .plan-price {
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+
+        .buy-btn {
+            padding: 8px 12px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .buy-btn:hover {
+            background-color: var(--primary-dark);
+        }
+
+        .timer-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .timer-content {
+            background-color: var(--white);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            max-width: 300px;
+            width: 100%;
+        }
+
+        .timer-text {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+        }
+
+        .timer-countdown {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+
+        .timer-subscription-text {
+            font-size: 0.9rem;
+            color: var(--gray);
+            margin-bottom: 15px;
+        }
+
+        .timer-btn {
+            padding: 10px 15px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.2s;
+        }
+
+        .timer-btn:hover {
+            background-color: var(--primary-dark);
+        }
         
         @media (max-width: 480px) {
             .main-buttons {
@@ -579,6 +723,10 @@
             }
 
             .history-actions {
+                flex-direction: column;
+            }
+
+            .subscription-plans {
                 flex-direction: column;
             }
         }
@@ -620,6 +768,33 @@
                 <div class="courier-info-item" id="ratingDisplay">
                     <i class="fas fa-star"></i>
                     <span class="courier-info-text" id="currentRatingText">0.00</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Блок подписки -->
+        <div class="subscription-container">
+            <div class="subscription-header">
+                <div class="subscription-title">Подписка</div>
+                <div class="subscription-status" id="subscriptionStatus">
+                    <div class="status-indicator status-inactive" id="statusIndicator"></div>
+                    <span id="statusText">Подписка не активна</span>
+                </div>
+            </div>
+            <div class="subscription-plans">
+                <div class="subscription-plan">
+                    <div class="plan-info">
+                        <div class="plan-name">Подписка на месяц</div>
+                        <div class="plan-price">150 руб.</div>
+                    </div>
+                    <button class="buy-btn" id="buyMonthBtn">Купить</button>
+                </div>
+                <div class="subscription-plan">
+                    <div class="plan-info">
+                        <div class="plan-name">Подписка на полгода</div>
+                        <div class="plan-price">400 руб.</div>
+                    </div>
+                    <button class="buy-btn" id="buyHalfYearBtn">Купить</button>
                 </div>
             </div>
         </div>
@@ -829,6 +1004,16 @@
             </div>
         </div>
     </div>
+
+    <!-- Модальное окно таймера -->
+    <div class="timer-modal" id="timerModal">
+        <div class="timer-content">
+            <div class="timer-text">Пожалуйста, подождите</div>
+            <div class="timer-countdown" id="timerCountdown">1:00</div>
+            <div class="timer-subscription-text">Вы можете купить подписку, чтобы убрать ожидание</div>
+            <button class="timer-btn" id="closeTimerBtn">Закрыть</button>
+        </div>
+    </div>
     
     <script>
         // Элементы DOM для аутентификации
@@ -838,6 +1023,18 @@
         const loginInput = document.getElementById('loginInput');
         const codeInput = document.getElementById('codeInput');
         const errorMessage = document.getElementById('errorMessage');
+        
+        // Элементы для подписки
+        const subscriptionStatus = document.getElementById('subscriptionStatus');
+        const statusIndicator = document.getElementById('statusIndicator');
+        const statusText = document.getElementById('statusText');
+        const buyMonthBtn = document.getElementById('buyMonthBtn');
+        const buyHalfYearBtn = document.getElementById('buyHalfYearBtn');
+        
+        // Элементы для таймера
+        const timerModal = document.getElementById('timerModal');
+        const timerCountdown = document.getElementById('timerCountdown');
+        const closeTimerBtn = document.getElementById('closeTimerBtn');
         
         // Остальные элементы DOM
         const ratingModal = document.getElementById('ratingModal');
@@ -878,6 +1075,9 @@
         let ordersHistory = JSON.parse(localStorage.getItem('deliveryHistory')) || [];
         let totalEarnings = parseFloat(localStorage.getItem('totalEarnings')) || 0;
         let currentOrderIndex = -1;
+        let lastCalculationTime = 0;
+        let subscriptionActive = false;
+        let currentUserLogin = '';
         
         // Тарифы для каждого типа курьера
         const rates = {
@@ -933,6 +1133,35 @@
             }
         }
         
+        // Проверка подписки пользователя
+        async function checkSubscription(login) {
+            try {
+                const users = await loadUsers();
+                const user = users.find(u => u.login === login);
+                
+                if (user && user.subs === 'on') {
+                    return true;
+                }
+                return false;
+            } catch (error) {
+                console.error('Ошибка проверки подписки:', error);
+                return false;
+            }
+        }
+        
+        // Обновление статуса подписки
+        async function updateSubscriptionStatus() {
+            subscriptionActive = await checkSubscription(currentUserLogin);
+            
+            if (subscriptionActive) {
+                statusIndicator.className = 'status-indicator status-active';
+                statusText.textContent = 'Подписка активна';
+            } else {
+                statusIndicator.className = 'status-indicator status-inactive';
+                statusText.textContent = 'Подписка не активна';
+            }
+        }
+        
         // Аутентификация пользователя
         async function authenticate(login, code) {
             const users = await loadUsers();
@@ -946,6 +1175,7 @@
                     expires: Date.now() + 7 * 24 * 60 * 60 * 1000 // 1 неделя
                 };
                 localStorage.setItem('authData', JSON.stringify(authData));
+                currentUserLogin = login;
                 return true;
             }
             
@@ -965,9 +1195,13 @@
         // Проверка аутентификации при загрузке страницы
         async function initAuth() {
             if (checkAuth()) {
+                const authData = JSON.parse(localStorage.getItem('authData'));
+                currentUserLogin = authData.login;
+                
                 loginContainer.style.display = 'none';
                 appContainer.style.display = 'block';
                 initApp();
+                updateSubscriptionStatus();
             } else {
                 loginContainer.style.display = 'flex';
                 appContainer.style.display = 'none';
@@ -1021,6 +1255,8 @@
             setInterval(() => {
                 if (!checkAuth()) {
                     logout();
+                } else {
+                    updateSubscriptionStatus();
                 }
             }, 5 * 60 * 1000);
         }
@@ -1339,6 +1575,41 @@
 
             updateHistoryDisplay();
         }
+
+        // Таймер ожидания
+        function showTimer() {
+            let timeLeft = 60; // 1 минута
+            timerCountdown.textContent = '1:00';
+            timerModal.style.display = 'flex';
+            
+            const timerInterval = setInterval(() => {
+                timeLeft--;
+                
+                const minutes = Math.floor(timeLeft / 60);
+                const seconds = timeLeft % 60;
+                timerCountdown.textContent = `${minutes}:${seconds < 10 ? '0' + seconds : seconds}`;
+                
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    timerModal.style.display = 'none';
+                    lastCalculationTime = Date.now();
+                }
+            }, 1000);
+        }
+
+        // Проверка времени между расчетами
+        function canCalculate() {
+            if (subscriptionActive) return true;
+            
+            const now = Date.now();
+            const timeSinceLastCalc = now - lastCalculationTime;
+            
+            if (lastCalculationTime === 0 || timeSinceLastCalc > 10 * 60 * 1000) {
+                return true;
+            }
+            
+            return false;
+        }
         
         // Обработчики событий
         courierTypeDisplay.addEventListener('click', () => {
@@ -1388,6 +1659,11 @@
                 return;
             }
             
+            if (!canCalculate()) {
+                alert('Пожалуйста, подождите 10 минут между расчетами или приобретите подписку');
+                return;
+            }
+            
             document.getElementById('singleWeight').value = '';
             document.getElementById('singleDistance').value = '';
             document.getElementById('singleMultiplier').value = '1';
@@ -1398,6 +1674,11 @@
             if (!courierRating) {
                 alert('Пожалуйста, сначала введите ваш рейтинг');
                 ratingModal.style.display = 'flex';
+                return;
+            }
+            
+            if (!canCalculate()) {
+                alert('Пожалуйста, подождите 10 минут между расчетами или приобретите подписку');
                 return;
             }
             
@@ -1419,6 +1700,10 @@
             if (isNaN(weight) || isNaN(distance) || weight <= 0 || distance <= 0) {
                 alert('Пожалуйста, введите корректные данные');
                 return;
+            }
+            
+            if (!subscriptionActive) {
+                showTimer();
             }
             
             const orderAmount = calculateOrder(weight, distance, multiplier);
@@ -1458,6 +1743,10 @@
             if (!isValid) {
                 alert('Пожалуйста, введите корректные данные для всех заказов');
                 return;
+            }
+            
+            if (!subscriptionActive) {
+                showTimer();
             }
             
             let totalAmount = 0;
@@ -1533,6 +1822,21 @@
                 updateHistoryDisplay();
             }
         });
+
+        // Обработчики кнопок покупки подписки
+        buyMonthBtn.addEventListener('click', () => {
+            window.open('https://t.me/PCH1s', '_blank');
+        });
+
+        buyHalfYearBtn.addEventListener('click', () => {
+            window.open('https://t.me/PCH1s', '_blank');
+        });
+
+        // Обработчик закрытия таймера
+        closeTimerBtn.addEventListener('click', () => {
+            timerModal.style.display = 'none';
+            lastCalculationTime = Date.now();
+        });
         
         window.addEventListener('click', (event) => {
             if (event.target === ratingModal) {
@@ -1545,6 +1849,7 @@
             if (event.target === resultModal) resultModal.style.display = 'none';
             if (event.target === orderDetailsModal) orderDetailsModal.style.display = 'none';
             if (event.target === returnModal) returnModal.style.display = 'none';
+            if (event.target === timerModal) timerModal.style.display = 'none';
         });
         
         // Инициализация аутентификации при загрузке страницы
