@@ -259,7 +259,7 @@
             box-shadow: 0 6px 15px rgba(67, 97, 238, 0.2);
         }
         
-        .history-btn, .settings-btn {
+        .history-btn {
             grid-column: span 2;
             background: var(--light);
             color: var(--gray);
@@ -275,8 +275,32 @@
             gap: 8px;
         }
         
-        .history-btn:hover, .settings-btn:hover {
+        .history-btn:hover {
             background: #e9ecef;
+        }
+
+        .settings-corner-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: transparent;
+            color: var(--white);
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 10;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        .settings-corner-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: rotate(90deg);
         }
         
         .modal {
@@ -638,6 +662,7 @@
 
         .setting-info {
             flex-grow: 1;
+            padding-right: 15px;
         }
 
         .setting-name {
@@ -653,8 +678,9 @@
         .toggle-switch {
             position: relative;
             display: inline-block;
-            width: 50px;
-            height: 24px;
+            width: 60px;
+            height: 34px;
+            flex-shrink: 0;
         }
 
         .toggle-switch input {
@@ -672,14 +698,14 @@
             bottom: 0;
             background-color: #ccc;
             transition: .4s;
-            border-radius: 24px;
+            border-radius: 34px;
         }
 
         .toggle-slider:before {
             position: absolute;
             content: "";
-            height: 16px;
-            width: 16px;
+            height: 26px;
+            width: 26px;
             left: 4px;
             bottom: 4px;
             background-color: white;
@@ -884,7 +910,7 @@
                 grid-template-columns: 1fr;
             }
             
-            .history-btn, .settings-btn {
+            .history-btn {
                 grid-column: span 1;
             }
             
@@ -902,6 +928,28 @@
                 width: 45px;
                 height: 45px;
                 font-size: 1rem;
+            }
+
+            .settings-corner-btn {
+                top: 15px;
+                right: 15px;
+                width: 35px;
+                height: 35px;
+                font-size: 1.3rem;
+            }
+
+            .toggle-switch {
+                width: 50px;
+                height: 28px;
+            }
+
+            .toggle-slider:before {
+                height: 20px;
+                width: 20px;
+            }
+
+            input:checked + .toggle-slider:before {
+                transform: translateX(22px);
             }
         }
     </style>
@@ -935,6 +983,9 @@
     <!-- Основное приложение (изначально скрыто) -->
     <div class="app-container" id="appContainer">
         <div class="app-header">
+            <button class="settings-corner-btn" id="settingsCornerBtn">
+                <i class="fas fa-cog"></i>
+            </button>
             <h1>Калькулятор доставки</h1>
             
             <div class="courier-info">
@@ -961,10 +1012,6 @@
             <button class="history-btn" id="historyBtn">
                 <i class="fas fa-history"></i>
                 <span>История заказов</span>
-            </button>
-            <button class="settings-btn" id="settingsBtn">
-                <i class="fas fa-cog"></i>
-                <span>Настройки</span>
             </button>
         </div>
         
@@ -1004,17 +1051,6 @@
                         <span class="toggle-slider"></span>
                     </label>
                 </div>
-                
-                <div class="setting-item">
-                    <div class="setting-info">
-                        <div class="setting-name">Автоопределение темы</div>
-                        <div class="setting-desc">Автоматически переключать тему в соответствии с системными настройками</div>
-                    </div>
-                    <label class="toggle-switch">
-                        <input type="checkbox" id="autoThemeToggle">
-                        <span class="toggle-slider"></span>
-                    </label>
-                </div>
             </div>
             
             <div class="settings-section">
@@ -1045,17 +1081,6 @@
             
             <div class="settings-section">
                 <div class="settings-section-title">Данные приложения</div>
-                
-                <div class="setting-item">
-                    <div class="setting-info">
-                        <div class="setting-name">Автосохранение</div>
-                        <div class="setting-desc">Автоматически сохранять историю расчетов</div>
-                    </div>
-                    <label class="toggle-switch">
-                        <input type="checkbox" id="autoSaveToggle" checked>
-                        <span class="toggle-slider"></span>
-                    </label>
-                </div>
                 
                 <button class="reset-btn" id="resetSettingsBtn">
                     <i class="fas fa-undo"></i> Сбросить настройки
@@ -1308,13 +1333,11 @@
         const errorMessage = document.getElementById('errorMessage');
         
         // Элементы для настроек
-        const settingsBtn = document.getElementById('settingsBtn');
+        const settingsCornerBtn = document.getElementById('settingsCornerBtn');
         const settingsContainer = document.getElementById('settingsContainer');
         const darkThemeToggle = document.getElementById('darkThemeToggle');
-        const autoThemeToggle = document.getElementById('autoThemeToggle');
         const soundToggle = document.getElementById('soundToggle');
         const vibrationToggle = document.getElementById('vibrationToggle');
-        const autoSaveToggle = document.getElementById('autoSaveToggle');
         const resetSettingsBtn = document.getElementById('resetSettingsBtn');
         
         // Элементы для подписки
@@ -1381,11 +1404,13 @@
         // Настройки
         let settings = JSON.parse(localStorage.getItem('appSettings')) || {
             darkTheme: false,
-            autoTheme: false,
             sound: true,
-            vibration: false,
-            autoSave: true
+            vibration: false
         };
+        
+        // Создаем аудио элемент для звуковых уведомлений
+        const notificationSound = new Audio();
+        notificationSound.src = "data:audio/wav;base64,UklGRigAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YQQAAAAAAA=="; // Пустой звук, можно заменить на реальный
         
         // Тарифы для каждого типа курьера
         const rates = {
@@ -1416,18 +1441,11 @@
         function initSettings() {
             // Применяем сохраненные настройки
             darkThemeToggle.checked = settings.darkTheme;
-            autoThemeToggle.checked = settings.autoTheme;
             soundToggle.checked = settings.sound;
             vibrationToggle.checked = settings.vibration;
-            autoSaveToggle.checked = settings.autoSave;
             
             // Применяем тему
             applyTheme();
-            
-            // Настройка автоопределения темы
-            if (settings.autoTheme) {
-                setupAutoTheme();
-            }
         }
         
         // Применение темы
@@ -1436,28 +1454,6 @@
                 document.documentElement.setAttribute('data-theme', 'dark');
             } else {
                 document.documentElement.removeAttribute('data-theme');
-            }
-        }
-        
-        // Настройка автоопределения темы
-        function setupAutoTheme() {
-            const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-            
-            const handleThemeChange = (e) => {
-                if (settings.autoTheme) {
-                    settings.darkTheme = e.matches;
-                    applyTheme();
-                    saveSettings();
-                }
-            };
-            
-            mediaQuery.addEventListener('change', handleThemeChange);
-            
-            // Применяем системную тему при инициализации
-            if (settings.autoTheme) {
-                settings.darkTheme = mediaQuery.matches;
-                applyTheme();
-                saveSettings();
             }
         }
         
@@ -1470,16 +1466,36 @@
         function resetSettings() {
             settings = {
                 darkTheme: false,
-                autoTheme: false,
                 sound: true,
-                vibration: false,
-                autoSave: true
+                vibration: false
             };
             saveSettings();
             initSettings();
             
             // Показываем уведомление
             alert('Настройки сброшены к значениям по умолчанию');
+        }
+        
+        // Воспроизведение звука уведомления
+        function playNotificationSound() {
+            if (settings.sound) {
+                try {
+                    notificationSound.play().catch(e => console.log('Ошибка воспроизведения звука:', e));
+                } catch (e) {
+                    console.log('Ошибка воспроизведения звука:', e);
+                }
+            }
+        }
+        
+        // Включение вибрации
+        function vibrate() {
+            if (settings.vibration && navigator.vibrate) {
+                try {
+                    navigator.vibrate(200);
+                } catch (e) {
+                    console.log('Ошибка вибрации:', e);
+                }
+            }
         }
         
         // Проверка аутентификации
@@ -2024,6 +2040,10 @@
             
             updateHistoryDisplay();
             
+            // Воспроизводим уведомления
+            playNotificationSound();
+            vibrate();
+            
             if (!hasActiveSubscription) {
                 startCooldown(10 * 60);
             }
@@ -2047,10 +2067,14 @@
             localStorage.setItem('totalEarnings', totalEarnings.toString());
 
             updateHistoryDisplay();
+            
+            // Воспроизводим уведомления
+            playNotificationSound();
+            vibrate();
         }
         
         // Обработчики событий для настроек
-        settingsBtn.addEventListener('click', () => {
+        settingsCornerBtn.addEventListener('click', () => {
             historyContainer.style.display = 'none';
             settingsContainer.style.display = settingsContainer.style.display === 'none' ? 'block' : 'none';
         });
@@ -2061,14 +2085,6 @@
             saveSettings();
         });
         
-        autoThemeToggle.addEventListener('change', function() {
-            settings.autoTheme = this.checked;
-            if (this.checked) {
-                setupAutoTheme();
-            }
-            saveSettings();
-        });
-        
         soundToggle.addEventListener('change', function() {
             settings.sound = this.checked;
             saveSettings();
@@ -2076,11 +2092,6 @@
         
         vibrationToggle.addEventListener('change', function() {
             settings.vibration = this.checked;
-            saveSettings();
-        });
-        
-        autoSaveToggle.addEventListener('change', function() {
-            settings.autoSave = this.checked;
             saveSettings();
         });
         
