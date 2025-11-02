@@ -3,21 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Калькулятор доставки</title>
+    <title>🎄 Калькулятор доставки</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --primary: #4361ee;
-            --primary-dark: #3a0ca3;
-            --secondary: #f72585;
-            --success: #4cc9f0;
-            --warning: #f8961e;
-            --danger: #ef233c;
+            --primary: #e63946;
+            --primary-dark: #c1121f;
+            --secondary: #2a9d8f;
+            --success: #8ac926;
+            --warning: #ff9e00;
+            --danger: #e63946;
             --light: #f8f9fa;
             --dark: #212529;
             --gray: #6c757d;
             --white: #ffffff;
-            --bg-gradient: linear-gradient(135deg, #4361ee 0%, #3a0ca3 100%);
+            --christmas-red: #e63946;
+            --christmas-green: #2a9d8f;
+            --christmas-gold: #ff9e00;
+            --christmas-silver: #f8f9fa;
+            --bg-gradient: linear-gradient(135deg, #e63946 0%, #c1121f 100%);
+            --christmas-gradient: linear-gradient(135deg, #e63946 0%, #2a9d8f 50%, #ff9e00 100%);
+            --winter-gradient: linear-gradient(135deg, #e63946 0%, #2a9d8f 100%);
         }
         
         * {
@@ -28,24 +34,107 @@
         }
         
         body {
-            background-color: #f5f7ff;
+            background-color: #0a2342;
+            background-image: 
+                radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 4px),
+                radial-gradient(white, rgba(255,255,255,.15) 1px, transparent 3px),
+                radial-gradient(white, rgba(255,255,255,.1) 2px, transparent 4px);
+            background-size: 550px 550px, 350px 350px, 250px 250px;
+            background-position: 0 0, 40px 60px, 130px 270px;
             color: var(--dark);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
             padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Анимированный снег */
+        .snowflakes {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        .snowflake {
+            position: absolute;
+            top: -10px;
+            color: white;
+            font-size: 1em;
+            animation: fall linear forwards;
+            opacity: 0.8;
+        }
+        
+        @keyframes fall {
+            to {
+                transform: translateY(105vh) rotate(360deg);
+            }
+        }
+
+        /* Новогодние украшения */
+        .christmas-decoration {
+            position: fixed;
+            z-index: 2;
+            pointer-events: none;
+        }
+        
+        .decoration-1 {
+            top: 10%;
+            left: 5%;
+            font-size: 2rem;
+            color: var(--christmas-red);
+            animation: swing 3s ease-in-out infinite;
+        }
+        
+        .decoration-2 {
+            top: 15%;
+            right: 5%;
+            font-size: 2rem;
+            color: var(--christmas-green);
+            animation: swing 4s ease-in-out infinite;
+        }
+        
+        .decoration-3 {
+            bottom: 20%;
+            left: 8%;
+            font-size: 1.5rem;
+            color: var(--christmas-gold);
+            animation: swing 3.5s ease-in-out infinite;
+        }
+        
+        .decoration-4 {
+            bottom: 15%;
+            right: 10%;
+            font-size: 1.5rem;
+            color: var(--christmas-red);
+            animation: swing 4.5s ease-in-out infinite;
+        }
+        
+        @keyframes swing {
+            0%, 100% { transform: rotate(-5deg); }
+            50% { transform: rotate(5deg); }
         }
         
         .app-container {
             width: 100%;
             max-width: 500px;
-            background-color: var(--white);
+            background-color: rgba(255, 255, 255, 0.95);
             border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2), 0 0 20px rgba(230, 57, 70, 0.3);
             overflow: hidden;
             position: relative;
-            display: none; /* Скрываем основное приложение до входа */
+            display: none;
+            z-index: 10;
+            border: 3px solid var(--christmas-gold);
+            background-image: 
+                linear-gradient(45deg, rgba(255, 255, 255, 0.1) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.1) 50%, rgba(255, 255, 255, 0.1) 75%, transparent 75%, transparent);
+            background-size: 20px 20px;
         }
         
         .login-container {
@@ -58,20 +147,44 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            background: var(--bg-gradient);
+            background: var(--winter-gradient);
             padding: 20px;
             box-sizing: border-box;
             z-index: 1000;
             animation: fadeIn 0.5s;
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.2) 10%, transparent 20%),
+                radial-gradient(circle at 80% 70%, rgba(255, 255, 255, 0.2) 10%, transparent 20%);
         }
         
         .login-content {
             width: 100%;
             max-width: 400px;
-            background-color: var(--white);
+            background-color: rgba(255, 255, 255, 0.95);
             border-radius: 20px;
             padding: 30px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border: 2px solid var(--christmas-gold);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .login-content::before {
+            content: "🎄";
+            position: absolute;
+            top: -10px;
+            left: 10px;
+            font-size: 1.5rem;
+            transform: rotate(-15deg);
+        }
+        
+        .login-content::after {
+            content: "⭐";
+            position: absolute;
+            bottom: -5px;
+            right: 10px;
+            font-size: 1.5rem;
+            transform: rotate(15deg);
         }
         
         @keyframes fadeIn {
@@ -82,15 +195,19 @@
         .login-header {
             text-align: center;
             margin-bottom: 25px;
+            position: relative;
         }
         
         .login-header h1 {
-            color: var(--primary);
+            color: var(--christmas-red);
             margin-bottom: 10px;
+            font-size: 1.8rem;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
         }
         
         .login-header p {
             color: var(--gray);
+            font-size: 1rem;
         }
         
         .login-form .form-group {
@@ -107,21 +224,23 @@
         .login-form input {
             width: 100%;
             padding: 12px 15px;
-            border: 1px solid #dee2e6;
+            border: 2px solid #dee2e6;
             border-radius: 10px;
             font-size: 1rem;
-            transition: border-color 0.3s;
+            transition: all 0.3s;
+            background-color: rgba(255, 255, 255, 0.9);
         }
         
         .login-form input:focus {
             outline: none;
-            border-color: var(--primary);
+            border-color: var(--christmas-red);
+            box-shadow: 0 0 0 3px rgba(230, 57, 70, 0.2);
         }
         
         .login-btn {
             width: 100%;
             padding: 12px;
-            background: var(--primary);
+            background: var(--christmas-gradient);
             color: white;
             border: none;
             border-radius: 10px;
@@ -129,10 +248,28 @@
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
         }
         
         .login-btn:hover {
-            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .login-btn::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: 0.5s;
+        }
+        
+        .login-btn:hover::after {
+            left: 100%;
         }
         
         .error-message {
@@ -151,7 +288,7 @@
         }
 
         .privacy-policy a {
-            color: var(--primary);
+            color: var(--christmas-red);
             text-decoration: none;
             transition: color 0.2s;
         }
@@ -161,19 +298,39 @@
             text-decoration: underline;
         }
         
-        /* Остальные стили из предыдущей версии */
+        /* Остальные стили с новогодними акцентами */
         .app-header {
-            background: var(--bg-gradient);
+            background: var(--christmas-gradient);
             color: var(--white);
             padding: 20px;
             text-align: center;
             position: relative;
+            overflow: hidden;
+        }
+        
+        .app-header::before {
+            content: "🎅";
+            position: absolute;
+            top: 10px;
+            left: 20px;
+            font-size: 1.5rem;
+            opacity: 0.8;
+        }
+        
+        .app-header::after {
+            content: "🦌";
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            font-size: 1.5rem;
+            opacity: 0.8;
         }
         
         .app-header h1 {
             font-size: 1.8rem;
             margin-bottom: 5px;
             font-weight: 700;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
         }
         
         .app-header p {
@@ -185,9 +342,10 @@
             display: flex;
             justify-content: space-between;
             padding: 15px 20px;
-            background-color: rgba(255, 255, 255, 0.1);
+            background-color: rgba(255, 255, 255, 0.2);
             border-radius: 12px;
             margin-top: 15px;
+            backdrop-filter: blur(5px);
         }
         
         .courier-info-item {
@@ -213,8 +371,8 @@
         
         .main-btn {
             background: var(--white);
-            color: var(--primary);
-            border: 2px solid var(--primary);
+            color: var(--christmas-red);
+            border: 2px solid var(--christmas-red);
             padding: 15px;
             border-radius: 12px;
             font-size: 1rem;
@@ -225,7 +383,24 @@
             flex-direction: column;
             align-items: center;
             gap: 8px;
-            box-shadow: 0 4px 10px rgba(67, 97, 238, 0.1);
+            box-shadow: 0 4px 10px rgba(230, 57, 70, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .main-btn::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(230, 57, 70, 0.1), transparent);
+            transition: 0.5s;
+        }
+        
+        .main-btn:hover::before {
+            left: 100%;
         }
         
         .main-btn.disabled {
@@ -239,10 +414,10 @@
         }
         
         .main-btn:hover:not(.disabled) {
-            background: var(--primary);
+            background: var(--christmas-red);
             color: var(--white);
             transform: translateY(-3px);
-            box-shadow: 0 6px 15px rgba(67, 97, 238, 0.2);
+            box-shadow: 0 6px 15px rgba(230, 57, 70, 0.2);
         }
         
         .history-btn {
@@ -263,6 +438,7 @@
         
         .history-btn:hover {
             background: #e9ecef;
+            transform: translateY(-2px);
         }
         
         .modal {
@@ -289,19 +465,35 @@
             animation: modalFadeIn 0.3s;
             max-height: 90vh;
             overflow-y: auto;
+            border: 2px solid var(--christmas-gold);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
         }
         
         @keyframes modalFadeIn {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
+            from { opacity: 0; transform: translateY(-20px) scale(0.9); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
         }
         
         .modal-header {
-            background: var(--bg-gradient);
+            background: var(--christmas-gradient);
             color: var(--white);
             padding: 15px 20px;
             font-size: 1.2rem;
             font-weight: 600;
+            text-align: center;
+            position: relative;
+        }
+        
+        .modal-header::before {
+            content: "❄️";
+            position: absolute;
+            left: 20px;
+        }
+        
+        .modal-header::after {
+            content: "🎁";
+            position: absolute;
+            right: 20px;
         }
         
         .modal-body {
@@ -322,15 +514,17 @@
         .form-control {
             width: 100%;
             padding: 12px 15px;
-            border: 1px solid #dee2e6;
+            border: 2px solid #dee2e6;
             border-radius: 10px;
             font-size: 1rem;
             transition: border-color 0.3s;
+            background-color: rgba(255, 255, 255, 0.9);
         }
         
         .form-control:focus {
             outline: none;
-            border-color: var(--primary);
+            border-color: var(--christmas-red);
+            box-shadow: 0 0 0 3px rgba(230, 57, 70, 0.2);
         }
         
         .select-wrapper {
@@ -365,15 +559,33 @@
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: 0.5s;
+        }
+        
+        .btn:hover::after {
+            left: 100%;
         }
         
         .btn-primary {
-            background: var(--primary);
+            background: var(--christmas-gradient);
             color: var(--white);
         }
         
         .btn-primary:hover {
-            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
         
         .btn-danger {
@@ -383,6 +595,7 @@
         
         .btn-danger:hover {
             background: #d90429;
+            transform: translateY(-2px);
         }
         
         .btn-success {
@@ -391,7 +604,8 @@
         }
         
         .btn-success:hover {
-            background: #00b4d8;
+            background: #7cb518;
+            transform: translateY(-2px);
         }
         
         .btn-sm {
@@ -414,12 +628,14 @@
         .history-title {
             font-size: 1.2rem;
             font-weight: 600;
+            color: var(--christmas-red);
         }
         
         .history-list {
             border-radius: 10px;
             overflow: hidden;
             margin-bottom: 15px;
+            border: 1px solid #dee2e6;
         }
         
         .history-item {
@@ -449,8 +665,10 @@
             font-weight: 600;
             text-align: right;
             padding: 15px 0;
-            border-top: 2px solid var(--primary);
+            border-top: 2px solid var(--christmas-red);
             margin-top: 10px;
+            color: var(--christmas-red);
+            font-size: 1.1rem;
         }
         
         .courier-types {
@@ -473,11 +691,12 @@
         
         .courier-type:hover {
             background-color: #e9ecef;
+            transform: translateY(-2px);
         }
         
         .courier-type.selected {
-            border-color: var(--primary);
-            background-color: rgba(67, 97, 238, 0.1);
+            border-color: var(--christmas-red);
+            background-color: rgba(230, 57, 70, 0.1);
         }
         
         .courier-type i {
@@ -492,7 +711,7 @@
         }
         
         .courier-type .fa-bicycle {
-            color: var(--primary);
+            color: var(--christmas-red);
         }
         
         .courier-type .fa-car {
@@ -518,7 +737,7 @@
             color: var(--gray);
             margin-top: 5px;
             padding-left: 10px;
-            border-left: 2px solid var(--primary);
+            border-left: 2px solid var(--christmas-red);
         }
         
         .order-inputs {
@@ -526,12 +745,13 @@
             border-radius: 10px;
             padding: 15px;
             margin-bottom: 15px;
+            border-left: 4px solid var(--christmas-green);
         }
         
         .order-number {
             font-weight: 600;
             margin-bottom: 10px;
-            color: var(--primary);
+            color: var(--christmas-red);
         }
         
         .order-details {
@@ -539,6 +759,7 @@
             padding: 15px;
             background-color: var(--light);
             border-radius: 10px;
+            border-left: 4px solid var(--christmas-red);
         }
         
         .order-details-row {
@@ -577,16 +798,17 @@
         }
 
         .return-btn:hover {
-            background-color: #00b4d8;
+            background-color: #7cb518;
+            transform: translateY(-2px);
         }
 
         .return-item {
-            background-color: rgba(76, 201, 240, 0.1);
+            background-color: rgba(138, 201, 38, 0.1);
             border-left: 4px solid var(--success);
         }
 
         .return-item:hover {
-            background-color: rgba(76, 201, 240, 0.2);
+            background-color: rgba(138, 201, 38, 0.2);
         }
         
         /* Стили для подписки */
@@ -594,25 +816,32 @@
             position: fixed;
             bottom: 20px;
             right: 20px;
-            background: var(--primary);
+            background: var(--christmas-gradient);
             color: white;
-            width: 50px;
-            height: 50px;
+            width: 60px;
+            height: 60px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.2rem;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            font-size: 1.5rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
             cursor: pointer;
             z-index: 100;
             transition: all 0.3s;
+            border: 2px solid var(--christmas-gold);
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
         }
         
         .subscription-btn:hover {
-            background: var(--primary-dark);
-            transform: translateY(-3px);
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+            transform: translateY(-5px) scale(1.1);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
         }
         
         .subscription-modal {
@@ -637,15 +866,17 @@
             border-radius: 20px;
             overflow: hidden;
             animation: modalFadeIn 0.3s;
+            border: 2px solid var(--christmas-gold);
         }
         
         .subscription-header {
-            background: var(--bg-gradient);
+            background: var(--christmas-gradient);
             color: var(--white);
             padding: 15px 20px;
             font-size: 1.2rem;
             font-weight: 600;
             text-align: center;
+            position: relative;
         }
         
         .subscription-body {
@@ -660,6 +891,7 @@
             padding: 15px;
             border-radius: 10px;
             background-color: var(--light);
+            border-left: 4px solid var(--christmas-red);
         }
         
         .status-indicator {
@@ -687,13 +919,25 @@
         .subscription-plan {
             padding: 15px;
             border-radius: 10px;
-            border: 1px solid #dee2e6;
+            border: 2px solid #dee2e6;
             transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .subscription-plan::before {
+            content: "🎁";
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 1.2rem;
+            opacity: 0.7;
         }
         
         .subscription-plan:hover {
-            border-color: var(--primary);
-            box-shadow: 0 4px 10px rgba(67, 97, 238, 0.1);
+            border-color: var(--christmas-red);
+            box-shadow: 0 4px 15px rgba(230, 57, 70, 0.2);
+            transform: translateY(-3px);
         }
         
         .plan-header {
@@ -706,11 +950,12 @@
         .plan-name {
             font-weight: 600;
             font-size: 1.1rem;
+            color: var(--christmas-red);
         }
         
         .plan-price {
             font-weight: 700;
-            color: var(--primary);
+            color: var(--christmas-red);
         }
         
         .plan-desc {
@@ -725,7 +970,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background-color: rgba(255, 255, 255, 0.8);
+            background-color: rgba(255, 255, 255, 0.9);
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -744,7 +989,7 @@
         .timer-countdown {
             font-size: 1.2rem;
             font-weight: 700;
-            color: var(--primary);
+            color: var(--christmas-red);
         }
         
         .upgrade-text {
@@ -773,19 +1018,28 @@
             .subscription-btn {
                 bottom: 15px;
                 right: 15px;
-                width: 45px;
-                height: 45px;
-                font-size: 1rem;
+                width: 50px;
+                height: 50px;
+                font-size: 1.2rem;
             }
         }
     </style>
 </head>
 <body>
+    <!-- Новогодние украшения -->
+    <div class="christmas-decoration decoration-1">🎄</div>
+    <div class="christmas-decoration decoration-2">🌟</div>
+    <div class="christmas-decoration decoration-3">❄️</div>
+    <div class="christmas-decoration decoration-4">🔔</div>
+    
+    <!-- Анимированный снег -->
+    <div class="snowflakes" id="snowflakes"></div>
+    
     <!-- Контейнер для входа -->
     <div class="login-container" id="loginContainer">
         <div class="login-content">
             <div class="login-header">
-                <h1>Вход в систему</h1>
+                <h1>🎅 Вход в систему</h1>
                 <p>Введите ваш логин и проверочный код</p>
             </div>
             <form class="login-form" id="loginForm">
@@ -797,7 +1051,7 @@
                     <label for="codeInput">Проверочный код:</label>
                     <input type="password" id="codeInput" placeholder="Введите проверочный код" required>
                 </div>
-                <button type="submit" class="login-btn">Войти</button>
+                <button type="submit" class="login-btn">Войти 🎄</button>
                 <div class="error-message" id="errorMessage">Неверный логин или проверочный код</div>
                 <div class="privacy-policy">
                     Входя в приложение, Вы принимаете <a href="https://markell1l.github.io/order/privacy-policy.html" target="_blank">политику конфиденциальности</a>
@@ -809,7 +1063,7 @@
     <!-- Основное приложение (изначально скрыто) -->
     <div class="app-container" id="appContainer">
         <div class="app-header">
-            <h1>Калькулятор доставки</h1>
+            <h1>🎄 Калькулятор доставки 🎁</h1>
             
             <div class="courier-info">
                 <div class="courier-info-item" id="courierTypeDisplay">
@@ -840,7 +1094,7 @@
         
         <div class="history-container" id="historyContainer">
             <div class="history-header">
-                <div class="history-title">История расчетов</div>
+                <div class="history-title">История расчетов 🎄</div>
                 <div>
                     <button class="btn btn-danger" id="clearHistoryBtn" style="padding: 8px 12px; font-size: 0.8rem;">
                         <i class="fas fa-trash"></i> Очистить
@@ -866,7 +1120,7 @@
     <div class="subscription-modal" id="subscriptionModal">
         <div class="subscription-content">
             <div class="subscription-header">
-                Подписка
+                🎁 Подписка
             </div>
             <div class="subscription-body">
                 <div class="subscription-status" id="subscriptionStatus">
@@ -884,7 +1138,7 @@
                             Полный доступ ко всем функциям на 1 месяц. Без ограничений на расчеты.
                         </div>
                         <button class="btn btn-primary" id="buyMonthBtn">
-                            Купить
+                            Купить 🎄
                         </button>
                     </div>
                     
@@ -897,12 +1151,12 @@
                             Полный доступ ко всем функциям на 6 месяцев. Самая выгодная подписка.
                         </div>
                         <button class="btn btn-primary" id="buyHalfYearBtn">
-                            Купить
+                            Купить 🎁
                         </button>
                     </div>
                 </div>
                 
-                <button class="btn" id="closeSubscriptionBtn" style="border: 1px solid #dee2e6; background: transparent;">
+                <button class="btn" id="closeSubscriptionBtn" style="border: 2px solid #dee2e6; background: transparent;">
                     Закрыть
                 </button>
             </div>
@@ -912,13 +1166,13 @@
     <!-- Модальное окно для рейтинга -->
     <div class="modal" id="ratingModal">
         <div class="modal-content">
-            <div class="modal-header">Ваш рейтинг</div>
+            <div class="modal-header">⭐ Ваш рейтинг</div>
             <div class="modal-body">
                 <div class="form-group">
                     <label for="ratingInput">Рейтинг курьера (1-5):</label>
                     <input type="number" class="form-control" id="ratingInput" min="1" max="5" step="0.01" placeholder="Например, 4.75">
                 </div>
-                <button class="btn btn-primary" id="saveRatingBtn">Сохранить</button>
+                <button class="btn btn-primary" id="saveRatingBtn">Сохранить 🎄</button>
             </div>
         </div>
     </div>
@@ -926,7 +1180,7 @@
     <!-- Модальное окно для выбора типа курьера -->
     <div class="modal" id="courierTypeModal">
         <div class="modal-content">
-            <div class="modal-header">Тип курьера</div>
+            <div class="modal-header">🚚 Тип курьера</div>
             <div class="modal-body">
                 <div class="courier-types">
                     <div class="courier-type" data-type="pedestrian">
@@ -962,7 +1216,7 @@
                         </div>
                     </div>
                 </div>
-                <button class="btn btn-primary" id="saveCourierTypeBtn">Сохранить</button>
+                <button class="btn btn-primary" id="saveCourierTypeBtn">Сохранить 🎅</button>
             </div>
         </div>
     </div>
@@ -970,7 +1224,7 @@
     <!-- Модальное окно для одиночного заказа -->
     <div class="modal" id="singleOrderModal">
         <div class="modal-content">
-            <div class="modal-header">Одиночный заказ</div>
+            <div class="modal-header">📦 Одиночный заказ</div>
             <div class="modal-body">
                 <div class="form-group">
                     <label for="singleWeight">Вес заказа (кг):</label>
@@ -991,7 +1245,7 @@
                         </select>
                     </div>
                 </div>
-                <button class="btn btn-primary" id="calculateSingleBtn">Рассчитать</button>
+                <button class="btn btn-primary" id="calculateSingleBtn">Рассчитать 🎄</button>
                 <div id="singleTimerOverlay" class="timer-overlay" style="display: none;">
                     <div class="timer-text">Подождите, идет расчет...</div>
                     <div class="timer-countdown" id="singleTimerCountdown">1:00</div>
@@ -1004,7 +1258,7 @@
     <!-- Модальное окно для мультизаказа -->
     <div class="modal" id="multiOrderModal">
         <div class="modal-content">
-            <div class="modal-header">Мультизаказ</div>
+            <div class="modal-header">📦 Мультизаказ</div>
             <div class="modal-body">
                 <div class="form-group">
                     <label for="orderCount">Количество заказов (2-10):</label>
@@ -1037,7 +1291,7 @@
                 
                 <div id="multiOrderInputs"></div>
                 
-                <button class="btn btn-primary" id="calculateMultiBtn">Рассчитать</button>
+                <button class="btn btn-primary" id="calculateMultiBtn">Рассчитать 🎁</button>
                 <div id="multiTimerOverlay" class="timer-overlay" style="display: none;">
                     <div class="timer-text">Подождите, идет расчет...</div>
                     <div class="timer-countdown" id="multiTimerCountdown">1:00</div>
@@ -1050,10 +1304,10 @@
     <!-- Модальное окно с результатом -->
     <div class="modal" id="resultModal">
         <div class="modal-content">
-            <div class="modal-header">Результат расчета</div>
+            <div class="modal-header">🎉 Результат расчета</div>
             <div class="modal-body">
                 <p id="resultText" style="margin-bottom: 20px; font-size: 1.1rem;"></p>
-                <button class="btn btn-success" id="closeResultBtn">Закрыть</button>
+                <button class="btn btn-success" id="closeResultBtn">Закрыть 🎄</button>
             </div>
         </div>
     </div>
@@ -1061,13 +1315,13 @@
     <!-- Модальное окно с деталями заказа -->
     <div class="modal" id="orderDetailsModal">
         <div class="modal-content">
-            <div class="modal-header">Детали заказа</div>
+            <div class="modal-header">📋 Детали заказа</div>
             <div class="modal-body">
                 <div id="orderDetailsContent"></div>
                 <button class="btn btn-danger btn-sm" id="deleteOrderBtn" style="margin-top: 15px; padding: 10px 15px; font-size: 0.9rem;">
                     <i class="fas fa-trash"></i> Удалить заказ
                 </button>
-                <button class="btn btn-primary" id="closeDetailsBtn" style="margin-top: 10px;">Закрыть</button>
+                <button class="btn btn-primary" id="closeDetailsBtn" style="margin-top: 10px;">Закрыть 🎅</button>
             </div>
         </div>
     </div>
@@ -1075,7 +1329,7 @@
     <!-- Модальное окно для добавления возврата -->
     <div class="modal" id="returnModal">
         <div class="modal-content">
-            <div class="modal-header">Добавить возврат</div>
+            <div class="modal-header">↩️ Добавить возврат</div>
             <div class="modal-body">
                 <div class="form-group">
                     <label for="returnCount">Количество возвратов:</label>
@@ -1086,12 +1340,33 @@
                         <i class="fas fa-info-circle"></i> За каждый возврат 141 руб.
                     </p>
                 </div>
-                <button class="btn btn-primary" id="saveReturnBtn">Добавить</button>
+                <button class="btn btn-primary" id="saveReturnBtn">Добавить 🎄</button>
             </div>
         </div>
     </div>
     
     <script>
+        // Создание анимированного снега
+        function createSnowflakes() {
+            const snowflakesContainer = document.getElementById('snowflakes');
+            const snowflakeCount = 50;
+            
+            for (let i = 0; i < snowflakeCount; i++) {
+                const snowflake = document.createElement('div');
+                snowflake.className = 'snowflake';
+                snowflake.innerHTML = '❄';
+                snowflake.style.left = Math.random() * 100 + 'vw';
+                snowflake.style.animationDuration = (Math.random() * 5 + 5) + 's';
+                snowflake.style.animationDelay = Math.random() * 5 + 's';
+                snowflake.style.fontSize = (Math.random() * 10 + 10) + 'px';
+                snowflake.style.opacity = Math.random() * 0.5 + 0.3;
+                snowflakesContainer.appendChild(snowflake);
+            }
+        }
+        
+        // Запуск снегопада
+        createSnowflakes();
+
         // Элементы DOM для аутентификации
         const loginContainer = document.getElementById('loginContainer');
         const appContainer = document.getElementById('appContainer');
@@ -1528,7 +1803,7 @@
                         <span>${order.type}</span>
                         <span>${order.amount.toFixed(2)} руб.</span>
                         <div class="history-item-actions">
-                            <button class="btn btn-sm" style="background: var(--primary); color: white; padding: 2px 8px;" data-index="${index}">
+                            <button class="btn btn-sm" style="background: var(--christmas-red); color: white; padding: 2px 8px;" data-index="${index}">
                                 <i class="fas fa-info-circle"></i>
                             </button>
                         </div>
@@ -2020,4 +2295,3 @@
     </script>
 </body>
 </html>
-
