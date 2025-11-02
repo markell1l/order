@@ -831,6 +831,11 @@
             transition: all 0.3s;
             border: 2px solid var(--christmas-gold);
             animation: pulse 2s infinite;
+            display: none; /* Скрыта по умолчанию */
+        }
+        
+        .subscription-btn.visible {
+            display: flex; /* Показываем только когда нужно */
         }
         
         @keyframes pulse {
@@ -1374,9 +1379,9 @@
         const loginInput = document.getElementById('loginInput');
         const codeInput = document.getElementById('codeInput');
         const errorMessage = document.getElementById('errorMessage');
+        const subscriptionBtn = document.getElementById('subscriptionBtn');
         
         // Элементы для подписки
-        const subscriptionBtn = document.getElementById('subscriptionBtn');
         const subscriptionModal = document.getElementById('subscriptionModal');
         const statusIndicator = document.getElementById('statusIndicator');
         const statusText = document.getElementById('statusText');
@@ -1460,6 +1465,15 @@
                 name: 'Автокурьер'
             }
         };
+        
+        // Функция для показа/скрытия кнопки подписки
+        function toggleSubscriptionButton(show) {
+            if (show) {
+                subscriptionBtn.classList.add('visible');
+            } else {
+                subscriptionBtn.classList.remove('visible');
+            }
+        }
         
         // Проверка аутентификации
         function checkAuth() {
@@ -1549,6 +1563,7 @@
             loginInput.value = '';
             codeInput.value = '';
             errorMessage.style.display = 'none';
+            toggleSubscriptionButton(false); // Скрываем кнопку подписки
             
             // Очищаем таймеры
             if (calculationTimer) clearInterval(calculationTimer);
@@ -1564,10 +1579,12 @@
                 
                 loginContainer.style.display = 'none';
                 appContainer.style.display = 'block';
+                toggleSubscriptionButton(true); // Показываем кнопку подписки
                 initApp();
             } else {
                 loginContainer.style.display = 'flex';
                 appContainer.style.display = 'none';
+                toggleSubscriptionButton(false); // Скрываем кнопку подписки
             }
         }
         
