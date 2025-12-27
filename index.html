@@ -47,6 +47,28 @@
             position: relative;
             display: none; /* Скрываем основное приложение до входа */
         }
+
+        /* --- Стили для Новогоднего Баннера --- */
+        .holiday-banner {
+            background: linear-gradient(270deg, #ff00cc, #333399, #00d4ff);
+            background-size: 600% 600%;
+            color: white;
+            text-align: center;
+            padding: 12px 15px;
+            font-weight: bold;
+            font-size: 0.95rem;
+            animation: holidayGradient 4s ease infinite;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            position: relative;
+            z-index: 10;
+        }
+
+        @keyframes holidayGradient {
+            0% { background-position: 0% 50% }
+            50% { background-position: 100% 50% }
+            100% { background-position: 0% 50% }
+        }
+        /* ------------------------------------- */
         
         .login-container {
             width: 100%;
@@ -161,7 +183,7 @@
             text-decoration: underline;
         }
         
-        /* Остальные стили из предыдущей версии */
+        /* Остальные стили */
         .app-header {
             background: var(--bg-gradient);
             color: var(--white);
@@ -326,6 +348,14 @@
             border-radius: 10px;
             font-size: 1rem;
             transition: border-color 0.3s;
+        }
+        
+        /* Стили для отключенного инпута */
+        .form-control:disabled {
+            background-color: #e9ecef;
+            cursor: not-allowed;
+            color: #495057;
+            font-weight: bold;
         }
         
         .form-control:focus {
@@ -777,11 +807,15 @@
                 height: 45px;
                 font-size: 1rem;
             }
+            
+            /* Адаптив для баннера */
+            .holiday-banner {
+                font-size: 0.85rem;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- Контейнер для входа -->
     <div class="login-container" id="loginContainer">
         <div class="login-content">
             <div class="login-header">
@@ -806,8 +840,13 @@
         </div>
     </div>
     
-    <!-- Основное приложение (изначально скрыто) -->
     <div class="app-container" id="appContainer">
+        <div class="holiday-banner">
+            <i class="fas fa-snowflake fa-spin" style="animation-duration: 3s;"></i>
+            С 30.12.25 по 02.01.26 действует новогодний коэффициент 2x!
+            <i class="fas fa-snowflake fa-spin" style="animation-duration: 3s;"></i>
+        </div>
+        
         <div class="app-header">
             <h1>Калькулятор доставки</h1>
             
@@ -857,12 +896,10 @@
         </div>
     </div>
     
-    <!-- Кнопка подписки -->
     <div class="subscription-btn" id="subscriptionBtn">
         <i class="fas fa-crown"></i>
     </div>
     
-    <!-- Модальное окно подписки -->
     <div class="subscription-modal" id="subscriptionModal">
         <div class="subscription-content">
             <div class="subscription-header">
@@ -909,7 +946,6 @@
         </div>
     </div>
     
-    <!-- Модальное окно для рейтинга -->
     <div class="modal" id="ratingModal">
         <div class="modal-content">
             <div class="modal-header">Ваш рейтинг</div>
@@ -923,7 +959,6 @@
         </div>
     </div>
     
-    <!-- Модальное окно для выбора типа курьера -->
     <div class="modal" id="courierTypeModal">
         <div class="modal-content">
             <div class="modal-header">Тип курьера</div>
@@ -967,7 +1002,6 @@
         </div>
     </div>
     
-    <!-- Модальное окно для одиночного заказа -->
     <div class="modal" id="singleOrderModal">
         <div class="modal-content">
             <div class="modal-header">Одиночный заказ</div>
@@ -983,11 +1017,8 @@
                 <div class="form-group">
                     <label for="singleMultiplier">Коэффициент заказа:</label>
                     <div class="select-wrapper">
-                        <select class="form-control" id="singleMultiplier">
-                            <option value="1">Обычный (1x)</option>
-                            <option value="1.25">Повышенный новогодний 1.25x</option>
-                            <option value="1.5">Повышенный новогодний 1.5x</option>
-                            <option value="2.5">Повышенный новогодний 2.5x</option>
+                        <select class="form-control" id="singleMultiplier" disabled>
+                            <option value="2" selected>🎄 Новогодний (2x)</option>
                         </select>
                     </div>
                 </div>
@@ -1001,7 +1032,6 @@
         </div>
     </div>
     
-    <!-- Модальное окно для мультизаказа -->
     <div class="modal" id="multiOrderModal">
         <div class="modal-content">
             <div class="modal-header">Мультизаказ</div>
@@ -1026,11 +1056,8 @@
                 <div class="form-group">
                     <label for="multiMultiplier">Коэффициент заказа:</label>
                     <div class="select-wrapper">
-                        <select class="form-control" id="multiMultiplier">
-                            <option value="1">Обычный (1x)</option>
-                            <option value="1.25">Повышенный новогодний 1.25x</option>
-                            <option value="1.5">Повышенный новогодний 1.5x</option>
-                            <option value="2.5">Повышенный новогодний 2.5x</option>
+                        <select class="form-control" id="multiMultiplier" disabled>
+                            <option value="2" selected>🎄 Новогодний (2x)</option>
                         </select>
                     </div>
                 </div>
@@ -1047,7 +1074,6 @@
         </div>
     </div>
     
-    <!-- Модальное окно с результатом -->
     <div class="modal" id="resultModal">
         <div class="modal-content">
             <div class="modal-header">Результат расчета</div>
@@ -1058,7 +1084,6 @@
         </div>
     </div>
     
-    <!-- Модальное окно с деталями заказа -->
     <div class="modal" id="orderDetailsModal">
         <div class="modal-content">
             <div class="modal-header">Детали заказа</div>
@@ -1072,7 +1097,6 @@
         </div>
     </div>
 
-    <!-- Модальное окно для добавления возврата -->
     <div class="modal" id="returnModal">
         <div class="modal-content">
             <div class="modal-header">Добавить возврат</div>
@@ -1869,7 +1893,8 @@
             
             document.getElementById('singleWeight').value = '';
             document.getElementById('singleDistance').value = '';
-            document.getElementById('singleMultiplier').value = '1';
+            // Коэффициент принудительно 2x (логика в расчете), но для UI сбросим
+            // document.getElementById('singleMultiplier').value = '2'; // Уже заблокирован в HTML
             singleOrderModal.style.display = 'flex';
         });
         
@@ -1881,7 +1906,8 @@
             }
             
             orderCountSelect.value = '2';
-            document.getElementById('multiMultiplier').value = '1';
+            // Коэффициент принудительно 2x
+            // document.getElementById('multiMultiplier').value = '2'; // Уже заблокирован в HTML
             updateMultiOrderInputs();
             multiOrderModal.style.display = 'flex';
         });
@@ -1893,7 +1919,9 @@
         calculateSingleBtn.addEventListener('click', () => {
             const weight = parseFloat(document.getElementById('singleWeight').value);
             const distance = parseFloat(document.getElementById('singleDistance').value);
-            const multiplier = parseFloat(document.getElementById('singleMultiplier').value);
+            
+            // ПРИНУДИТЕЛЬНЫЙ НОВОГОДНИЙ КОЭФФИЦИЕНТ 2x
+            const multiplier = 2;
             
             if (isNaN(weight) || isNaN(distance) || weight <= 0 || distance <= 0) {
                 alert('Пожалуйста, введите корректные данные');
@@ -1930,7 +1958,10 @@
         
         calculateMultiBtn.addEventListener('click', () => {
             const orderCount = parseInt(orderCountSelect.value);
-            const multiplier = parseFloat(document.getElementById('multiMultiplier').value);
+            
+            // ПРИНУДИТЕЛЬНЫЙ НОВОГОДНИЙ КОЭФФИЦИЕНТ 2x
+            const multiplier = 2;
+            
             let isValid = true;
             const orders = [];
             
