@@ -47,28 +47,6 @@
             position: relative;
             display: none; /* Скрываем основное приложение до входа */
         }
-
-        /* --- Стили для Новогоднего Баннера --- */
-        .holiday-banner {
-            background: linear-gradient(270deg, #ff00cc, #333399, #00d4ff);
-            background-size: 600% 600%;
-            color: white;
-            text-align: center;
-            padding: 12px 15px;
-            font-weight: bold;
-            font-size: 0.95rem;
-            animation: holidayGradient 4s ease infinite;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            position: relative;
-            z-index: 10;
-        }
-
-        @keyframes holidayGradient {
-            0% { background-position: 0% 50% }
-            50% { background-position: 100% 50% }
-            100% { background-position: 0% 50% }
-        }
-        /* ------------------------------------- */
         
         .login-container {
             width: 100%;
@@ -553,7 +531,7 @@
             align-items: center;
             justify-content: space-between;
         }
-        
+
         /* Стили для кнопки инфо в тарифе */
         .info-btn {
             background: none;
@@ -850,11 +828,6 @@
                 height: 45px;
                 font-size: 1rem;
             }
-            
-            /* Адаптив для баннера */
-            .holiday-banner {
-                font-size: 0.85rem;
-            }
         }
     </style>
 </head>
@@ -884,11 +857,6 @@
     </div>
     
     <div class="app-container" id="appContainer">
-        <div class="holiday-banner">
-            <i class="fas fa-snowflake fa-spin" style="animation-duration: 3s;"></i>
-            С 30.12.25 по 02.01.26 все расчеты производятся по новогоднему коэффициенту 2x!
-            <i class="fas fa-snowflake fa-spin" style="animation-duration: 3s;"></i>
-        </div>
         
         <div class="app-header">
             <h1>Калькулятор доставки</h1>
@@ -1076,7 +1044,7 @@
             </div>
         </div>
     </div>
-    
+
     <div class="modal" id="singleOrderModal">
         <div class="modal-content">
             <div class="modal-header">Одиночный заказ</div>
@@ -1092,8 +1060,11 @@
                 <div class="form-group">
                     <label for="singleMultiplier">Коэффициент заказа:</label>
                     <div class="select-wrapper">
-                        <select class="form-control" id="singleMultiplier" disabled>
-                            <option value="2" selected>🎄 Новогодний (2x)</option>
+                        <select class="form-control" id="singleMultiplier">
+                            <option value="1">Обычный (1x)</option>
+                            <option value="1.1">Повышенный 1.1x</option>
+                            <option value="1.25">Повышенный 1.25x</option>
+                            <option value="1.5">Повышенный 1.5x</option>
                         </select>
                     </div>
                 </div>
@@ -1131,8 +1102,11 @@
                 <div class="form-group">
                     <label for="multiMultiplier">Коэффициент заказа:</label>
                     <div class="select-wrapper">
-                        <select class="form-control" id="multiMultiplier" disabled>
-                            <option value="2" selected>🎄 Новогодний (2x)</option>
+                        <select class="form-control" id="multiMultiplier">
+                            <option value="1">Обычный (1x)</option>
+                            <option value="1.1">Повышенный 1.1x</option>
+                            <option value="1.25">Повышенный 1.25x</option>
+                            <option value="1.5">Повышенный 1.5x</option>
                         </select>
                     </div>
                 </div>
@@ -1216,7 +1190,7 @@
         const resultModal = document.getElementById('resultModal');
         const orderDetailsModal = document.getElementById('orderDetailsModal');
         const returnModal = document.getElementById('returnModal');
-        const tariffModal = document.getElementById('tariffModal'); // Новое модальное окно
+        const tariffModal = document.getElementById('tariffModal'); // Модальное окно тарифов
         
         const singleOrderBtn = document.getElementById('singleOrderBtn');
         const multiOrderBtn = document.getElementById('multiOrderBtn');
@@ -1286,12 +1260,12 @@
                 pickup: 60,
                 delivery: 81,
                 distance: 19,
-                weight: 2, // Базовая ставка (для веса < 30кг)
+                weight: 2, // Базовое значение, но для авто используется функция getWeightRate
                 name: 'Автокурьер'
             }
         };
 
-        // Вспомогательная функция для определения тарифа по весу
+        // Вспомогательная функция для определения тарифа по весу (СЛОЖНАЯ ЛОГИКА ДЛЯ АВТО)
         function getWeightRate(type, weight) {
             if (type === 'car') {
                 if (weight < 30) return 2;
@@ -1301,7 +1275,7 @@
             }
             return rates[type].weight;
         }
-        
+
         // Проверка аутентификации
         function checkAuth() {
             const authData = localStorage.getItem('authData');
@@ -1873,7 +1847,7 @@
             const deliveryFee = rate.delivery * multiplier;
             const distanceFee = distance * rate.distance * multiplier;
             
-            // Получаем ставку по весу (динамически для авто, статично для других)
+            // Используем функцию getWeightRate для динамического определения стоимости веса
             const weightRate = getWeightRate(courierType, weight);
             const weightFee = weight * weightRate * multiplier;
             
@@ -2002,6 +1976,7 @@
             
             document.getElementById('singleWeight').value = '';
             document.getElementById('singleDistance').value = '';
+            document.getElementById('singleMultiplier').value = '1';
             singleOrderModal.style.display = 'flex';
         });
         
@@ -2013,6 +1988,7 @@
             }
             
             orderCountSelect.value = '2';
+            document.getElementById('multiMultiplier').value = '1';
             updateMultiOrderInputs();
             multiOrderModal.style.display = 'flex';
         });
@@ -2024,9 +2000,7 @@
         calculateSingleBtn.addEventListener('click', () => {
             const weight = parseFloat(document.getElementById('singleWeight').value);
             const distance = parseFloat(document.getElementById('singleDistance').value);
-            
-            // ПРИНУДИТЕЛЬНЫЙ НОВОГОДНИЙ КОЭФФИЦИЕНТ 2x
-            const multiplier = 2;
+            const multiplier = parseFloat(document.getElementById('singleMultiplier').value);
             
             if (isNaN(weight) || isNaN(distance) || weight <= 0 || distance <= 0) {
                 alert('Пожалуйста, введите корректные данные');
@@ -2063,10 +2037,7 @@
         
         calculateMultiBtn.addEventListener('click', () => {
             const orderCount = parseInt(orderCountSelect.value);
-            
-            // ПРИНУДИТЕЛЬНЫЙ НОВОГОДНИЙ КОЭФФИЦИЕНТ 2x
-            const multiplier = 2;
-            
+            const multiplier = parseFloat(document.getElementById('multiMultiplier').value);
             let isValid = true;
             const orders = [];
             
@@ -2104,16 +2075,14 @@
             const rate = rates[courierType];
             
             for (const order of orders) {
-                // Определяем ставку за вес для конкретного заказа
                 const currentWeightRate = getWeightRate(courierType, order.weight);
 
                 if (isFirstOrder) {
-                    // Для первого заказа полный расчет (пикап + вручение + расстояние + вес)
-                    // Используем функцию, так как там уже вшита логика веса
+                    // Для первого заказа полный расчет
                     totalAmount += calculateOrder(order.weight, order.distance, multiplier);
                     isFirstOrder = false;
                 } else {
-                    // Для последующих заказов: вручение + расстояние + вес
+                    // Для последующих: вручение + расстояние + вес
                     totalAmount += (rate.delivery * multiplier) + 
                                   (order.distance * rate.distance * multiplier) + 
                                   (order.weight * currentWeightRate * multiplier);
