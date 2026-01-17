@@ -402,6 +402,15 @@
             background: #00b4d8;
         }
         
+        .btn-warning {
+            background: var(--warning);
+            color: var(--white);
+        }
+        
+        .btn-warning:hover {
+            background: #e07c00;
+        }
+        
         .btn-sm {
             padding: 6px 12px;
             font-size: 0.8rem;
@@ -804,6 +813,255 @@
             border-bottom: none;
         }
         
+        /* Новые стили для цели по заработку */
+        .goal-container {
+            padding: 0 20px 20px;
+            display: none;
+        }
+        
+        .goal-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+        }
+        
+        .goal-progress {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .goal-progress-bar {
+            flex-grow: 1;
+            height: 10px;
+            background-color: #e9ecef;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        
+        .goal-progress-fill {
+            height: 100%;
+            background: var(--bg-gradient);
+            border-radius: 5px;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+        
+        .goal-progress-text {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--primary);
+            min-width: 60px;
+            text-align: right;
+        }
+        
+        .goal-set-btn {
+            width: 100%;
+            padding: 8px;
+            background-color: var(--light);
+            border: 1px dashed var(--gray);
+            color: var(--gray);
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+            display: none; /* Скрываем кнопку по требованию */
+        }
+        
+        .goal-set-btn:hover {
+            background-color: #e9ecef;
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+        
+        /* Кнопка настроек */
+        .settings-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: transparent;
+            border: none;
+            color: var(--white);
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: transform 0.3s;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+        
+        .settings-btn:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            transform: rotate(30deg);
+        }
+        
+        /* Стили для кнопки редактирования в истории */
+        .edit-btn {
+            background-color: transparent;
+            color: var(--gray);
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .edit-btn:hover {
+            background-color: #e9ecef;
+            color: var(--primary);
+            transform: scale(1.1);
+        }
+        
+        /* Стили для тумблера */
+        .toggle-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+        
+        .toggle-label {
+            font-weight: 500;
+            color: var(--dark);
+        }
+        
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 26px;
+        }
+        
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+        
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        
+        input:checked + .toggle-slider {
+            background-color: var(--primary);
+        }
+        
+        input:checked + .toggle-slider:before {
+            transform: translateX(24px);
+        }
+        
+        /* Стили для уведомлений */
+        .notification-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 2000;
+            max-width: 350px;
+        }
+        
+        .notification {
+            background: var(--white);
+            border-radius: 10px;
+            padding: 15px 20px;
+            margin-bottom: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+            border-left: 4px solid var(--primary);
+        }
+        
+        .notification.show {
+            transform: translateX(0);
+        }
+        
+        .notification-icon {
+            font-size: 1.2rem;
+            color: var(--primary);
+        }
+        
+        .notification-content {
+            flex-grow: 1;
+        }
+        
+        .notification-title {
+            font-weight: 600;
+            margin-bottom: 3px;
+        }
+        
+        .notification-message {
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+        
+        .notification-close {
+            background: none;
+            border: none;
+            color: var(--gray);
+            cursor: pointer;
+            font-size: 1rem;
+            padding: 5px;
+        }
+        
+        .notification-close:hover {
+            color: var(--dark);
+        }
+        
+        /* Стили для разных типов уведомлений */
+        .notification-success {
+            border-left-color: var(--success);
+        }
+        
+        .notification-success .notification-icon {
+            color: var(--success);
+        }
+        
+        .notification-error {
+            border-left-color: var(--danger);
+        }
+        
+        .notification-error .notification-icon {
+            color: var(--danger);
+        }
+        
+        .notification-warning {
+            border-left-color: var(--warning);
+        }
+        
+        .notification-warning .notification-icon {
+            color: var(--warning);
+        }
+        
         @media (max-width: 480px) {
             .main-buttons {
                 grid-template-columns: 1fr;
@@ -828,10 +1086,26 @@
                 height: 45px;
                 font-size: 1rem;
             }
+            
+            .settings-btn {
+                top: 15px;
+                right: 15px;
+                font-size: 1rem;
+            }
+            
+            .notification-container {
+                top: 10px;
+                right: 10px;
+                left: 10px;
+                max-width: none;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- Контейнер для уведомлений -->
+    <div class="notification-container" id="notificationContainer"></div>
+    
     <div class="login-container" id="loginContainer">
         <div class="login-content">
             <div class="login-header">
@@ -860,6 +1134,9 @@
         
         <div class="app-header">
             <h1>Калькулятор доставки</h1>
+            <button class="settings-btn" id="settingsBtn">
+                <i class="fas fa-cog"></i>
+            </button>
             
             <div class="courier-info">
                 <div class="courier-info-item" id="courierTypeDisplay">
@@ -870,6 +1147,19 @@
                     <i class="fas fa-star"></i>
                     <span class="courier-info-text" id="currentRatingText">0.00</span>
                 </div>
+            </div>
+        </div>
+        
+        <div class="goal-container" id="goalContainer">
+            <div class="goal-info">
+                <span>Цель на день</span>
+                <span id="todayEarningsText">0 из 0 руб.</span>
+            </div>
+            <div class="goal-progress">
+                <div class="goal-progress-bar">
+                    <div class="goal-progress-fill" id="goalProgressFill"></div>
+                </div>
+                <div class="goal-progress-text" id="goalProgressText">0%</div>
             </div>
         </div>
         
@@ -909,6 +1199,37 @@
     
     <div class="subscription-btn" id="subscriptionBtn">
         <i class="fas fa-crown"></i>
+    </div>
+    
+    <!-- Модальное окно настроек -->
+    <div class="modal" id="settingsModal">
+        <div class="modal-content">
+            <div class="modal-header">Настройки</div>
+            <div class="modal-body">
+                <div class="toggle-container">
+                    <div class="toggle-label">Показывать цель по заработку:</div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="goalToggle">
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+                
+                <div id="goalSettings" style="display: none;">
+                    <div class="form-group">
+                        <label for="dailyGoalInput">Цель на день (руб.):</label>
+                        <input type="number" class="form-control" id="dailyGoalInput" min="0" step="10" value="0">
+                    </div>
+                    <div class="form-group">
+                        <p style="font-size: 0.9rem; color: var(--gray);">
+                            <i class="fas fa-info-circle"></i> Цель поможет отслеживать ваш прогресс за день
+                        </p>
+                    </div>
+                </div>
+                
+                <button class="btn btn-primary" id="saveSettingsBtn">Сохранить</button>
+                <button class="btn" id="closeSettingsBtn" style="margin-top: 10px; background: transparent; border: 1px solid #dee2e6;">Закрыть</button>
+            </div>
+        </div>
     </div>
     
     <div class="subscription-modal" id="subscriptionModal">
@@ -1123,6 +1444,76 @@
         </div>
     </div>
     
+    <!-- Модальное окно редактирования одиночного заказа -->
+    <div class="modal" id="editSingleOrderModal">
+        <div class="modal-content">
+            <div class="modal-header">Редактировать заказ</div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="editSingleWeight">Вес заказа (кг):</label>
+                    <input type="number" class="form-control" id="editSingleWeight" min="0" step="0.1" placeholder="Введите вес">
+                </div>
+                <div class="form-group">
+                    <label for="editSingleDistance">Расстояние до клиента (км):</label>
+                    <input type="number" class="form-control" id="editSingleDistance" min="0" step="0.1" placeholder="Введите расстояние">
+                </div>
+                <div class="form-group">
+                    <label for="editSingleMultiplier">Коэффициент заказа:</label>
+                    <div class="select-wrapper">
+                        <select class="form-control" id="editSingleMultiplier">
+                            <option value="1">Обычный (1x)</option>
+                            <option value="1.1">Повышенный 1.1x</option>
+                            <option value="1.25">Повышенный 1.25x</option>
+                            <option value="1.5">Повышенный 1.5x</option>
+                        </select>
+                    </div>
+                </div>
+                <button class="btn btn-primary" id="saveEditSingleBtn">Сохранить изменения</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Модальное окно редактирования мультизаказа -->
+    <div class="modal" id="editMultiOrderModal">
+        <div class="modal-content">
+            <div class="modal-header">Редактировать мультизаказ</div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="editOrderCount">Количество заказов (2-10):</label>
+                    <div class="select-wrapper">
+                        <select class="form-control" id="editOrderCount">
+                            <option value="2">2 заказа</option>
+                            <option value="3">3 заказа</option>
+                            <option value="4">4 заказа</option>
+                            <option value="5">5 заказов</option>
+                            <option value="6">6 заказов</option>
+                            <option value="7">7 заказов</option>
+                            <option value="8">8 заказов</option>
+                            <option value="9">9 заказов</option>
+                            <option value="10">10 заказов</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="editMultiMultiplier">Коэффициент заказа:</label>
+                    <div class="select-wrapper">
+                        <select class="form-control" id="editMultiMultiplier">
+                            <option value="1">Обычный (1x)</option>
+                            <option value="1.1">Повышенный 1.1x</option>
+                            <option value="1.25">Повышенный 1.25x</option>
+                            <option value="1.5">Повышенный 1.5x</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div id="editMultiOrderInputs"></div>
+                
+                <button class="btn btn-primary" id="saveEditMultiBtn">Сохранить изменения</button>
+            </div>
+        </div>
+    </div>
+    
     <div class="modal" id="resultModal">
         <div class="modal-content">
             <div class="modal-header">Результат расчета</div>
@@ -1182,6 +1573,22 @@
         const buyHalfYearBtn = document.getElementById('buyHalfYearBtn');
         const closeSubscriptionBtn = document.getElementById('closeSubscriptionBtn');
         
+        // Новые элементы для цели и настроек
+        const settingsBtn = document.getElementById('settingsBtn');
+        const settingsModal = document.getElementById('settingsModal');
+        const goalToggle = document.getElementById('goalToggle');
+        const goalSettings = document.getElementById('goalSettings');
+        const dailyGoalInput = document.getElementById('dailyGoalInput');
+        const saveSettingsBtn = document.getElementById('saveSettingsBtn');
+        const closeSettingsBtn = document.getElementById('closeSettingsBtn');
+        const goalContainer = document.getElementById('goalContainer');
+        const goalProgressFill = document.getElementById('goalProgressFill');
+        const goalProgressText = document.getElementById('goalProgressText');
+        const todayEarningsText = document.getElementById('todayEarningsText');
+        
+        // Контейнер для уведомлений
+        const notificationContainer = document.getElementById('notificationContainer');
+        
         // Остальные элементы DOM
         const ratingModal = document.getElementById('ratingModal');
         const courierTypeModal = document.getElementById('courierTypeModal');
@@ -1190,7 +1597,9 @@
         const resultModal = document.getElementById('resultModal');
         const orderDetailsModal = document.getElementById('orderDetailsModal');
         const returnModal = document.getElementById('returnModal');
-        const tariffModal = document.getElementById('tariffModal'); // Модальное окно тарифов
+        const tariffModal = document.getElementById('tariffModal');
+        const editSingleOrderModal = document.getElementById('editSingleOrderModal');
+        const editMultiOrderModal = document.getElementById('editMultiOrderModal');
         
         const singleOrderBtn = document.getElementById('singleOrderBtn');
         const multiOrderBtn = document.getElementById('multiOrderBtn');
@@ -1205,8 +1614,10 @@
         const clearHistoryBtn = document.getElementById('clearHistoryBtn');
         const addReturnBtn = document.getElementById('addReturnBtn');
         const saveReturnBtn = document.getElementById('saveReturnBtn');
-        const carInfoBtn = document.getElementById('carInfoBtn'); // Кнопка инфо
-        const closeTariffBtn = document.getElementById('closeTariffBtn'); // Кнопка закрытия тарифа
+        const carInfoBtn = document.getElementById('carInfoBtn');
+        const closeTariffBtn = document.getElementById('closeTariffBtn');
+        const saveEditSingleBtn = document.getElementById('saveEditSingleBtn');
+        const saveEditMultiBtn = document.getElementById('saveEditMultiBtn');
         
         const historyContainer = document.getElementById('historyContainer');
         const historyList = document.getElementById('historyList');
@@ -1240,6 +1651,12 @@
         let calculationTimer = null;
         let cooldownTimer = null;
         
+        // Новые переменные для цели
+        let dailyGoal = parseInt(localStorage.getItem('dailyGoal')) || 0;
+        let showGoal = localStorage.getItem('showGoal') === 'true' || false;
+        let todayEarnings = parseFloat(localStorage.getItem('todayEarnings')) || 0;
+        let lastResetDate = localStorage.getItem('lastResetDate') || '';
+        
         // Тарифы для каждого типа курьера
         const rates = {
             pedestrian: {
@@ -1264,6 +1681,52 @@
                 name: 'Автокурьер'
             }
         };
+
+        // Функция для показа уведомлений
+        function showNotification(title, message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.className = `notification notification-${type}`;
+            notification.innerHTML = `
+                <div class="notification-icon">
+                    <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : type === 'warning' ? 'exclamation-triangle' : 'info-circle'}"></i>
+                </div>
+                <div class="notification-content">
+                    <div class="notification-title">${title}</div>
+                    <div class="notification-message">${message}</div>
+                </div>
+                <button class="notification-close">
+                    <i class="fas fa-times"></i>
+                </button>
+            `;
+            
+            notificationContainer.appendChild(notification);
+            
+            // Анимация появления
+            setTimeout(() => {
+                notification.classList.add('show');
+            }, 10);
+            
+            // Автоматическое закрытие через 5 секунд
+            const autoClose = setTimeout(() => {
+                closeNotification(notification);
+            }, 5000);
+            
+            // Обработчик закрытия
+            const closeBtn = notification.querySelector('.notification-close');
+            closeBtn.addEventListener('click', () => {
+                clearTimeout(autoClose);
+                closeNotification(notification);
+            });
+        }
+        
+        function closeNotification(notification) {
+            notification.classList.remove('show');
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.parentNode.removeChild(notification);
+                }
+            }, 300);
+        }
 
         // Вспомогательная функция для определения тарифа по весу (СЛОЖНАЯ ЛОГИКА ДЛЯ АВТО)
         function getWeightRate(type, weight) {
@@ -1473,6 +1936,10 @@
             orderCountSelect.addEventListener('change', updateMultiOrderInputs);
             updateMultiOrderInputs();
             
+            // Инициализация настроек цели
+            initGoalSettings();
+            updateGoalDisplay();
+            
             // Проверка аутентификации каждые 5 минут
             setInterval(async () => {
                 if (!checkAuth()) {
@@ -1494,6 +1961,98 @@
             
             // Проверяем, нужно ли активировать кулдаун
             checkCooldown();
+            
+            // Проверяем, не сменился ли день для сброса дневных заработков
+            checkDayReset();
+        }
+        
+        // Инициализация настроек цели
+        function initGoalSettings() {
+            // Загружаем сохраненные настройки
+            goalToggle.checked = showGoal;
+            dailyGoalInput.value = dailyGoal;
+            
+            // Показываем/скрываем поле ввода цели в зависимости от тумблера
+            goalSettings.style.display = showGoal ? 'block' : 'none';
+            
+            // Обновляем отображение контейнера цели
+            goalContainer.style.display = showGoal ? 'block' : 'none';
+            
+            // Обновляем сегодняшние заработки
+            updateTodayEarnings();
+            
+            // Обработчик изменения тумблера
+            goalToggle.addEventListener('change', function() {
+                goalSettings.style.display = this.checked ? 'block' : 'none';
+            });
+        }
+        
+        // Проверка смены дня для сброса дневных заработков
+        function checkDayReset() {
+            const today = new Date().toDateString();
+            
+            if (lastResetDate !== today) {
+                // Сброс дневных заработков
+                todayEarnings = 0;
+                lastResetDate = today;
+                localStorage.setItem('todayEarnings', todayEarnings.toString());
+                localStorage.setItem('lastResetDate', lastResetDate);
+                updateGoalDisplay();
+            }
+        }
+        
+        // Обновление сегодняшних заработков
+        function updateTodayEarnings() {
+            // Пересчитываем сегодняшние заработки из истории
+            const today = new Date().toDateString();
+            todayEarnings = 0;
+            
+            ordersHistory.forEach(order => {
+                const orderDate = new Date(order.timestamp).toDateString();
+                if (orderDate === today) {
+                    todayEarnings += order.amount;
+                }
+            });
+            
+            localStorage.setItem('todayEarnings', todayEarnings.toString());
+            updateGoalDisplay();
+        }
+        
+        // Обновление отображения цели
+        function updateGoalDisplay() {
+            if (!showGoal) return;
+            
+            // Отображаем сумму цели, а не заработанную сумму
+            todayEarningsText.textContent = `${todayEarnings.toFixed(2)} из ${dailyGoal} руб.`;
+            
+            if (dailyGoal > 0) {
+                const percentage = Math.min(Math.round((todayEarnings / dailyGoal) * 100), 100);
+                goalProgressFill.style.width = `${percentage}%`;
+                goalProgressText.textContent = `${percentage}%`;
+                
+                if (percentage >= 100) {
+                    goalProgressFill.style.background = 'var(--success)';
+                } else {
+                    goalProgressFill.style.background = 'var(--bg-gradient)';
+                }
+            } else {
+                goalProgressFill.style.width = '0%';
+                goalProgressText.textContent = '0%';
+            }
+        }
+        
+        // Сохранение настроек цели
+        function saveGoalSettings() {
+            showGoal = goalToggle.checked;
+            dailyGoal = parseInt(dailyGoalInput.value) || 0;
+            
+            localStorage.setItem('showGoal', showGoal.toString());
+            localStorage.setItem('dailyGoal', dailyGoal.toString());
+            
+            goalContainer.style.display = showGoal ? 'block' : 'none';
+            updateGoalDisplay();
+            
+            showNotification('Настройки сохранены', 'Ваши настройки успешно сохранены', 'success');
         }
         
         // Проверка кулдауна между расчетами
@@ -1641,6 +2200,30 @@
             }
         }
         
+        // Обновление полей для редактирования мультизаказа
+        function updateEditMultiOrderInputs(orderCount, orders = []) {
+            const editMultiOrderInputs = document.getElementById('editMultiOrderInputs');
+            editMultiOrderInputs.innerHTML = '';
+            
+            for (let i = 1; i <= orderCount; i++) {
+                const orderDiv = document.createElement('div');
+                orderDiv.className = 'order-inputs';
+                const order = orders[i-1] || { weight: '', distance: '' };
+                orderDiv.innerHTML = `
+                    <div class="order-number">Заказ ${i}</div>
+                    <div class="form-group">
+                        <label for="editMultiWeight${i}">Вес заказа (кг):</label>
+                        <input type="number" class="form-control" id="editMultiWeight${i}" min="0" step="0.1" value="${order.weight || ''}" placeholder="Введите вес">
+                    </div>
+                    <div class="form-group">
+                        <label for="editMultiDistance${i}">Расстояние до клиента (км):</label>
+                        <input type="number" class="form-control" id="editMultiDistance${i}" min="0" step="0.1" value="${order.distance || ''}" placeholder="Введите расстояние">
+                    </div>
+                `;
+                editMultiOrderInputs.appendChild(orderDiv);
+            }
+        }
+        
         // Обновление выбранного типа курьера
         function updateSelectedCourierType() {
             courierTypes.forEach(type => {
@@ -1666,11 +2249,22 @@
                     }
                     item.dataset.index = index;
                     
+                    // Определяем иконку для типа заказа
+                    let orderIcon = 'fa-box';
+                    if (order.orderType === 'multi') orderIcon = 'fa-boxes-stacked';
+                    if (order.orderType === 'return') orderIcon = 'fa-undo';
+                    
                     item.innerHTML = `
-                        <span>${order.type}</span>
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <i class="fas ${orderIcon}" style="color: var(--primary);"></i>
+                            <span>${order.type}</span>
+                        </div>
                         <span>${order.amount.toFixed(2)} руб.</span>
                         <div class="history-item-actions">
-                            <button class="btn btn-sm" style="background: var(--primary); color: white; padding: 2px 8px;" data-index="${index}">
+                            ${order.orderType !== 'return' ? `<button class="edit-btn" data-index="${index}" title="Редактировать">
+                                <i class="fas fa-pencil"></i>
+                            </button>` : ''}
+                            <button class="btn btn-sm" style="background: var(--primary); color: white; padding: 2px 8px;" data-index="${index}" title="Подробнее">
                                 <i class="fas fa-info-circle"></i>
                             </button>
                         </div>
@@ -1691,8 +2285,8 @@
             // Добавляем обработчики событий для кнопок просмотра
             document.querySelectorAll('.history-item').forEach(item => {
                 item.addEventListener('click', (e) => {
-                    // Проверяем, не была ли нажата кнопка удаления
-                    if (e.target.closest('.btn-danger')) return;
+                    // Проверяем, не была ли нажата кнопка удаления или редактирования
+                    if (e.target.closest('.btn-danger') || e.target.closest('.edit-btn')) return;
                     
                     const index = parseInt(item.dataset.index);
                     showOrderDetails(index);
@@ -1707,6 +2301,171 @@
                     showOrderDetails(index);
                 });
             });
+            
+            // Добавляем обработчики для кнопок редактирования (карандаш)
+            document.querySelectorAll('.history-item-actions .edit-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const index = parseInt(btn.dataset.index);
+                    editOrder(index);
+                });
+            });
+            
+            // Обновляем сегодняшние заработки
+            updateTodayEarnings();
+        }
+        
+        // Редактирование заказа
+        function editOrder(index) {
+            if (index < 0 || index >= ordersHistory.length) return;
+            
+            const order = ordersHistory[index];
+            currentOrderIndex = index;
+            
+            if (order.orderType === 'single') {
+                // Редактирование одиночного заказа
+                document.getElementById('editSingleWeight').value = order.weight;
+                document.getElementById('editSingleDistance').value = order.distance;
+                document.getElementById('editSingleMultiplier').value = order.multiplier;
+                editSingleOrderModal.style.display = 'flex';
+            } else if (order.orderType === 'multi') {
+                // Редактирование мультизаказа
+                document.getElementById('editOrderCount').value = order.orderCount;
+                document.getElementById('editMultiMultiplier').value = order.multiplier;
+                updateEditMultiOrderInputs(order.orderCount, order.orders || []);
+                editMultiOrderModal.style.display = 'flex';
+                
+                // Добавляем обработчик изменения количества заказов
+                const editOrderCountSelect = document.getElementById('editOrderCount');
+                editOrderCountSelect.addEventListener('change', function() {
+                    updateEditMultiOrderInputs(parseInt(this.value), order.orders || []);
+                });
+            }
+        }
+        
+        // Сохранение изменений одиночного заказа
+        function saveEditedSingleOrder() {
+            if (currentOrderIndex < 0 || currentOrderIndex >= ordersHistory.length) return;
+            
+            const weight = parseFloat(document.getElementById('editSingleWeight').value);
+            const distance = parseFloat(document.getElementById('editSingleDistance').value);
+            const multiplier = parseFloat(document.getElementById('editSingleMultiplier').value);
+            
+            if (isNaN(weight) || isNaN(distance) || weight <= 0 || distance <= 0) {
+                showNotification('Ошибка', 'Пожалуйста, введите корректные данные', 'error');
+                return;
+            }
+            
+            const oldOrder = ordersHistory[currentOrderIndex];
+            const oldAmount = oldOrder.amount;
+            
+            // Пересчитываем стоимость
+            const orderAmount = calculateOrder(weight, distance, multiplier);
+            const ratingBonus = calculateRatingBonus(courierRating);
+            const totalAmount = orderAmount + ratingBonus;
+            
+            // Обновляем заказ
+            ordersHistory[currentOrderIndex] = {
+                ...oldOrder,
+                type: `Одиночный заказ (${multiplier}x)`,
+                amount: totalAmount,
+                weight: weight,
+                distance: distance,
+                multiplier: multiplier,
+                ratingBonus: ratingBonus
+            };
+            
+            // Обновляем общую сумму
+            totalEarnings = totalEarnings - oldAmount + totalAmount;
+            
+            // Сохраняем в localStorage
+            localStorage.setItem('deliveryHistory', JSON.stringify(ordersHistory));
+            localStorage.setItem('totalEarnings', totalEarnings.toString());
+            
+            // Обновляем отображение
+            updateHistoryDisplay();
+            editSingleOrderModal.style.display = 'none';
+            
+            // Показываем уведомление об успешном обновлении
+            showNotification('Заказ обновлен', 'Заказ успешно обновлен!', 'success');
+        }
+        
+        // Сохранение изменений мультизаказа
+        function saveEditedMultiOrder() {
+            if (currentOrderIndex < 0 || currentOrderIndex >= ordersHistory.length) return;
+            
+            const orderCount = parseInt(document.getElementById('editOrderCount').value);
+            const multiplier = parseFloat(document.getElementById('editMultiMultiplier').value);
+            let isValid = true;
+            const orders = [];
+            
+            for (let i = 1; i <= orderCount; i++) {
+                const weight = parseFloat(document.getElementById(`editMultiWeight${i}`).value);
+                const distance = parseFloat(document.getElementById(`editMultiDistance${i}`).value);
+                
+                if (isNaN(weight) || isNaN(distance) || weight <= 0 || distance <= 0) {
+                    isValid = false;
+                    break;
+                }
+                
+                orders.push({ weight, distance });
+            }
+            
+            if (!isValid) {
+                showNotification('Ошибка', 'Пожалуйста, введите корректные данные для всех заказов', 'error');
+                return;
+            }
+            
+            const oldOrder = ordersHistory[currentOrderIndex];
+            const oldAmount = oldOrder.amount;
+            
+            // Пересчитываем стоимость
+            let totalAmount = 0;
+            let isFirstOrder = true;
+            const rate = rates[courierType];
+            
+            for (const order of orders) {
+                const currentWeightRate = getWeightRate(courierType, order.weight);
+
+                if (isFirstOrder) {
+                    // Для первого заказа полный расчет
+                    totalAmount += calculateOrder(order.weight, order.distance, multiplier);
+                    isFirstOrder = false;
+                } else {
+                    // Для последующих: вручение + расстояние + вес
+                    totalAmount += (rate.delivery * multiplier) + 
+                                  (order.distance * rate.distance * multiplier) + 
+                                  (order.weight * currentWeightRate * multiplier);
+                }
+            }
+            
+            const ratingBonus = calculateRatingBonus(courierRating);
+            totalAmount += ratingBonus;
+            
+            // Обновляем заказ
+            ordersHistory[currentOrderIndex] = {
+                ...oldOrder,
+                type: `Мультизаказ (${orderCount}, ${multiplier}x)`,
+                amount: totalAmount,
+                orderCount: orderCount,
+                multiplier: multiplier,
+                orders: orders,
+                ratingBonus: ratingBonus
+            };
+            
+            // Обновляем общую сумму
+            totalEarnings = totalEarnings - oldAmount + totalAmount;
+            
+            // Сохраняем в localStorage
+            localStorage.setItem('deliveryHistory', JSON.stringify(ordersHistory));
+            localStorage.setItem('totalEarnings', totalEarnings.toString());
+            
+            // Обновляем отображение
+            updateHistoryDisplay();
+            editMultiOrderModal.style.display = 'none';
+            
+            // Показываем уведомление об успешном обновлении
+            showNotification('Заказ обновлен', 'Мультизаказ успешно обновлен!', 'success');
         }
         
         // Показать детали заказа
@@ -1838,6 +2597,8 @@
             
             updateHistoryDisplay();
             orderDetailsModal.style.display = 'none';
+            
+            showNotification('Заказ удален', 'Заказ успешно удален из истории', 'success');
         }
         
         // Расчет стоимости заказа
@@ -1909,6 +2670,7 @@
             localStorage.setItem('totalEarnings', totalEarnings.toString());
 
             updateHistoryDisplay();
+            showNotification('Возврат добавлен', `Добавлено ${count} возврат(ов) на сумму ${returnAmount} руб.`, 'success');
         }
         
         // Обработчики событий
@@ -1951,7 +2713,7 @@
             const rating = parseFloat(ratingInput.value);
             
             if (isNaN(rating) || rating < 1 || rating > 5) {
-                alert('Пожалуйста, введите корректный рейтинг от 1 до 5');
+                showNotification('Ошибка', 'Пожалуйста, введите корректный рейтинг от 1 до 5', 'error');
                 return;
             }
             
@@ -1959,17 +2721,21 @@
             localStorage.setItem('courierRating', rating.toString());
             ratingModal.style.display = 'none';
             updateRatingDisplay();
+            
+            showNotification('Рейтинг сохранен', `Ваш рейтинг успешно сохранен: ${rating.toFixed(2)}`, 'success');
         });
         
         saveCourierTypeBtn.addEventListener('click', () => {
             localStorage.setItem('courierType', courierType);
             courierTypeModal.style.display = 'none';
             updateCourierTypeDisplay();
+            
+            showNotification('Тип курьера сохранен', `Тип курьера успешно изменен на: ${rates[courierType].name}`, 'success');
         });
         
         singleOrderBtn.addEventListener('click', () => {
             if (!courierRating) {
-                alert('Пожалуйста, сначала введите ваш рейтинг');
+                showNotification('Внимание', 'Пожалуйста, сначала введите ваш рейтинг', 'warning');
                 ratingModal.style.display = 'flex';
                 return;
             }
@@ -1982,7 +2748,7 @@
         
         multiOrderBtn.addEventListener('click', () => {
             if (!courierRating) {
-                alert('Пожалуйста, сначала введите ваш рейтинг');
+                showNotification('Внимание', 'Пожалуйста, сначала введите ваш рейтинг', 'warning');
                 ratingModal.style.display = 'flex';
                 return;
             }
@@ -2003,7 +2769,7 @@
             const multiplier = parseFloat(document.getElementById('singleMultiplier').value);
             
             if (isNaN(weight) || isNaN(distance) || weight <= 0 || distance <= 0) {
-                alert('Пожалуйста, введите корректные данные');
+                showNotification('Ошибка', 'Пожалуйста, введите корректные данные', 'error');
                 return;
             }
             
@@ -2033,6 +2799,8 @@
                 distance: distance,
                 multiplier: multiplier
             });
+            
+            showNotification('Расчет завершен', `Стоимость заказа: ${totalAmount.toFixed(2)} руб.`, 'success');
         }
         
         calculateMultiBtn.addEventListener('click', () => {
@@ -2054,7 +2822,7 @@
             }
             
             if (!isValid) {
-                alert('Пожалуйста, введите корректные данные для всех заказов');
+                showNotification('Ошибка', 'Пожалуйста, введите корректные данные для всех заказов', 'error');
                 return;
             }
             
@@ -2103,6 +2871,8 @@
                 multiplier: multiplier,
                 orders: orders
             });
+            
+            showNotification('Расчет завершен', `Стоимость ${orderCount} заказов: ${totalAmount.toFixed(2)} руб.`, 'success');
         }
         
         closeResultBtn.addEventListener('click', () => {
@@ -2130,7 +2900,7 @@
             const count = parseInt(returnCountInput.value);
             
             if (isNaN(count) || count < 1) {
-                alert('Пожалуйста, введите корректное количество возвратов');
+                showNotification('Ошибка', 'Пожалуйста, введите корректное количество возвратов', 'error');
                 return;
             }
             
@@ -2142,9 +2912,14 @@
             if (confirm('Вы уверены, что хотите очистить историю?')) {
                 ordersHistory = [];
                 totalEarnings = 0;
+                todayEarnings = 0;
                 localStorage.removeItem('deliveryHistory');
                 localStorage.removeItem('totalEarnings');
+                localStorage.setItem('todayEarnings', '0');
                 updateHistoryDisplay();
+                updateGoalDisplay();
+                
+                showNotification('История очищена', 'Вся история расчетов успешно очищена', 'success');
             }
         });
         
@@ -2159,11 +2934,31 @@
         
         buyMonthBtn.addEventListener('click', () => {
             window.open('https://t.me/PCH1s', '_blank');
+            showNotification('Подписка', 'Вы будете перенаправлены для покупки подписки', 'info');
         });
         
         buyHalfYearBtn.addEventListener('click', () => {
             window.open('https://t.me/PCH1s', '_blank');
+            showNotification('Подписка', 'Вы будете перенаправлены для покупки подписки', 'info');
         });
+        
+        // Обработчики для настроек
+        settingsBtn.addEventListener('click', () => {
+            settingsModal.style.display = 'flex';
+        });
+        
+        closeSettingsBtn.addEventListener('click', () => {
+            settingsModal.style.display = 'none';
+        });
+        
+        saveSettingsBtn.addEventListener('click', () => {
+            saveGoalSettings();
+            settingsModal.style.display = 'none';
+        });
+        
+        // Обработчики для редактирования заказов
+        saveEditSingleBtn.addEventListener('click', saveEditedSingleOrder);
+        saveEditMultiBtn.addEventListener('click', saveEditedMultiOrder);
         
         window.addEventListener('click', (event) => {
             if (event.target === ratingModal) {
@@ -2178,6 +2973,9 @@
             if (event.target === returnModal) returnModal.style.display = 'none';
             if (event.target === subscriptionModal) subscriptionModal.style.display = 'none';
             if (event.target === tariffModal) tariffModal.style.display = 'none';
+            if (event.target === settingsModal) settingsModal.style.display = 'none';
+            if (event.target === editSingleOrderModal) editSingleOrderModal.style.display = 'none';
+            if (event.target === editMultiOrderModal) editMultiOrderModal.style.display = 'none';
         });
         
         // Инициализация аутентификации при загрузке страницы
