@@ -18,6 +18,14 @@
             --gray: #6c757d;
             --white: #ffffff;
             --bg-gradient: linear-gradient(135deg, #4361ee 0%, #3a0ca3 100%);
+            
+            /* Темная тема переменные */
+            --dark-bg: #121212;
+            --dark-surface: #1e1e1e;
+            --dark-surface-light: #2d2d2d;
+            --dark-text: #f0f0f0;
+            --dark-text-secondary: #b0b0b0;
+            --dark-border: #404040;
         }
         
         * {
@@ -25,6 +33,7 @@
             margin: 0;
             padding: 0;
             font-family: 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', sans-serif;
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
         }
         
         body {
@@ -37,6 +46,12 @@
             padding: 20px;
         }
         
+        /* Темная тема для body */
+        body.dark-theme {
+            background-color: var(--dark-bg);
+            color: var(--dark-text);
+        }
+        
         .app-container {
             width: 100%;
             max-width: 500px;
@@ -46,6 +61,12 @@
             overflow: hidden;
             position: relative;
             display: none; /* Скрываем основное приложение до входа */
+        }
+        
+        /* Темная тема для контейнера приложения */
+        body.dark-theme .app-container {
+            background-color: var(--dark-surface);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
         }
         
         .login-container {
@@ -72,6 +93,12 @@
             border-radius: 20px;
             padding: 30px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* Темная тема для формы входа */
+        body.dark-theme .login-content {
+            background-color: var(--dark-surface);
+            color: var(--dark-text);
         }
         
         @keyframes fadeIn {
@@ -104,6 +131,11 @@
             color: var(--dark);
         }
         
+        /* Темная тема для текста форм */
+        body.dark-theme .login-form label {
+            color: var(--dark-text);
+        }
+        
         .login-form input {
             width: 100%;
             padding: 12px 15px;
@@ -111,6 +143,15 @@
             border-radius: 10px;
             font-size: 1rem;
             transition: border-color 0.3s;
+            background-color: var(--white);
+            color: var(--dark);
+        }
+        
+        /* Темная тема для инпутов */
+        body.dark-theme .login-form input {
+            background-color: var(--dark-surface-light);
+            border-color: var(--dark-border);
+            color: var(--dark-text);
         }
         
         .login-form input:focus {
@@ -229,6 +270,13 @@
             box-shadow: 0 4px 10px rgba(67, 97, 238, 0.1);
         }
         
+        /* Темная тема для кнопок */
+        body.dark-theme .main-btn {
+            background: var(--dark-surface-light);
+            color: var(--primary);
+            border-color: var(--primary);
+        }
+        
         .main-btn.disabled {
             opacity: 0.5;
             pointer-events: none;
@@ -262,8 +310,19 @@
             gap: 8px;
         }
         
+        /* Темная тема для кнопки истории */
+        body.dark-theme .history-btn {
+            background: var(--dark-surface-light);
+            color: var(--dark-text-secondary);
+        }
+        
         .history-btn:hover {
             background: #e9ecef;
+        }
+        
+        /* Темная тема для кнопки истории при наведении */
+        body.dark-theme .history-btn:hover {
+            background: var(--dark-border);
         }
         
         .modal {
@@ -290,6 +349,12 @@
             animation: modalFadeIn 0.3s;
             max-height: 90vh;
             overflow-y: auto;
+        }
+        
+        /* Темная тема для модальных окон */
+        body.dark-theme .modal-content {
+            background-color: var(--dark-surface);
+            color: var(--dark-text);
         }
         
         @keyframes modalFadeIn {
@@ -320,6 +385,11 @@
             color: var(--dark);
         }
         
+        /* Темная тема для лейблов */
+        body.dark-theme .form-group label {
+            color: var(--dark-text);
+        }
+        
         .form-control {
             width: 100%;
             padding: 12px 15px;
@@ -327,6 +397,15 @@
             border-radius: 10px;
             font-size: 1rem;
             transition: border-color 0.3s;
+            background-color: var(--white);
+            color: var(--dark);
+        }
+        
+        /* Темная тема для полей ввода */
+        body.dark-theme .form-control {
+            background-color: var(--dark-surface-light);
+            border-color: var(--dark-border);
+            color: var(--dark-text);
         }
         
         /* Стили для отключенного инпута */
@@ -434,6 +513,11 @@
             font-weight: 600;
         }
         
+        /* Темная тема для текста */
+        body.dark-theme .history-title {
+            color: var(--dark-text);
+        }
+        
         .history-list {
             border-radius: 10px;
             overflow: hidden;
@@ -451,8 +535,19 @@
             transition: background-color 0.2s;
         }
         
+        /* Темная тема для элементов истории */
+        body.dark-theme .history-item {
+            background-color: var(--dark-surface-light);
+            border-bottom-color: var(--dark-border);
+        }
+        
         .history-item:hover {
             background-color: #e9ecef;
+        }
+        
+        /* Темная тема для элементов истории при наведении */
+        body.dark-theme .history-item:hover {
+            background-color: var(--dark-border);
         }
         
         .history-item:last-child {
@@ -491,8 +586,18 @@
             border: 2px solid transparent;
         }
         
+        /* Темная тема для типов курьеров */
+        body.dark-theme .courier-type {
+            background-color: var(--dark-surface-light);
+        }
+        
         .courier-type:hover {
             background-color: #e9ecef;
+        }
+        
+        /* Темная тема для типов курьеров при наведении */
+        body.dark-theme .courier-type:hover {
+            background-color: var(--dark-border);
         }
         
         .courier-type.selected {
@@ -568,6 +673,11 @@
             margin-bottom: 15px;
         }
         
+        /* Темная тема для полей ввода заказов */
+        body.dark-theme .order-inputs {
+            background-color: var(--dark-surface-light);
+        }
+        
         .order-number {
             font-weight: 600;
             margin-bottom: 10px;
@@ -579,6 +689,11 @@
             padding: 15px;
             background-color: var(--light);
             border-radius: 10px;
+        }
+        
+        /* Темная тема для деталей заказа */
+        body.dark-theme .order-details {
+            background-color: var(--dark-surface-light);
         }
         
         .order-details-row {
@@ -679,6 +794,11 @@
             animation: modalFadeIn 0.3s;
         }
         
+        /* Темная тема для модального окна подписки */
+        body.dark-theme .subscription-content {
+            background-color: var(--dark-surface);
+        }
+        
         .subscription-header {
             background: var(--bg-gradient);
             color: var(--white);
@@ -700,6 +820,11 @@
             padding: 15px;
             border-radius: 10px;
             background-color: var(--light);
+        }
+        
+        /* Темная тема для статуса подписки */
+        body.dark-theme .subscription-status {
+            background-color: var(--dark-surface-light);
         }
         
         .status-indicator {
@@ -729,6 +854,11 @@
             border-radius: 10px;
             border: 1px solid #dee2e6;
             transition: all 0.3s;
+        }
+        
+        /* Темная тема для планов подписки */
+        body.dark-theme .subscription-plan {
+            border-color: var(--dark-border);
         }
         
         .subscription-plan:hover {
@@ -774,11 +904,21 @@
             z-index: 1;
         }
         
+        /* Темная тема для таймера */
+        body.dark-theme .timer-overlay {
+            background-color: rgba(30, 30, 30, 0.9);
+        }
+        
         .timer-text {
             font-size: 1rem;
             font-weight: 600;
             margin-bottom: 5px;
             color: var(--dark);
+        }
+        
+        /* Темная тема для текста таймера */
+        body.dark-theme .timer-text {
+            color: var(--dark-text);
         }
         
         .timer-countdown {
@@ -791,6 +931,11 @@
             font-size: 0.9rem;
             color: var(--dark);
             margin-top: 5px;
+        }
+        
+        /* Темная тема для текста апгрейда */
+        body.dark-theme .upgrade-text {
+            color: var(--dark-text);
         }
 
         /* Таблица тарифов */
@@ -807,6 +952,12 @@
             font-size: 0.9rem;
         }
 
+        /* Темная тема для таблицы */
+        body.dark-theme .tariff-table th,
+        body.dark-theme .tariff-table td {
+            border-bottom-color: var(--dark-border);
+        }
+
         .tariff-table th {
             font-weight: 600;
             color: var(--primary);
@@ -816,7 +967,7 @@
             border-bottom: none;
         }
         
-        /* Новые стили для цели по заработку */
+        /* Новые стили для цели по заработку - ОБНОВЛЕННЫЙ ДИЗАЙН */
         .goal-container {
             padding: 0 20px 20px;
             display: none;
@@ -825,38 +976,104 @@
         .goal-info {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 10px;
-            font-size: 0.9rem;
-        }
-        
-        .goal-progress {
-            display: flex;
             align-items: center;
-            gap: 10px;
+            margin-bottom: 15px;
+            font-size: 0.95rem;
+            font-weight: 500;
         }
         
-        .goal-progress-bar {
-            flex-grow: 1;
-            height: 10px;
-            background-color: #e9ecef;
-            border-radius: 5px;
+        .goal-amount {
+            font-weight: 600;
+            color: var(--primary);
+        }
+        
+        .goal-progress-container {
+            background: linear-gradient(90deg, #f0f2ff 0%, #e6e9ff 100%);
+            border-radius: 12px;
+            padding: 3px;
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.05);
+            position: relative;
             overflow: hidden;
         }
         
-        .goal-progress-fill {
-            height: 100%;
-            background: var(--bg-gradient);
-            border-radius: 5px;
+        /* Темная тема для контейнера прогресса */
+        body.dark-theme .goal-progress-container {
+            background: linear-gradient(90deg, #2a2a3a 0%, #232332 100%);
+        }
+        
+        .goal-progress-bar {
+            height: 24px;
+            background: linear-gradient(90deg, var(--primary) 0%, var(--primary-dark) 100%);
+            border-radius: 10px;
             width: 0%;
-            transition: width 0.3s ease;
+            transition: width 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 10px;
+            box-shadow: 0 2px 8px rgba(67, 97, 238, 0.3);
+        }
+        
+        /* Анимация заполнения прогресс-бара */
+        .goal-progress-bar::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, 
+                rgba(255,255,255,0.1) 0%, 
+                rgba(255,255,255,0.2) 50%, 
+                rgba(255,255,255,0.1) 100%);
+            background-size: 200% 100%;
+            animation: shimmer 2s infinite linear;
+        }
+        
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
         }
         
         .goal-progress-text {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: white;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+            z-index: 1;
+            letter-spacing: 0.5px;
+        }
+        
+        .goal-details {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 8px;
             font-size: 0.8rem;
+            color: var(--gray);
+        }
+        
+        .goal-achieved {
+            color: var(--success);
             font-weight: 600;
-            color: var(--primary);
-            min-width: 60px;
-            text-align: right;
+        }
+        
+        .goal-remaining {
+            color: var(--warning);
+            font-weight: 600;
+        }
+        
+        /* Анимация при достижении цели */
+        .goal-complete .goal-progress-bar {
+            background: linear-gradient(90deg, var(--success) 0%, #00b894 100%);
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(76, 201, 240, 0.4); }
+            70% { box-shadow: 0 0 0 6px rgba(76, 201, 240, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(76, 201, 240, 0); }
         }
         
         .goal-set-btn {
@@ -960,6 +1177,11 @@
             color: var(--dark);
         }
         
+        /* Темная тема для текста тумблера */
+        body.dark-theme .toggle-label {
+            color: var(--dark-text);
+        }
+        
         .toggle-switch {
             position: relative;
             display: inline-block;
@@ -1026,6 +1248,12 @@
             transform: translateX(400px);
             transition: transform 0.3s ease;
             border-left: 4px solid var(--primary);
+        }
+        
+        /* Темная тема для уведомлений */
+        body.dark-theme .notification {
+            background: var(--dark-surface);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
         }
         
         .notification.show {
@@ -1227,16 +1455,20 @@
             </div>
         </div>
         
+        <!-- ОБНОВЛЕННЫЙ ДИЗАЙН ЦЕЛИ -->
         <div class="goal-container" id="goalContainer">
             <div class="goal-info">
                 <span>Цель на день</span>
-                <span id="todayEarningsText">0 из 0 руб.</span>
+                <span class="goal-amount" id="todayEarningsText">0 из 0 руб.</span>
             </div>
-            <div class="goal-progress">
-                <div class="goal-progress-bar">
-                    <div class="goal-progress-fill" id="goalProgressFill"></div>
+            <div class="goal-progress-container">
+                <div class="goal-progress-bar" id="goalProgressFill">
+                    <div class="goal-progress-text" id="goalProgressText">0%</div>
                 </div>
-                <div class="goal-progress-text" id="goalProgressText">0%</div>
+            </div>
+            <div class="goal-details">
+                <span class="goal-achieved" id="goalAchievedText">Заработано: 0 руб.</span>
+                <span class="goal-remaining" id="goalRemainingText">Осталось: 0 руб.</span>
             </div>
         </div>
         
@@ -1283,6 +1515,15 @@
         <div class="modal-content">
             <div class="modal-header">Настройки</div>
             <div class="modal-body">
+                <!-- Новый переключатель темы -->
+                <div class="toggle-container">
+                    <div class="toggle-label">Темная тема:</div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="themeToggle">
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+                
                 <div class="toggle-container">
                     <div class="toggle-label">Показывать цель по заработку:</div>
                     <label class="toggle-switch">
@@ -1662,6 +1903,11 @@
         const goalProgressFill = document.getElementById('goalProgressFill');
         const goalProgressText = document.getElementById('goalProgressText');
         const todayEarningsText = document.getElementById('todayEarningsText');
+        const goalAchievedText = document.getElementById('goalAchievedText');
+        const goalRemainingText = document.getElementById('goalRemainingText');
+        
+        // Новый элемент для переключения темы
+        const themeToggle = document.getElementById('themeToggle');
         
         // Контейнер для уведомлений
         const notificationContainer = document.getElementById('notificationContainer');
@@ -1733,6 +1979,9 @@
         let showGoal = localStorage.getItem('showGoal') === 'true' || false;
         let todayEarnings = parseFloat(localStorage.getItem('todayEarnings')) || 0;
         let lastResetDate = localStorage.getItem('lastResetDate') || '';
+        
+        // Переменная для темы
+        let darkTheme = localStorage.getItem('darkTheme') === 'true' || false;
         
         // Тарифы для каждого типа курьера
         const rates = {
@@ -1992,6 +2241,9 @@
         function initApp() {
             updateHistoryDisplay();
             
+            // Применяем сохраненную тему
+            applyTheme();
+            
             // Проверяем, есть ли сохраненный рейтинг
             const savedRating = localStorage.getItem('courierRating');
             if (savedRating) {
@@ -2043,11 +2295,36 @@
             checkDayReset();
         }
         
+        // Применение темы
+        function applyTheme() {
+            if (darkTheme) {
+                document.body.classList.add('dark-theme');
+                themeToggle.checked = true;
+            } else {
+                document.body.classList.remove('dark-theme');
+                themeToggle.checked = false;
+            }
+        }
+        
+        // Переключение темы
+        function toggleTheme() {
+            darkTheme = !darkTheme;
+            localStorage.setItem('darkTheme', darkTheme);
+            applyTheme();
+            
+            showNotification(
+                'Тема изменена', 
+                darkTheme ? 'Включена темная тема' : 'Включена светлая тема', 
+                'success'
+            );
+        }
+        
         // Инициализация настроек цели
         function initGoalSettings() {
             // Загружаем сохраненные настройки
             goalToggle.checked = showGoal;
             dailyGoalInput.value = dailyGoal;
+            themeToggle.checked = darkTheme;
             
             // Показываем/скрываем поле ввода цели в зависимости от тумблера
             goalSettings.style.display = showGoal ? 'block' : 'none';
@@ -2062,6 +2339,9 @@
             goalToggle.addEventListener('change', function() {
                 goalSettings.style.display = this.checked ? 'block' : 'none';
             });
+            
+            // Обработчик переключения темы
+            themeToggle.addEventListener('change', toggleTheme);
         }
         
         // Проверка смены дня для сброса дневных заработков
@@ -2095,31 +2375,40 @@
             updateGoalDisplay();
         }
         
-        // Обновление отображения цели
+        // Обновление отображения цели (ОБНОВЛЕННЫЙ ДИЗАЙН)
         function updateGoalDisplay() {
             if (!showGoal) return;
             
             // Отображаем сумму цели, а не заработанную сумму
             todayEarningsText.textContent = `${todayEarnings.toFixed(2)} из ${dailyGoal} руб.`;
+            goalAchievedText.textContent = `Заработано: ${todayEarnings.toFixed(2)} руб.`;
             
             if (dailyGoal > 0) {
                 const percentage = Math.min(Math.round((todayEarnings / dailyGoal) * 100), 100);
                 goalProgressFill.style.width = `${percentage}%`;
                 goalProgressText.textContent = `${percentage}%`;
                 
+                const remaining = Math.max(0, dailyGoal - todayEarnings);
+                goalRemainingText.textContent = `Осталось: ${remaining.toFixed(2)} руб.`;
+                
+                // Добавляем/убираем класс при достижении цели
                 if (percentage >= 100) {
-                    goalProgressFill.style.background = 'var(--success)';
+                    goalProgressFill.style.background = 'linear-gradient(90deg, var(--success) 0%, #00b894 100%)';
+                    goalContainer.classList.add('goal-complete');
                 } else {
-                    goalProgressFill.style.background = 'var(--bg-gradient)';
+                    goalProgressFill.style.background = 'linear-gradient(90deg, var(--primary) 0%, var(--primary-dark) 100%)';
+                    goalContainer.classList.remove('goal-complete');
                 }
             } else {
                 goalProgressFill.style.width = '0%';
                 goalProgressText.textContent = '0%';
+                goalRemainingText.textContent = 'Осталось: 0 руб.';
+                goalContainer.classList.remove('goal-complete');
             }
         }
         
-        // Сохранение настроек цели
-        function saveGoalSettings() {
+        // Сохранение настроек цели и темы
+        function saveSettings() {
             showGoal = goalToggle.checked;
             dailyGoal = parseInt(dailyGoalInput.value) || 0;
             
@@ -3029,7 +3318,7 @@
         });
         
         saveSettingsBtn.addEventListener('click', () => {
-            saveGoalSettings();
+            saveSettings();
             settingsModal.style.display = 'none';
         });
         
