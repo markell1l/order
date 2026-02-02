@@ -967,24 +967,10 @@
             border-bottom: none;
         }
         
-        /* Новые стили для цели по заработку - ОБНОВЛЕННЫЙ ДИЗАЙН */
+        /* ОБНОВЛЕННЫЕ СТИЛИ ДЛЯ ЦЕЛИ */
         .goal-container {
             padding: 0 20px 20px;
             display: none;
-        }
-        
-        .goal-info {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-            font-size: 0.95rem;
-            font-weight: 500;
-        }
-        
-        .goal-amount {
-            font-weight: 600;
-            color: var(--primary);
         }
         
         .goal-progress-container {
@@ -994,6 +980,7 @@
             box-shadow: inset 0 2px 5px rgba(0,0,0,0.05);
             position: relative;
             overflow: hidden;
+            margin-bottom: 10px;
         }
         
         /* Темная тема для контейнера прогресса */
@@ -1008,12 +995,13 @@
             width: 0%;
             transition: width 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
             position: relative;
-            overflow: hidden;
+            overflow: visible;
             display: flex;
             align-items: center;
             justify-content: flex-end;
-            padding-right: 10px;
+            padding-right: 12px;
             box-shadow: 0 2px 8px rgba(67, 97, 238, 0.3);
+            min-width: 40px; /* Минимальная ширина для отображения процентов */
         }
         
         /* Анимация заполнения прогресс-бара */
@@ -1044,18 +1032,18 @@
             text-shadow: 0 1px 2px rgba(0,0,0,0.2);
             z-index: 1;
             letter-spacing: 0.5px;
+            white-space: nowrap; /* Предотвращает перенос текста */
         }
         
         .goal-details {
             display: flex;
             justify-content: space-between;
-            margin-top: 8px;
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             color: var(--gray);
         }
         
         .goal-achieved {
-            color: var(--success);
+            color: var(--primary);
             font-weight: 600;
         }
         
@@ -1389,6 +1377,12 @@
             .courier-info-text {
                 font-size: 0.8rem;
             }
+            
+            .goal-details {
+                flex-direction: column;
+                gap: 5px;
+                align-items: flex-start;
+            }
         }
         
         @media (max-width: 350px) {
@@ -1457,18 +1451,14 @@
         
         <!-- ОБНОВЛЕННЫЙ ДИЗАЙН ЦЕЛИ -->
         <div class="goal-container" id="goalContainer">
-            <div class="goal-info">
-                <span>Цель на день</span>
-                <span class="goal-amount" id="todayEarningsText">0 из 0 руб.</span>
-            </div>
             <div class="goal-progress-container">
                 <div class="goal-progress-bar" id="goalProgressFill">
                     <div class="goal-progress-text" id="goalProgressText">0%</div>
                 </div>
             </div>
             <div class="goal-details">
-                <span class="goal-achieved" id="goalAchievedText">Заработано: 0 руб.</span>
-                <span class="goal-remaining" id="goalRemainingText">Осталось: 0 руб.</span>
+                <span class="goal-achieved" id="goalAchievedText">Заработано: 0 ₽</span>
+                <span class="goal-remaining" id="goalRemainingText">Осталось: 0 ₽</span>
             </div>
         </div>
         
@@ -1502,7 +1492,7 @@
                 </button>
             </div>
             <div class="history-list" id="historyList"></div>
-            <div class="history-total" id="historyTotal">Итого: 0 руб.</div>
+            <div class="history-total" id="historyTotal">Итого: 0 ₽</div>
         </div>
     </div>
     
@@ -1534,7 +1524,7 @@
                 
                 <div id="goalSettings" style="display: none;">
                     <div class="form-group">
-                        <label for="dailyGoalInput">Цель на день (руб.):</label>
+                        <label for="dailyGoalInput">Цель на день (₽):</label>
                         <input type="number" class="form-control" id="dailyGoalInput" min="0" step="10" value="0">
                     </div>
                     <div class="form-group">
@@ -1565,7 +1555,7 @@
                     <div class="subscription-plan">
                         <div class="plan-header">
                             <div class="plan-name">Месячная подписка</div>
-                            <div class="plan-price">150 руб.</div>
+                            <div class="plan-price">150 ₽</div>
                         </div>
                         <div class="plan-desc">
                             Полный доступ ко всем функциям на 1 месяц. Без ограничений на расчеты.
@@ -1578,7 +1568,7 @@
                     <div class="subscription-plan">
                         <div class="plan-header">
                             <div class="plan-name">Полугодовая подписка</div>
-                            <div class="plan-price">400 руб.</div>
+                            <div class="plan-price">400 ₽</div>
                         </div>
                         <div class="plan-desc">
                             Полный доступ ко всем функции на 6 месяцев. Самая выгодная подписка.
@@ -1620,7 +1610,7 @@
                             <div class="courier-type-name">Пеший курьер</div>
                             <div class="courier-type-desc">Доставка пешком</div>
                             <div class="rate-info">
-                                Тариф: 4р/км, 2р/кг
+                                Тариф: 4₽/км, 2₽/кг
                             </div>
                         </div>
                     </div>
@@ -1631,7 +1621,7 @@
                             <div class="courier-type-name">Велокурьер</div>
                             <div class="courier-type-desc">Доставка на велосипеде</div>
                             <div class="rate-info">
-                                Тариф: 15р/км, 2р/кг
+                                Тариф: 15₽/км, 2₽/кг
                             </div>
                         </div>
                     </div>
@@ -1642,7 +1632,7 @@
                             <div class="courier-type-name">Автокурьер</div>
                             <div class="courier-type-desc">Доставка на автомобиле</div>
                             <div class="rate-info">
-                                <span>Тариф: 19р/км, от 2р/кг</span>
+                                <span>Тариф: 19₽/км, от 2₽/кг</span>
                                 <button class="info-btn" id="carInfoBtn" title="Подробнее о тарифе"><i class="fas fa-circle-info"></i></button>
                             </div>
                         </div>
@@ -1667,15 +1657,15 @@
                     <tbody>
                         <tr>
                             <td>до 30 кг</td>
-                            <td>2 руб. / кг</td>
+                            <td>2 ₽ / кг</td>
                         </tr>
                         <tr>
                             <td>от 30 до 60 кг</td>
-                            <td>3 руб. / кг</td>
+                            <td>3 ₽ / кг</td>
                         </tr>
                         <tr>
                             <td>от 60 до 99 кг</td>
-                            <td>4 руб. / кг</td>
+                            <td>4 ₽ / кг</td>
                         </tr>
                     </tbody>
                 </table>
@@ -1865,7 +1855,7 @@
                 </div>
                 <div class="form-group">
                     <p style="font-size: 0.9rem; color: var(--gray);">
-                        <i class="fas fa-info-circle"></i> За каждый возврат 141 руб.
+                        <i class="fas fa-info-circle"></i> За каждый возврат 141 ₽
                     </p>
                 </div>
                 <button class="btn btn-primary" id="saveReturnBtn">Добавить</button>
@@ -1902,7 +1892,6 @@
         const goalContainer = document.getElementById('goalContainer');
         const goalProgressFill = document.getElementById('goalProgressFill');
         const goalProgressText = document.getElementById('goalProgressText');
-        const todayEarningsText = document.getElementById('todayEarningsText');
         const goalAchievedText = document.getElementById('goalAchievedText');
         const goalRemainingText = document.getElementById('goalRemainingText');
         
@@ -2379,17 +2368,17 @@
         function updateGoalDisplay() {
             if (!showGoal) return;
             
-            // Отображаем сумму цели, а не заработанную сумму
-            todayEarningsText.textContent = `${todayEarnings.toFixed(2)} из ${dailyGoal} руб.`;
-            goalAchievedText.textContent = `Заработано: ${todayEarnings.toFixed(2)} руб.`;
+            // Обновляем текстовые поля с символом рубля
+            goalAchievedText.textContent = `Заработано: ${todayEarnings.toFixed(2)} ₽`;
             
             if (dailyGoal > 0) {
                 const percentage = Math.min(Math.round((todayEarnings / dailyGoal) * 100), 100);
+                // ФИКС: Устанавливаем ширину прогресс-бара и обновляем текст процентов сразу
                 goalProgressFill.style.width = `${percentage}%`;
                 goalProgressText.textContent = `${percentage}%`;
                 
                 const remaining = Math.max(0, dailyGoal - todayEarnings);
-                goalRemainingText.textContent = `Осталось: ${remaining.toFixed(2)} руб.`;
+                goalRemainingText.textContent = `Осталось: ${remaining.toFixed(2)} ₽`;
                 
                 // Добавляем/убираем класс при достижении цели
                 if (percentage >= 100) {
@@ -2402,9 +2391,15 @@
             } else {
                 goalProgressFill.style.width = '0%';
                 goalProgressText.textContent = '0%';
-                goalRemainingText.textContent = 'Осталось: 0 руб.';
+                goalRemainingText.textContent = 'Осталось: 0 ₽';
                 goalContainer.classList.remove('goal-complete');
             }
+            
+            // Принудительное обновление отображения прогресс-бара
+            setTimeout(() => {
+                const computedWidth = getComputedStyle(goalProgressFill).width;
+                goalProgressFill.style.width = computedWidth; // Перерисовываем
+            }, 10);
         }
         
         // Сохранение настроек цели и темы
@@ -2600,7 +2595,7 @@
             });
         }
         
-        // Обновление отображения истории
+        // Обновление отображения истории с символом рубля
         function updateHistoryDisplay() {
             historyList.innerHTML = '';
             
@@ -2624,7 +2619,7 @@
                         <div style="display: flex; align-items: center; gap: 10px; flex-grow: 1;">
                             <i class="fas ${orderIcon}" style="color: var(--primary);"></i>
                             <span style="flex-grow: 1;">${order.type}</span>
-                            <span style="font-weight: 600; margin-right: 10px;">${order.amount.toFixed(2)} руб.</span>
+                            <span style="font-weight: 600; margin-right: 10px;">${order.amount.toFixed(2)} ₽</span>
                         </div>
                         <div class="history-item-actions">
                             ${order.orderType !== 'return' ? `<button class="edit-btn" data-index="${index}" title="Редактировать">
@@ -2646,7 +2641,7 @@
             });
             
             totalEarnings = total;
-            historyTotal.textContent = `Итого: ${totalEarnings.toFixed(2)} руб.`;
+            historyTotal.textContent = `Итого: ${totalEarnings.toFixed(2)} ₽`;
             
             // Добавляем обработчики событий для кнопок просмотра
             document.querySelectorAll('.history-item').forEach(item => {
@@ -2834,7 +2829,7 @@
             showNotification('Заказ обновлен', 'Мультизаказ успешно обновлен!', 'success');
         }
         
-        // Показать детали заказа
+        // Показать детали заказа с символом рубля
         function showOrderDetails(index) {
             if (index < 0 || index >= ordersHistory.length) return;
             
@@ -2852,7 +2847,7 @@
                         </div>
                         <div class="order-details-row">
                             <span class="order-details-label">Сумма:</span>
-                            <span class="order-details-value">${order.amount.toFixed(2)} руб.</span>
+                            <span class="order-details-value">${order.amount.toFixed(2)} ₽</span>
                         </div>
                         <div class="order-details-row">
                             <span class="order-details-label">Количество возвратов:</span>
@@ -2873,7 +2868,7 @@
                         </div>
                         <div class="order-details-row">
                             <span class="order-details-label">Сумма:</span>
-                            <span class="order-details-value">${order.amount.toFixed(2)} руб.</span>
+                            <span class="order-details-value">${order.amount.toFixed(2)} ₽</span>
                         </div>
                         <div class="order-details-row">
                             <span class="order-details-label">Тип курьера:</span>
@@ -2885,7 +2880,7 @@
                         </div>
                         <div class="order-details-row">
                             <span class="order-details-label">Бонус за рейтинг:</span>
-                            <span class="order-details-value">${order.ratingBonus || 0} руб.</span>
+                            <span class="order-details-value">${order.ratingBonus || 0} ₽</span>
                         </div>
                         <div class="order-details-row">
                             <span class="order-details-label">Дата:</span>
@@ -2990,7 +2985,7 @@
             return 0;
         }
         
-        // Сохранение заказа в историю
+        // Сохранение заказа в историю с символом рубля
         function saveToHistory(orderType, amount, details) {
             const order = {
                 type: orderType,
@@ -3018,7 +3013,7 @@
             }
         }
 
-        // Добавление возврата в историю
+        // Добавление возврата в историю с символом рубля
         function addReturn(count) {
             const returnAmount = count * 141;
             const returnOrder = {
@@ -3036,7 +3031,7 @@
             localStorage.setItem('totalEarnings', totalEarnings.toString());
 
             updateHistoryDisplay();
-            showNotification('Возврат добавлен', `Добавлено ${count} возврат(ов) на сумму ${returnAmount} руб.`, 'success');
+            showNotification('Возврат добавлен', `Добавлено ${count} возврат(ов) на сумму ${returnAmount} ₽`, 'success');
         }
         
         // Обработчики событий
@@ -3155,7 +3150,7 @@
             const ratingBonus = calculateRatingBonus(courierRating);
             const totalAmount = orderAmount + ratingBonus;
             
-            document.getElementById('resultText').textContent = `Стоимость заказа: ${totalAmount.toFixed(2)} руб. (${multiplier}x, включая бонус за рейтинг: ${ratingBonus} руб.)`;
+            document.getElementById('resultText').textContent = `Стоимость заказа: ${totalAmount.toFixed(2)} ₽ (${multiplier}x, включая бонус за рейтинг: ${ratingBonus} ₽)`;
             singleOrderModal.style.display = 'none';
             resultModal.style.display = 'flex';
             
@@ -3166,7 +3161,7 @@
                 multiplier: multiplier
             });
             
-            showNotification('Расчет завершен', `Стоимость заказа: ${totalAmount.toFixed(2)} руб.`, 'success');
+            showNotification('Расчет завершен', `Стоимость заказа: ${totalAmount.toFixed(2)} ₽`, 'success');
         }
         
         calculateMultiBtn.addEventListener('click', () => {
@@ -3227,7 +3222,7 @@
             totalAmount += ratingBonus;
             
             document.getElementById('resultText').textContent = 
-                `Стоимость ${orderCount} заказов (${multiplier}x): ${totalAmount.toFixed(2)} руб. (включая бонус за рейтинг: ${ratingBonus} руб.)`;
+                `Стоимость ${orderCount} заказов (${multiplier}x): ${totalAmount.toFixed(2)} ₽ (включая бонус за рейтинг: ${ratingBonus} ₽)`;
             multiOrderModal.style.display = 'none';
             resultModal.style.display = 'flex';
             
@@ -3238,7 +3233,7 @@
                 orders: orders
             });
             
-            showNotification('Расчет завершен', `Стоимость ${orderCount} заказов: ${totalAmount.toFixed(2)} руб.`, 'success');
+            showNotification('Расчет завершен', `Стоимость ${orderCount} заказов: ${totalAmount.toFixed(2)} ₽`, 'success');
         }
         
         closeResultBtn.addEventListener('click', () => {
