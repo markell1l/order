@@ -967,7 +967,7 @@
             border-bottom: none;
         }
         
-        /* ОБНОВЛЕННЫЕ СТИЛИ ДЛЯ ЦЕЛИ */
+        /* ОБНОВЛЕННЫЕ СТИЛИ ДЛЯ ЦЕЛИ - ИСПРАВЛЕН БАГ */
         .goal-container {
             padding: 0 20px 20px;
             display: none;
@@ -1002,6 +1002,19 @@
             padding-right: 12px;
             box-shadow: 0 2px 8px rgba(67, 97, 238, 0.3);
             min-width: 40px; /* Минимальная ширина для отображения процентов */
+        }
+        
+        /* ФИКС: Добавлен форсированный отрисовывающий слой */
+        .goal-progress-bar::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: inherit;
+            border-radius: inherit;
+            z-index: -1;
         }
         
         /* Анимация заполнения прогресс-бара */
@@ -2364,7 +2377,7 @@
             updateGoalDisplay();
         }
         
-        // Обновление отображения цели (ОБНОВЛЕННЫЙ ДИЗАЙН)
+        // Обновление отображения цели (ИСПРАВЛЕННЫЙ ДИЗАЙН - БАГ УСТРАНЕН)
         function updateGoalDisplay() {
             if (!showGoal) return;
             
@@ -2373,33 +2386,40 @@
             
             if (dailyGoal > 0) {
                 const percentage = Math.min(Math.round((todayEarnings / dailyGoal) * 100), 100);
-                // ФИКС: Устанавливаем ширину прогресс-бара и обновляем текст процентов сразу
-                goalProgressFill.style.width = `${percentage}%`;
-                goalProgressText.textContent = `${percentage}%`;
                 
-                const remaining = Math.max(0, dailyGoal - todayEarnings);
-                goalRemainingText.textContent = `Осталось: ${remaining.toFixed(2)} ₽`;
+                // ФИКС: Принудительно перерисовываем прогресс-бар
+                goalProgressFill.style.width = '0%';
                 
-                // Добавляем/убираем класс при достижении цели
-                if (percentage >= 100) {
-                    goalProgressFill.style.background = 'linear-gradient(90deg, var(--success) 0%, #00b894 100%)';
-                    goalContainer.classList.add('goal-complete');
-                } else {
-                    goalProgressFill.style.background = 'linear-gradient(90deg, var(--primary) 0%, var(--primary-dark) 100%)';
-                    goalContainer.classList.remove('goal-complete');
-                }
+                // Небольшая задержка для сброса анимации
+                setTimeout(() => {
+                    goalProgressFill.style.width = `${percentage}%`;
+                    goalProgressText.textContent = `${percentage}%`;
+                    
+                    const remaining = Math.max(0, dailyGoal - todayEarnings);
+                    goalRemainingText.textContent = `Осталось: ${remaining.toFixed(2)} ₽`;
+                    
+                    // Добавляем/убираем класс при достижении цели
+                    if (percentage >= 100) {
+                        goalProgressFill.style.background = 'linear-gradient(90deg, var(--success) 0%, #00b894 100%)';
+                        goalContainer.classList.add('goal-complete');
+                    } else {
+                        goalProgressFill.style.background = 'linear-gradient(90deg, var(--primary) 0%, var(--primary-dark) 100%)';
+                        goalContainer.classList.remove('goal-complete');
+                    }
+                    
+                    // Принудительный reflow для запуска анимации
+                    goalProgressFill.offsetHeight;
+                    
+                }, 10);
             } else {
                 goalProgressFill.style.width = '0%';
                 goalProgressText.textContent = '0%';
                 goalRemainingText.textContent = 'Осталось: 0 ₽';
                 goalContainer.classList.remove('goal-complete');
+                
+                // Принудительный reflow
+                goalProgressFill.offsetHeight;
             }
-            
-            // Принудительное обновление отображения прогресс-бара
-            setTimeout(() => {
-                const computedWidth = getComputedStyle(goalProgressFill).width;
-                goalProgressFill.style.width = computedWidth; // Перерисовываем
-            }, 10);
         }
         
         // Сохранение настроек цели и темы
