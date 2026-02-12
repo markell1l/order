@@ -26,6 +26,10 @@
             --dark-text: #f0f0f0;
             --dark-text-secondary: #b0b0b0;
             --dark-border: #404040;
+            
+            /* Баннер вечернего времени */
+            --evening-banner-bg: #f8961e;
+            --evening-banner-text: #ffffff;
         }
         
         * {
@@ -246,6 +250,31 @@
             font-size: 0.9rem;
         }
         
+        /* Баннер вечерней доплаты */
+        .evening-banner {
+            display: none;
+            padding: 12px 20px;
+            background: linear-gradient(90deg, var(--warning) 0%, #e07c00 100%);
+            color: var(--evening-banner-text);
+            font-weight: 600;
+            text-align: center;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-size: 0.95rem;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+        }
+        
+        .evening-banner i {
+            font-size: 1.1rem;
+        }
+        
+        /* Темная тема для баннера */
+        body.dark-theme .evening-banner {
+            background: linear-gradient(90deg, #c97e00 0%, #a56600 100%);
+            color: var(--dark-text);
+        }
+        
         .main-buttons {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -406,6 +435,34 @@
             background-color: var(--dark-surface-light);
             border-color: var(--dark-border);
             color: var(--dark-text);
+        }
+        
+        /* Стили для чекбокса магазина */
+        .store-checkbox {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            gap: 10px;
+            padding: 10px 0;
+        }
+        
+        .store-checkbox input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+            accent-color: var(--primary);
+        }
+        
+        .store-checkbox label {
+            margin-bottom: 0;
+            cursor: pointer;
+            font-weight: 500;
+            color: var(--dark);
+        }
+        
+        .store-checkbox label i {
+            color: #00a86b;
+            margin-left: 4px;
         }
         
         /* Стили для отключенного инпута */
@@ -1462,6 +1519,12 @@
             </div>
         </div>
         
+        <!-- Баннер вечернего времени -->
+        <div class="evening-banner" id="eveningBanner">
+            <i class="fas fa-clock"></i>
+            <span id="eveningBannerText"></span>
+        </div>
+        
         <!-- ОБНОВЛЕННЫЙ ДИЗАЙН ЦЕЛИ -->
         <div class="goal-container" id="goalContainer">
             <div class="goal-progress-container">
@@ -1699,6 +1762,13 @@
                     <label for="singleDistance">Расстояние до клиента (км):</label>
                     <input type="number" class="form-control" id="singleDistance" min="0" step="0.1" placeholder="Введите расстояние">
                 </div>
+                <!-- Чекбокс "Заказ из магазина П🟢" -->
+                <div class="store-checkbox">
+                    <input type="checkbox" id="singleStoreCheckbox">
+                    <label for="singleStoreCheckbox">
+                        Заказ из магазина "П🟢" <i class="fas fa-store"></i>
+                    </label>
+                </div>
                 <div class="form-group">
                     <label for="singleMultiplier">Коэффициент заказа:</label>
                     <div class="select-wrapper">
@@ -1753,6 +1823,14 @@
                     </div>
                 </div>
                 
+                <!-- Чекбокс "Заказ из магазина П🟢" для мультизаказа -->
+                <div class="store-checkbox">
+                    <input type="checkbox" id="multiStoreCheckbox">
+                    <label for="multiStoreCheckbox">
+                        Заказ из магазина "П🟢" <i class="fas fa-store"></i>
+                    </label>
+                </div>
+                
                 <div id="multiOrderInputs"></div>
                 
                 <button class="btn btn-primary" id="calculateMultiBtn">Рассчитать</button>
@@ -1777,6 +1855,13 @@
                 <div class="form-group">
                     <label for="editSingleDistance">Расстояние до клиента (км):</label>
                     <input type="number" class="form-control" id="editSingleDistance" min="0" step="0.1" placeholder="Введите расстояние">
+                </div>
+                <!-- Чекбокс для редактирования -->
+                <div class="store-checkbox">
+                    <input type="checkbox" id="editSingleStoreCheckbox">
+                    <label for="editSingleStoreCheckbox">
+                        Заказ из магазина "П🟢" <i class="fas fa-store"></i>
+                    </label>
                 </div>
                 <div class="form-group">
                     <label for="editSingleMultiplier">Коэффициент заказа:</label>
@@ -1826,6 +1911,14 @@
                             <option value="1.5">Повышенный 1.5x</option>
                         </select>
                     </div>
+                </div>
+                
+                <!-- Чекбокс для редактирования мультизаказа -->
+                <div class="store-checkbox">
+                    <input type="checkbox" id="editMultiStoreCheckbox">
+                    <label for="editMultiStoreCheckbox">
+                        Заказ из магазина "П🟢" <i class="fas fa-store"></i>
+                    </label>
                 </div>
                 
                 <div id="editMultiOrderInputs"></div>
@@ -1956,6 +2049,23 @@
         const orderDetailsContent = document.getElementById('orderDetailsContent');
         const returnCountInput = document.getElementById('returnCount');
         
+        // Элементы для чекбоксов магазина
+        const singleStoreCheckbox = document.getElementById('singleStoreCheckbox');
+        const multiStoreCheckbox = document.getElementById('multiStoreCheckbox');
+        const editSingleStoreCheckbox = document.getElementById('editSingleStoreCheckbox');
+        const editMultiStoreCheckbox = document.getElementById('editMultiStoreCheckbox');
+        
+        // Селекты мультипликаторов
+        const singleMultiplierSelect = document.getElementById('singleMultiplier');
+        const multiMultiplierSelect = document.getElementById('multiMultiplier');
+        const editSingleMultiplierSelect = document.getElementById('editSingleMultiplier');
+        const editMultiMultiplierSelect = document.getElementById('editMultiMultiplier');
+        const editOrderCountSelect = document.getElementById('editOrderCount');
+        
+        // Баннер вечернего времени
+        const eveningBanner = document.getElementById('eveningBanner');
+        const eveningBannerText = document.getElementById('eveningBannerText');
+        
         // Таймеры
         const singleTimerOverlay = document.getElementById('singleTimerOverlay');
         const singleTimerCountdown = document.getElementById('singleTimerCountdown');
@@ -2009,6 +2119,80 @@
                 name: 'Автокурьер'
             }
         };
+
+        // Маппинг мультипликаторов для обычного и магазинного заказа
+        const multiplierMap = {
+            normal: [1, 1.1, 1.25, 1.5],
+            store: [1.1, 1.2, 1.35, 1.6]
+        };
+
+        // Функция для обновления опций селекта мультипликатора
+        function updateMultiplierOptions(selectElement, isStore) {
+            const options = selectElement.options;
+            const values = isStore ? multiplierMap.store : multiplierMap.normal;
+            const labels = isStore 
+                ? ['1.1x (обычный)', '1.2x', '1.35x', '1.6x']
+                : ['Обычный (1x)', 'Повышенный 1.1x', 'Повышенный 1.25x', 'Повышенный 1.5x'];
+            
+            for (let i = 0; i < options.length; i++) {
+                options[i].value = values[i];
+                options[i].textContent = labels[i];
+            }
+        }
+
+        // Обработчики для чекбоксов магазина
+        singleStoreCheckbox.addEventListener('change', function() {
+            updateMultiplierOptions(singleMultiplierSelect, this.checked);
+        });
+        
+        multiStoreCheckbox.addEventListener('change', function() {
+            updateMultiplierOptions(multiMultiplierSelect, this.checked);
+        });
+        
+        editSingleStoreCheckbox.addEventListener('change', function() {
+            updateMultiplierOptions(editSingleMultiplierSelect, this.checked);
+        });
+        
+        editMultiStoreCheckbox.addEventListener('change', function() {
+            updateMultiplierOptions(editMultiMultiplierSelect, this.checked);
+        });
+
+        // Функция для получения коэффициента вечерней доплаты
+        function getEveningMultiplier() {
+            const now = new Date();
+            const hours = now.getHours();
+            // Доплата с 20:00 до 23:00
+            if (hours >= 20 && hours < 23) {
+                return 1.2;
+            }
+            return 1.0;
+        }
+
+        // Функция для обновления баннера вечернего времени
+        function updateEveningBanner() {
+            const now = new Date();
+            const hours = now.getHours();
+            const minutes = now.getMinutes();
+            const currentTime = hours + minutes / 60;
+            
+            // Скрываем баннер по умолчанию
+            eveningBanner.style.display = 'none';
+            
+            // Баннер-предупреждение с 19:45 до 20:00
+            if (currentTime >= 19.75 && currentTime < 20) {
+                eveningBanner.style.display = 'flex';
+                eveningBannerText.textContent = 'Скоро, с 20:00 начнется доплата 20% за вечернее время';
+            }
+            // Баннер активности с 20:00 до 23:00
+            else if (currentTime >= 20 && currentTime < 23) {
+                eveningBanner.style.display = 'flex';
+                eveningBannerText.textContent = 'Сейчас действует доплата 20% за вечернее время (20:00-23:00)';
+            }
+            // После 23:00 баннер скрыт
+        }
+
+        // Запуск периодического обновления баннера
+        setInterval(updateEveningBanner, 30000); // каждые 30 секунд
 
         // Функция для показа уведомлений
         function showNotification(title, message, type = 'info') {
@@ -2270,6 +2454,9 @@
             // Инициализация настроек цели
             initGoalSettings();
             updateGoalDisplay();
+            
+            // Инициализация баннера вечернего времени
+            updateEveningBanner();
             
             // Проверка аутентификации каждые 5 минут
             setInterval(async () => {
@@ -2707,11 +2894,16 @@
                 // Редактирование одиночного заказа
                 document.getElementById('editSingleWeight').value = order.weight;
                 document.getElementById('editSingleDistance').value = order.distance;
-                document.getElementById('editSingleMultiplier').value = order.multiplier;
+                // Устанавливаем чекбокс магазина и обновляем мультипликатор
+                editSingleStoreCheckbox.checked = order.storeOrder || false;
+                updateMultiplierOptions(editSingleMultiplierSelect, editSingleStoreCheckbox.checked);
+                editSingleMultiplierSelect.value = order.multiplier;
                 editSingleOrderModal.style.display = 'flex';
             } else if (order.orderType === 'multi') {
                 // Редактирование мультизаказа
                 document.getElementById('editOrderCount').value = order.orderCount;
+                editMultiStoreCheckbox.checked = order.storeOrder || false;
+                updateMultiplierOptions(editMultiMultiplierSelect, editMultiStoreCheckbox.checked);
                 document.getElementById('editMultiMultiplier').value = order.multiplier;
                 updateEditMultiOrderInputs(order.orderCount, order.orders || []);
                 editMultiOrderModal.style.display = 'flex';
@@ -2731,6 +2923,7 @@
             const weight = parseFloat(document.getElementById('editSingleWeight').value);
             const distance = parseFloat(document.getElementById('editSingleDistance').value);
             const multiplier = parseFloat(document.getElementById('editSingleMultiplier').value);
+            const storeOrder = editSingleStoreCheckbox.checked;
             
             if (isNaN(weight) || isNaN(distance) || weight <= 0 || distance <= 0) {
                 showNotification('Ошибка', 'Пожалуйста, введите корректные данные', 'error');
@@ -2748,12 +2941,13 @@
             // Обновляем заказ
             ordersHistory[currentOrderIndex] = {
                 ...oldOrder,
-                type: `Одиночный заказ (${multiplier}x)`,
+                type: `Одиночный заказ (${multiplier}x)${storeOrder ? ' [П🟢]' : ''}`,
                 amount: totalAmount,
                 weight: weight,
                 distance: distance,
                 multiplier: multiplier,
-                ratingBonus: ratingBonus
+                ratingBonus: ratingBonus,
+                storeOrder: storeOrder
             };
             
             // Обновляем общую сумму
@@ -2777,6 +2971,7 @@
             
             const orderCount = parseInt(document.getElementById('editOrderCount').value);
             const multiplier = parseFloat(document.getElementById('editMultiMultiplier').value);
+            const storeOrder = editMultiStoreCheckbox.checked;
             let isValid = true;
             const orders = [];
             
@@ -2826,12 +3021,13 @@
             // Обновляем заказ
             ordersHistory[currentOrderIndex] = {
                 ...oldOrder,
-                type: `Мультизаказ (${orderCount}, ${multiplier}x)`,
+                type: `Мультизаказ (${orderCount}, ${multiplier}x)${storeOrder ? ' [П🟢]' : ''}`,
                 amount: totalAmount,
                 orderCount: orderCount,
                 multiplier: multiplier,
                 orders: orders,
-                ratingBonus: ratingBonus
+                ratingBonus: ratingBonus,
+                storeOrder: storeOrder
             };
             
             // Обновляем общую сумму
@@ -2901,6 +3097,10 @@
                         <div class="order-details-row">
                             <span class="order-details-label">Бонус за рейтинг:</span>
                             <span class="order-details-value">${order.ratingBonus || 0} ₽</span>
+                        </div>
+                        <div class="order-details-row">
+                            <span class="order-details-label">Магазин П🟢:</span>
+                            <span class="order-details-value">${order.storeOrder ? 'Да' : 'Нет'}</span>
                         </div>
                         <div class="order-details-row">
                             <span class="order-details-label">Дата:</span>
@@ -2982,16 +3182,18 @@
             showNotification('Заказ удален', 'Заказ успешно удален из истории', 'success');
         }
         
-        // Расчет стоимости заказа
+        // Расчет стоимости заказа с учетом вечерней доплаты
         function calculateOrder(weight, distance, multiplier = 1) {
             const rate = rates[courierType];
-            const pickupFee = rate.pickup * multiplier;
-            const deliveryFee = rate.delivery * multiplier;
-            const distanceFee = distance * rate.distance * multiplier;
+            const eveningMultiplier = getEveningMultiplier();
+            
+            const pickupFee = rate.pickup * multiplier * eveningMultiplier;
+            const deliveryFee = rate.delivery * multiplier * eveningMultiplier;
+            const distanceFee = distance * rate.distance * multiplier * eveningMultiplier;
             
             // Используем функцию getWeightRate для динамического определения стоимости веса
             const weightRate = getWeightRate(courierType, weight);
-            const weightFee = weight * weightRate * multiplier;
+            const weightFee = weight * weightRate * multiplier * eveningMultiplier;
             
             return pickupFee + deliveryFee + distanceFee + weightFee;
         }
@@ -3015,6 +3217,7 @@
                 courierType: rates[courierType].name,
                 courierTypeName: courierType,
                 timestamp: new Date().getTime(),
+                storeOrder: details.storeOrder || false,
                 ...details
             };
             
@@ -3123,7 +3326,9 @@
             
             document.getElementById('singleWeight').value = '';
             document.getElementById('singleDistance').value = '';
-            document.getElementById('singleMultiplier').value = '1';
+            singleStoreCheckbox.checked = false;
+            updateMultiplierOptions(singleMultiplierSelect, false);
+            singleMultiplierSelect.value = '1';
             singleOrderModal.style.display = 'flex';
         });
         
@@ -3135,6 +3340,8 @@
             }
             
             orderCountSelect.value = '2';
+            multiStoreCheckbox.checked = false;
+            updateMultiplierOptions(multiMultiplierSelect, false);
             document.getElementById('multiMultiplier').value = '1';
             updateMultiOrderInputs();
             multiOrderModal.style.display = 'flex';
@@ -3148,6 +3355,7 @@
             const weight = parseFloat(document.getElementById('singleWeight').value);
             const distance = parseFloat(document.getElementById('singleDistance').value);
             const multiplier = parseFloat(document.getElementById('singleMultiplier').value);
+            const storeOrder = singleStoreCheckbox.checked;
             
             if (isNaN(weight) || isNaN(distance) || weight <= 0 || distance <= 0) {
                 showNotification('Ошибка', 'Пожалуйста, введите корректные данные', 'error');
@@ -3156,29 +3364,30 @@
             
             if (hasActiveSubscription) {
                 // Если есть подписка, сразу показываем результат
-                showSingleOrderResult(weight, distance, multiplier);
+                showSingleOrderResult(weight, distance, multiplier, storeOrder);
             } else {
                 // Если нет подписки, запускаем таймер
                 startCalculationTimer('single', () => {
-                    showSingleOrderResult(weight, distance, multiplier);
+                    showSingleOrderResult(weight, distance, multiplier, storeOrder);
                 });
             }
         });
         
-        function showSingleOrderResult(weight, distance, multiplier) {
+        function showSingleOrderResult(weight, distance, multiplier, storeOrder) {
             const orderAmount = calculateOrder(weight, distance, multiplier);
             const ratingBonus = calculateRatingBonus(courierRating);
             const totalAmount = orderAmount + ratingBonus;
             
-            document.getElementById('resultText').textContent = `Стоимость заказа: ${totalAmount.toFixed(2)} ₽ (${multiplier}x, включая бонус за рейтинг: ${ratingBonus} ₽)`;
+            document.getElementById('resultText').textContent = `Стоимость заказа: ${totalAmount.toFixed(2)} ₽ (${multiplier}x, включая бонус за рейтинг: ${ratingBonus} ₽)${storeOrder ? ' + магазин П🟢' : ''}`;
             singleOrderModal.style.display = 'none';
             resultModal.style.display = 'flex';
             
-            saveToHistory(`Одиночный заказ (${multiplier}x)`, totalAmount, {
+            saveToHistory(`Одиночный заказ (${multiplier}x)${storeOrder ? ' [П🟢]' : ''}`, totalAmount, {
                 orderType: 'single',
                 weight: weight,
                 distance: distance,
-                multiplier: multiplier
+                multiplier: multiplier,
+                storeOrder: storeOrder
             });
             
             showNotification('Расчет завершен', `Стоимость заказа: ${totalAmount.toFixed(2)} ₽`, 'success');
@@ -3187,6 +3396,7 @@
         calculateMultiBtn.addEventListener('click', () => {
             const orderCount = parseInt(orderCountSelect.value);
             const multiplier = parseFloat(document.getElementById('multiMultiplier').value);
+            const storeOrder = multiStoreCheckbox.checked;
             let isValid = true;
             const orders = [];
             
@@ -3209,16 +3419,16 @@
             
             if (hasActiveSubscription) {
                 // Если есть подписка, сразу показываем результат
-                showMultiOrderResult(orderCount, multiplier, orders);
+                showMultiOrderResult(orderCount, multiplier, orders, storeOrder);
             } else {
                 // Если нет подписки, запускаем таймер
                 startCalculationTimer('multi', () => {
-                    showMultiOrderResult(orderCount, multiplier, orders);
+                    showMultiOrderResult(orderCount, multiplier, orders, storeOrder);
                 });
             }
         });
         
-        function showMultiOrderResult(orderCount, multiplier, orders) {
+        function showMultiOrderResult(orderCount, multiplier, orders, storeOrder) {
             let totalAmount = 0;
             let isFirstOrder = true;
             const rate = rates[courierType];
@@ -3231,10 +3441,11 @@
                     totalAmount += calculateOrder(order.weight, order.distance, multiplier);
                     isFirstOrder = false;
                 } else {
-                    // Для последующих: вручение + расстояние + вес
-                    totalAmount += (rate.delivery * multiplier) + 
-                                  (order.distance * rate.distance * multiplier) + 
-                                  (order.weight * currentWeightRate * multiplier);
+                    // Для последующих: вручение + расстояние + вес (с вечерней доплатой)
+                    const eveningMultiplier = getEveningMultiplier();
+                    totalAmount += (rate.delivery * multiplier * eveningMultiplier) + 
+                                  (order.distance * rate.distance * multiplier * eveningMultiplier) + 
+                                  (order.weight * currentWeightRate * multiplier * eveningMultiplier);
                 }
             }
             
@@ -3242,15 +3453,16 @@
             totalAmount += ratingBonus;
             
             document.getElementById('resultText').textContent = 
-                `Стоимость ${orderCount} заказов (${multiplier}x): ${totalAmount.toFixed(2)} ₽ (включая бонус за рейтинг: ${ratingBonus} ₽)`;
+                `Стоимость ${orderCount} заказов (${multiplier}x): ${totalAmount.toFixed(2)} ₽ (включая бонус за рейтинг: ${ratingBonus} ₽)${storeOrder ? ' + магазин П🟢' : ''}`;
             multiOrderModal.style.display = 'none';
             resultModal.style.display = 'flex';
             
-            saveToHistory(`Мультизаказ (${orderCount}, ${multiplier}x)`, totalAmount, {
+            saveToHistory(`Мультизаказ (${orderCount}, ${multiplier}x)${storeOrder ? ' [П🟢]' : ''}`, totalAmount, {
                 orderType: 'multi',
                 orderCount: orderCount,
                 multiplier: multiplier,
-                orders: orders
+                orders: orders,
+                storeOrder: storeOrder
             });
             
             showNotification('Расчет завершен', `Стоимость ${orderCount} заказов: ${totalAmount.toFixed(2)} ₽`, 'success');
