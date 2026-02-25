@@ -233,6 +233,7 @@
             display: flex;
             align-items: center;
             gap: 8px;
+            cursor: pointer;
         }
         
         .courier-info-item i {
@@ -850,6 +851,8 @@
             padding: 15px;
             border-radius: 10px;
             background-color: var(--light);
+            flex-direction: column;
+            gap: 5px;
         }
         
         body.dark-theme .subscription-status {
@@ -869,6 +872,19 @@
         
         .status-inactive {
             background-color: var(--danger);
+        }
+        
+        .status-main {
+            display: flex;
+            align-items: center;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+        
+        .subscription-days {
+            font-size: 0.95rem;
+            color: var(--primary);
+            font-weight: 500;
         }
         
         .subscription-plans {
@@ -1570,8 +1586,11 @@
             </div>
             <div class="subscription-body">
                 <div class="subscription-status" id="subscriptionStatus">
-                    <div class="status-indicator status-inactive" id="statusIndicator"></div>
-                    <span id="statusText">Подписка не активна</span>
+                    <div class="status-main">
+                        <div class="status-indicator status-inactive" id="statusIndicator"></div>
+                        <span id="statusText">Подписка не активна</span>
+                    </div>
+                    <div class="subscription-days" id="subscriptionDaysText"></div>
                 </div>
                 
                 <div class="subscription-plans">
@@ -1923,6 +1942,7 @@
         const subscriptionModal = document.getElementById('subscriptionModal');
         const statusIndicator = document.getElementById('statusIndicator');
         const statusText = document.getElementById('statusText');
+        const subscriptionDaysText = document.getElementById('subscriptionDaysText');
         const buyMonthBtn = document.getElementById('buyMonthBtn');
         const buyHalfYearBtn = document.getElementById('buyHalfYearBtn');
         const closeSubscriptionBtn = document.getElementById('closeSubscriptionBtn');
@@ -2012,6 +2032,9 @@
         let totalEarnings = parseFloat(localStorage.getItem('totalEarnings')) || 0;
         let currentOrderIndex = -1;
         let hasActiveSubscription = false;
+        let subscriptionDaysRemaining = 0;
+        let subscriptionType = null;
+        let subscriptionStartDate = null;
         let isUserBanned = false;
         let lastCalculationTime = 0;
         let calculationTimer = null;
@@ -2197,19 +2220,96 @@
             }
         }
         
+        // Функция для расчета оставшихся дней подписки
+        function calculateRemainingDays(startDate, type) {
+            if (!startDate || !type) return 0;
+            
+            const start = new Date(startDate);
+            const today = new Date();
+            
+            // Убираем время из дат для корректного сравнения
+            start.setHours(0, 0, 0, 0);
+            today.setHours(0, 0, 0, 0);
+            
+            const daysPassed = Math.floor((today - start) / (1000 * 60 * 60 * 24));
+            
+            let totalDays = 0;
+            if (type === 'month') {
+                totalDays = 30;
+            } else if (type === 'halfyear') {
+                totalDays = 183;
+            }
+            
+            const remaining = Math.max(0, totalDays - daysPassed);
+            return remaining;
+        }
+        
         async function checkSubscription(login) {
             const users = await loadUsers();
             const user = users.find(u => u.login === login);
             
-            if (user && user.subs === 'on') {
-                hasActiveSubscription = true;
-                return true;
+            if (user && user.subscription && user.subscription.isActive && user.subscription.startDate && user.subscription.type) {
+                // Вычисляем оставшиеся дни
+                const remaining = calculateRemainingDays(user.subscription.startDate, user.subscription.type);
+                
+                if (remaining > 0) {
+                    hasActiveSubscription = true;
+                    subscriptionDaysRemaining = remaining;
+                    subscriptionType = user.subscription.type;
+                    subscriptionStartDate = user.subscription.startDate;
+                    return true;
+                } else {
+                    // Подписка истекла
+                    hasActiveSubscription = false;
+                    subscriptionDaysRemaining = 0;
+                    subscriptionType = null;
+                    subscriptionStartDate = null;
+                    return false;
+                }
             }
             
             hasActiveSubscription = false;
+            subscriptionDaysRemaining = 0;
+            subscriptionType = null;
+            subscriptionStartDate = null;
             return false;
         }
-
+        
+        function updateSubscriptionStatus() {
+            if (hasActiveSubscription) {
+                statusIndicator.classList.remove('status-inactive');
+                statusIndicator.classList.add('status-active');
+                
+                // Определяем текст в зависимости от типа подписки
+                let typeText = '';
+                if (subscriptionType === 'month') {
+                    typeText = 'месячная';
+                } else if (subscriptionType === 'halfyear') {
+                    typeText = 'полугодовая';
+                }
+                
+                statusText.textContent = `Подписка активна (${typeText})`;
+                
+                // Показываем оставшиеся дни
+                const daysWord = getDaysWord(subscriptionDaysRemaining);
+                subscriptionDaysText.textContent = `Осталось ${subscriptionDaysRemaining} ${daysWord}`;
+            } else {
+                statusIndicator.classList.remove('status-active');
+                statusIndicator.classList.add('status-inactive');
+                statusText.textContent = 'Подписка не активна';
+                subscriptionDaysText.textContent = '';
+            }
+        }
+        
+        function getDaysWord(days) {
+            if (days >= 11 && days <= 19) return 'дней';
+            
+            const lastDigit = days % 10;
+            if (lastDigit === 1) return 'день';
+            if (lastDigit >= 2 && lastDigit <= 4) return 'дня';
+            return 'дней';
+        }
+        
         async function checkBanStatus(login) {
             const users = await loadUsers();
             const user = users.find(u => u.login === login);
@@ -2248,18 +2348,6 @@
             }
             
             return false;
-        }
-        
-        function updateSubscriptionStatus() {
-            if (hasActiveSubscription) {
-                statusIndicator.classList.remove('status-inactive');
-                statusIndicator.classList.add('status-active');
-                statusText.textContent = 'Подписка активна';
-            } else {
-                statusIndicator.classList.remove('status-active');
-                statusIndicator.classList.add('status-inactive');
-                statusText.textContent = 'Подписка не активна';
-            }
         }
         
         function logout() {
@@ -3012,9 +3100,6 @@
             showNotification('Заказ удален', 'Заказ успешно удален из истории', 'success');
         }
         
-        // ------------------------------------------------------------
-        //   ИЗМЕНЁННАЯ ФУНКЦИЯ РАСЧЁТА — УЧИТЫВАЕТ ВЕЧЕРНЮЮ ДОПЛАТУ ТОЛЬКО ДЛЯ БАЗОВЫХ ТАРИФОВ
-        // ------------------------------------------------------------
         function calculateOrder(weight, distance, multiplier, storeOrder = false) {
             const rate = rates[courierType];
             const eveningMultiplier = getEveningMultiplier(multiplier, storeOrder);
