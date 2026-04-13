@@ -567,7 +567,6 @@
         .history-item {
             display: flex;
             justify-content: space-between;
-            font-size: 0.9rem;
             align-items: center;
             padding: 12px 15px;
             background-color: var(--light);
@@ -2774,7 +2773,7 @@
                         <div style="display: flex; align-items: center; gap: 10px; flex-grow: 1;">
                             <i class="fas ${orderIcon}" style="color: var(--primary);"></i>
                             <span style="flex-grow: 1;">${order.type}</span>
-                            <span style="font-weight: 600; margin-right: 10px;">${order.amount.toFixed(2)} ₽</span>
+                            <span style="font-weight: 600; margin-right: 10px; white-space: nowrap;">${order.amount.toFixed(2)} ₽</span>
                         </div>
                         <div class="history-item-actions">
                             ${order.orderType !== 'return' ? `<button class="edit-btn" data-index="${index}" title="Редактировать">
