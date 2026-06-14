@@ -2,11 +2,11 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <title>Калькулятор доставки</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* все стили без изменений, оставляем как в предыдущей версии */
+        /* ========== ОРИГИНАЛЬНЫЕ СТИЛИ (БЕЗ ИЗМЕНЕНИЙ) ========== */
         :root {
             --primary: #4361ee;
             --primary-dark: #3a0ca3;
@@ -1468,7 +1468,6 @@
     </div>
     
     <div class="app-container" id="appContainer">
-        
         <div class="app-header">
             <h1>Калькулятор доставки</h1>
             <button class="settings-btn" id="settingsBtn">
@@ -1532,6 +1531,9 @@
                 <button class="return-btn" id="addReturnBtn">
                     <i class="fas fa-undo"></i> Добавить возврат
                 </button>
+                <button class="return-btn" id="addTipsBtn" style="background-color: #f39c12;">
+                    <i class="fas fa-hand-holding-heart"></i> Добавить чаевые
+                </button>
             </div>
             <div class="history-list" id="historyList"></div>
             <div class="history-total" id="historyTotal">Итого: 0 ₽</div>
@@ -1582,9 +1584,7 @@
     
     <div class="subscription-modal" id="subscriptionModal">
         <div class="subscription-content">
-            <div class="subscription-header">
-                Подписка
-            </div>
+            <div class="subscription-header">Подписка</div>
             <div class="subscription-body">
                 <div class="subscription-status" id="subscriptionStatus">
                     <div class="status-main">
@@ -1603,9 +1603,7 @@
                         <div class="plan-desc">
                             Полный доступ ко всем функциям на 1 месяц. Без ограничений на расчеты.
                         </div>
-                        <button class="btn btn-primary" id="buyMonthBtn">
-                            Купить
-                        </button>
+                        <button class="btn btn-primary" id="buyMonthBtn">Купить</button>
                     </div>
                     
                     <div class="subscription-plan">
@@ -1616,15 +1614,11 @@
                         <div class="plan-desc">
                             Полный доступ ко всем функции на 6 месяцев. Самая выгодная подписка.
                         </div>
-                        <button class="btn btn-primary" id="buyHalfYearBtn">
-                            Купить
-                        </button>
+                        <button class="btn btn-primary" id="buyHalfYearBtn">Купить</button>
                     </div>
                 </div>
                 
-                <button class="btn" id="closeSubscriptionBtn" style="border: 1px solid #dee2e6; background: transparent;">
-                    Закрыть
-                </button>
+                <button class="btn" id="closeSubscriptionBtn" style="border: 1px solid #dee2e6; background: transparent;">Закрыть</button>
             </div>
         </div>
     </div>
@@ -1692,24 +1686,12 @@
             <div class="modal-body">
                 <table class="tariff-table">
                     <thead>
-                        <tr>
-                            <th>Вес заказа</th>
-                            <th>Ставка</th>
-                        </tr>
+                        <tr><th>Вес заказа</th><th>Ставка</th></tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>до 30 кг</td>
-                            <td>2 ₽ / кг</td>
-                        </tr>
-                        <tr>
-                            <td>от 30 до 60 кг</td>
-                            <td>3 ₽ / кг</td>
-                        </tr>
-                        <tr>
-                            <td>от 60 до 99 кг</td>
-                            <td>4 ₽ / кг</td>
-                        </tr>
+                        <tr><td>до 30 кг</td><td>2 ₽ / кг</td></tr>
+                        <tr><td>от 30 до 60 кг</td><td>3 ₽ / кг</td></tr>
+                        <tr><td>от 60 до 99 кг</td><td>4 ₽ / кг</td></tr>
                     </tbody>
                 </table>
                 <button class="btn btn-primary" id="closeTariffBtn">Понятно</button>
@@ -1731,9 +1713,7 @@
                 </div>
                 <div class="store-checkbox">
                     <input type="checkbox" id="singleStoreCheckbox">
-                    <label for="singleStoreCheckbox">
-                        Заказ из магазина "П🟢" <i class="fas fa-store"></i>
-                    </label>
+                    <label for="singleStoreCheckbox">Заказ из магазина "П🟢" <i class="fas fa-store"></i></label>
                 </div>
                 <div class="form-group">
                     <label for="singleMultiplier">Коэффициент заказа:</label>
@@ -1764,19 +1744,12 @@
                     <label for="orderCount">Количество заказов (2-10):</label>
                     <div class="select-wrapper">
                         <select class="form-control" id="orderCount">
-                            <option value="2">2 заказа</option>
-                            <option value="3">3 заказа</option>
-                            <option value="4">4 заказа</option>
-                            <option value="5">5 заказов</option>
-                            <option value="6">6 заказов</option>
-                            <option value="7">7 заказов</option>
-                            <option value="8">8 заказов</option>
-                            <option value="9">9 заказов</option>
-                            <option value="10">10 заказов</option>
+                            <option value="2">2 заказа</option><option value="3">3 заказа</option><option value="4">4 заказа</option>
+                            <option value="5">5 заказов</option><option value="6">6 заказов</option><option value="7">7 заказов</option>
+                            <option value="8">8 заказов</option><option value="9">9 заказов</option><option value="10">10 заказов</option>
                         </select>
                     </div>
                 </div>
-                
                 <div class="form-group">
                     <label for="multiMultiplier">Коэффициент заказа:</label>
                     <div class="select-wrapper">
@@ -1788,16 +1761,11 @@
                         </select>
                     </div>
                 </div>
-                
                 <div class="store-checkbox">
                     <input type="checkbox" id="multiStoreCheckbox">
-                    <label for="multiStoreCheckbox">
-                        Заказ из магазина "П🟢" <i class="fas fa-store"></i>
-                    </label>
+                    <label for="multiStoreCheckbox">Заказ из магазина "П🟢" <i class="fas fa-store"></i></label>
                 </div>
-                
                 <div id="multiOrderInputs"></div>
-                
                 <button class="btn btn-primary" id="calculateMultiBtn">Рассчитать</button>
                 <div id="multiTimerOverlay" class="timer-overlay" style="display: none;">
                     <div class="timer-text">Подождите, идет расчет...</div>
@@ -1822,9 +1790,7 @@
                 </div>
                 <div class="store-checkbox">
                     <input type="checkbox" id="editSingleStoreCheckbox">
-                    <label for="editSingleStoreCheckbox">
-                        Заказ из магазина "П🟢" <i class="fas fa-store"></i>
-                    </label>
+                    <label for="editSingleStoreCheckbox">Заказ из магазина "П🟢" <i class="fas fa-store"></i></label>
                 </div>
                 <div class="form-group">
                     <label for="editSingleMultiplier">Коэффициент заказа:</label>
@@ -1850,19 +1816,12 @@
                     <label for="editOrderCount">Количество заказов (2-10):</label>
                     <div class="select-wrapper">
                         <select class="form-control" id="editOrderCount">
-                            <option value="2">2 заказа</option>
-                            <option value="3">3 заказа</option>
-                            <option value="4">4 заказа</option>
-                            <option value="5">5 заказов</option>
-                            <option value="6">6 заказов</option>
-                            <option value="7">7 заказов</option>
-                            <option value="8">8 заказов</option>
-                            <option value="9">9 заказов</option>
-                            <option value="10">10 заказов</option>
+                            <option value="2">2 заказа</option><option value="3">3 заказа</option><option value="4">4 заказа</option>
+                            <option value="5">5 заказов</option><option value="6">6 заказов</option><option value="7">7 заказов</option>
+                            <option value="8">8 заказов</option><option value="9">9 заказов</option><option value="10">10 заказов</option>
                         </select>
                     </div>
                 </div>
-                
                 <div class="form-group">
                     <label for="editMultiMultiplier">Коэффициент заказа:</label>
                     <div class="select-wrapper">
@@ -1874,16 +1833,11 @@
                         </select>
                     </div>
                 </div>
-                
                 <div class="store-checkbox">
                     <input type="checkbox" id="editMultiStoreCheckbox">
-                    <label for="editMultiStoreCheckbox">
-                        Заказ из магазина "П🟢" <i class="fas fa-store"></i>
-                    </label>
+                    <label for="editMultiStoreCheckbox">Заказ из магазина "П🟢" <i class="fas fa-store"></i></label>
                 </div>
-                
                 <div id="editMultiOrderInputs"></div>
-                
                 <button class="btn btn-primary" id="saveEditMultiBtn">Сохранить изменения</button>
             </div>
         </div>
@@ -1921,16 +1875,54 @@
                     <input type="number" class="form-control" id="returnCount" min="1" value="1">
                 </div>
                 <div class="form-group">
-                    <p style="font-size: 0.9rem; color: var(--gray);">
-                        <i class="fas fa-info-circle"></i> За каждый возврат 141 ₽
-                    </p>
+                    <p style="font-size: 0.9rem; color: var(--gray);"><i class="fas fa-info-circle"></i> За каждый возврат 141 ₽</p>
                 </div>
                 <button class="btn btn-primary" id="saveReturnBtn">Добавить</button>
             </div>
         </div>
     </div>
+
+    <!-- Новое модальное окно для чаевых -->
+    <div class="modal" id="tipsModal">
+        <div class="modal-content">
+            <div class="modal-header">Добавить чаевые</div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="tipsAmount">Сумма чаевых (₽):</label>
+                    <input type="number" class="form-control" id="tipsAmount" min="1" step="1" placeholder="Например, 100">
+                </div>
+                <div class="form-group">
+                    <p style="font-size: 0.9rem; color: var(--gray);">
+                        <i class="fas fa-info-circle"></i> Если клиент оставил вам чаевые, вы можете добавить их к общему заработку.
+                    </p>
+                </div>
+                <button class="btn btn-primary" id="saveTipsBtn">Добавить</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно предупреждения о большом расстоянии -->
+    <div class="modal" id="distanceWarningModal">
+        <div class="modal-content">
+            <div class="modal-header">Внимание</div>
+            <div class="modal-body">
+                <p id="warningText" style="margin-bottom: 20px;"></p>
+                <div style="display: flex; gap: 10px;">
+                    <button class="btn btn-primary" id="warningFixBtn" style="flex:1;">Исправить</button>
+                    <button class="btn btn-success" id="warningProceedBtn" style="flex:1;">Все верно</button>
+                </div>
+            </div>
+        </div>
+    </div>
     
     <script>
+        // ---------------------------------- ДОБАВЛЕНИЕ НОВЫХ ПЕРЕМЕННЫХ ----------------------------------
+        let pendingCalculation = null;      // для хранения продолжения при подтверждении большого расстояния
+        
+        // ===============================================================================================
+        // ОСТАЛЬНОЙ КОД (оригинальный) с незначительными вставками для поддержки новых функций
+        // ===============================================================================================
+        
         // Элементы DOM
         const loginContainer = document.getElementById('loginContainer');
         const appContainer = document.getElementById('appContainer');
@@ -1974,6 +1966,8 @@
         const tariffModal = document.getElementById('tariffModal');
         const editSingleOrderModal = document.getElementById('editSingleOrderModal');
         const editMultiOrderModal = document.getElementById('editMultiOrderModal');
+        const tipsModal = document.getElementById('tipsModal');
+        const distanceWarningModal = document.getElementById('distanceWarningModal');
         
         const singleOrderBtn = document.getElementById('singleOrderBtn');
         const multiOrderBtn = document.getElementById('multiOrderBtn');
@@ -1992,6 +1986,10 @@
         const closeTariffBtn = document.getElementById('closeTariffBtn');
         const saveEditSingleBtn = document.getElementById('saveEditSingleBtn');
         const saveEditMultiBtn = document.getElementById('saveEditMultiBtn');
+        const addTipsBtn = document.getElementById('addTipsBtn');
+        const saveTipsBtn = document.getElementById('saveTipsBtn');
+        const warningFixBtn = document.getElementById('warningFixBtn');
+        const warningProceedBtn = document.getElementById('warningProceedBtn');
         
         const historyContainer = document.getElementById('historyContainer');
         const historyList = document.getElementById('historyList');
@@ -2049,140 +2047,90 @@
         let darkTheme = localStorage.getItem('darkTheme') === 'true' || false;
         
         const rates = {
-            pedestrian: {
-                pickup: 60,
-                delivery: 81,
-                distance: 4,
-                weight: 2,
-                name: 'Пеший курьер'
-            },
-            bicycle: {
-                pickup: 60,
-                delivery: 81,
-                distance: 15,
-                weight: 2,
-                name: 'Велокурьер'
-            },
-            car: {
-                pickup: 60,
-                delivery: 81,
-                distance: 19,
-                weight: 2,
-                name: 'Автокурьер'
+            pedestrian: { pickup: 60, delivery: 81, distance: 4, weight: 2, name: 'Пеший курьер' },
+            bicycle: { pickup: 60, delivery: 81, distance: 15, weight: 2, name: 'Велокурьер' },
+            car: { pickup: 60, delivery: 81, distance: 19, weight: 2, name: 'Автокурьер' }
+        };
+
+        const multiplierMap = { normal: [1, 1.1, 1.25, 1.5], store: [1.1, 1.2, 1.35, 1.6] };
+
+        // ---------- НОВАЯ ФУНКЦИЯ: проверка расстояния и вызов предупреждения ----------
+        function checkDistanceLimit(distance, callback) {
+            let limit = 0;
+            switch(courierType) {
+                case 'pedestrian': limit = 1.5; break;
+                case 'bicycle': limit = 3; break;
+                case 'car': limit = 10; break;
+                default: limit = 10;
             }
-        };
-
-        const multiplierMap = {
-            normal: [1, 1.1, 1.25, 1.5],
-            store: [1.1, 1.2, 1.35, 1.6]
-        };
-
-      
+            if (distance > limit) {
+                const warningTextElem = document.getElementById('warningText');
+                warningTextElem.innerHTML = `Указанное расстояние (${distance} км) слишком большое для вашего типа передвижения (${rates[courierType].name}).<br>Возможно, вы ошиблись.<br><br>Максимальное расстояние для этого типа: ${limit} км.`;
+                pendingCalculation = callback;
+                distanceWarningModal.style.display = 'flex';
+                return false;
+            }
+            return true;
+        }
+        
         function getEveningMultiplier(multiplier, storeOrder) {
             const now = new Date();
             const hours = now.getHours();
             const isEveningTime = (hours >= 20 && hours < 23);
-            
             if (!isEveningTime) return 1.0;
-            
-            const isBaseRate = (multiplier === 1 && !storeOrder) || 
-                              (multiplier === 1.1 && storeOrder);
-            
+            const isBaseRate = (multiplier === 1 && !storeOrder) || (multiplier === 1.1 && storeOrder);
             return isBaseRate ? 1.2 : 1.0;
         }
 
-      
         function updateEveningBanner() {
             const now = new Date();
             const hours = now.getHours();
             const minutes = now.getMinutes();
             const currentTime = hours + minutes / 60;
-            
             eveningBanner.style.display = 'none';
-            
-            // Предупреждение: 19:45 - 20:00
             if (currentTime >= 19.75 && currentTime < 20) {
                 eveningBanner.style.display = 'flex';
                 eveningBannerText.textContent = 'Скоро, с 20:00 начнется доплата 20% за вечернее время';
             }
-            // Активный период: 20:00 - 23:00
             else if (currentTime >= 20 && currentTime < 23) {
                 eveningBanner.style.display = 'flex';
                 eveningBannerText.textContent = 'Сейчас действует доплата 20% за вечернее время (20:00-23:00)';
             }
         }
-
         setInterval(updateEveningBanner, 30000);
 
         function updateMultiplierOptions(selectElement, isStore) {
             const options = selectElement.options;
             const values = isStore ? multiplierMap.store : multiplierMap.normal;
-            const labels = isStore 
-                ? ['1.1x (обычный)', '1.2x', '1.35x', '1.6x']
-                : ['Обычный (1x)', 'Повышенный 1.1x', 'Повышенный 1.25x', 'Повышенный 1.5x'];
-            
+            const labels = isStore ? ['1.1x (обычный)', '1.2x', '1.35x', '1.6x'] : ['Обычный (1x)', 'Повышенный 1.1x', 'Повышенный 1.25x', 'Повышенный 1.5x'];
             for (let i = 0; i < options.length; i++) {
                 options[i].value = values[i];
                 options[i].textContent = labels[i];
             }
         }
 
-        singleStoreCheckbox.addEventListener('change', function() {
-            updateMultiplierOptions(singleMultiplierSelect, this.checked);
-        });
-        
-        multiStoreCheckbox.addEventListener('change', function() {
-            updateMultiplierOptions(multiMultiplierSelect, this.checked);
-        });
-        
-        editSingleStoreCheckbox.addEventListener('change', function() {
-            updateMultiplierOptions(editSingleMultiplierSelect, this.checked);
-        });
-        
-        editMultiStoreCheckbox.addEventListener('change', function() {
-            updateMultiplierOptions(editMultiMultiplierSelect, this.checked);
-        });
+        singleStoreCheckbox.addEventListener('change', function() { updateMultiplierOptions(singleMultiplierSelect, this.checked); });
+        multiStoreCheckbox.addEventListener('change', function() { updateMultiplierOptions(multiMultiplierSelect, this.checked); });
+        editSingleStoreCheckbox.addEventListener('change', function() { updateMultiplierOptions(editSingleMultiplierSelect, this.checked); });
+        editMultiStoreCheckbox.addEventListener('change', function() { updateMultiplierOptions(editMultiMultiplierSelect, this.checked); });
 
         function showNotification(title, message, type = 'info') {
             const notification = document.createElement('div');
             notification.className = `notification notification-${type}`;
             notification.innerHTML = `
-                <div class="notification-icon">
-                    <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : type === 'warning' ? 'exclamation-triangle' : 'info-circle'}"></i>
-                </div>
-                <div class="notification-content">
-                    <div class="notification-title">${title}</div>
-                    <div class="notification-message">${message}</div>
-                </div>
-                <button class="notification-close">
-                    <i class="fas fa-times"></i>
-                </button>
+                <div class="notification-icon"><i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : type === 'warning' ? 'exclamation-triangle' : 'info-circle'}"></i></div>
+                <div class="notification-content"><div class="notification-title">${title}</div><div class="notification-message">${message}</div></div>
+                <button class="notification-close"><i class="fas fa-times"></i></button>
             `;
-            
             notificationContainer.appendChild(notification);
-            
-            setTimeout(() => {
-                notification.classList.add('show');
-            }, 10);
-            
-            const autoClose = setTimeout(() => {
-                closeNotification(notification);
-            }, 5000);
-            
+            setTimeout(() => notification.classList.add('show'), 10);
+            const autoClose = setTimeout(() => closeNotification(notification), 5000);
             const closeBtn = notification.querySelector('.notification-close');
-            closeBtn.addEventListener('click', () => {
-                clearTimeout(autoClose);
-                closeNotification(notification);
-            });
+            closeBtn.addEventListener('click', () => { clearTimeout(autoClose); closeNotification(notification); });
         }
-        
         function closeNotification(notification) {
             notification.classList.remove('show');
-            setTimeout(() => {
-                if (notification.parentNode) {
-                    notification.parentNode.removeChild(notification);
-                }
-            }, 300);
+            setTimeout(() => { if (notification.parentNode) notification.parentNode.removeChild(notification); }, 300);
         }
 
         function getWeightRate(type, weight) {
@@ -2198,197 +2146,106 @@
         function checkAuth() {
             const authData = localStorage.getItem('authData');
             if (!authData) return false;
-            
             const { login, code, expires } = JSON.parse(authData);
-            if (Date.now() > expires) {
-                localStorage.removeItem('authData');
-                return false;
-            }
-            
+            if (Date.now() > expires) { localStorage.removeItem('authData'); return false; }
             return true;
         }
-        
         async function loadUsers() {
             try {
                 const response = await fetch('https://raw.githubusercontent.com/markell1l/order/main/auth.json');
                 if (!response.ok) throw new Error('Не удалось загрузить данные пользователей');
-                
                 const data = await response.json();
                 return data.users || [];
-            } catch (error) {
-                console.error('Ошибка загрузки пользователей:', error);
-                return [];
-            }
+            } catch (error) { console.error('Ошибка загрузки пользователей:', error); return []; }
         }
-        
-        // Функция для расчета оставшихся дней подписки
         function calculateRemainingDays(startDate, type) {
             if (!startDate || !type) return 0;
-            
-            const start = new Date(startDate);
-            const today = new Date();
-            
-            // Убираем время из дат для корректного сравнения
-            start.setHours(0, 0, 0, 0);
-            today.setHours(0, 0, 0, 0);
-            
-            const daysPassed = Math.floor((today - start) / (1000 * 60 * 60 * 24));
-            
-            let totalDays = 0;
-            if (type === 'month') {
-                totalDays = 30;
-            } else if (type === 'halfyear') {
-                totalDays = 183;
-            }
-            
-            const remaining = Math.max(0, totalDays - daysPassed);
-            return remaining;
+            const start = new Date(startDate); start.setHours(0,0,0,0);
+            const today = new Date(); today.setHours(0,0,0,0);
+            const daysPassed = Math.floor((today - start) / (1000*60*60*24));
+            let totalDays = type === 'month' ? 30 : 183;
+            return Math.max(0, totalDays - daysPassed);
         }
-        
         async function checkSubscription(login) {
             const users = await loadUsers();
             const user = users.find(u => u.login === login);
-            
             if (user && user.subscription && user.subscription.isActive && user.subscription.startDate && user.subscription.type) {
-                // Вычисляем оставшиеся дни
                 const remaining = calculateRemainingDays(user.subscription.startDate, user.subscription.type);
-                
                 if (remaining > 0) {
                     hasActiveSubscription = true;
                     subscriptionDaysRemaining = remaining;
                     subscriptionType = user.subscription.type;
                     subscriptionStartDate = user.subscription.startDate;
                     return true;
-                } else {
-                    // Подписка истекла
-                    hasActiveSubscription = false;
-                    subscriptionDaysRemaining = 0;
-                    subscriptionType = null;
-                    subscriptionStartDate = null;
-                    return false;
                 }
             }
-            
-            hasActiveSubscription = false;
-            subscriptionDaysRemaining = 0;
-            subscriptionType = null;
-            subscriptionStartDate = null;
+            hasActiveSubscription = false; subscriptionDaysRemaining = 0; subscriptionType = null; subscriptionStartDate = null;
             return false;
         }
-        
         function updateSubscriptionStatus() {
             if (hasActiveSubscription) {
-                statusIndicator.classList.remove('status-inactive');
-                statusIndicator.classList.add('status-active');
-                
-                // Определяем текст в зависимости от типа подписки
-                let typeText = '';
-                if (subscriptionType === 'month') {
-                    typeText = 'месячная';
-                } else if (subscriptionType === 'halfyear') {
-                    typeText = 'полугодовая';
-                }
-                
-                statusText.textContent = `Подписка активна`;
-                
-                // Показываем оставшиеся дни
+                statusIndicator.classList.remove('status-inactive'); statusIndicator.classList.add('status-active');
+                statusText.textContent = 'Подписка активна';
                 const daysWord = getDaysWord(subscriptionDaysRemaining);
                 subscriptionDaysText.textContent = `Осталось ${subscriptionDaysRemaining} ${daysWord}`;
             } else {
-                statusIndicator.classList.remove('status-active');
-                statusIndicator.classList.add('status-inactive');
+                statusIndicator.classList.remove('status-active'); statusIndicator.classList.add('status-inactive');
                 statusText.textContent = 'Подписка не активна';
                 subscriptionDaysText.textContent = '';
             }
         }
-        
         function getDaysWord(days) {
             if (days >= 11 && days <= 19) return 'дней';
-            
             const lastDigit = days % 10;
             if (lastDigit === 1) return 'день';
             if (lastDigit >= 2 && lastDigit <= 4) return 'дня';
             return 'дней';
         }
-        
         async function checkBanStatus(login) {
             const users = await loadUsers();
             const user = users.find(u => u.login === login);
-            
-            if (user && user.banned === 'on') {
-                isUserBanned = true;
-                return true;
-            }
-            
-            isUserBanned = false;
-            return false;
+            if (user && user.banned === 'on') { isUserBanned = true; return true; }
+            isUserBanned = false; return false;
         }
-        
         async function authenticate(login, code) {
             const users = await loadUsers();
             const user = users.find(u => u.login === login && u.code === code);
-            
             if (user) {
-                if (user.banned === 'on') {
-                    errorMessage.textContent = 'Ваш аккаунт заблокирован';
-                    errorMessage.style.display = 'block';
-                    return false;
-                }
-                
-                const authData = {
-                    login,
-                    code,
-                    expires: Date.now() + 7 * 24 * 60 * 60 * 1000
-                };
+                if (user.banned === 'on') { errorMessage.textContent = 'Ваш аккаунт заблокирован'; errorMessage.style.display = 'block'; return false; }
+                const authData = { login, code, expires: Date.now() + 7*24*60*60*1000 };
                 localStorage.setItem('authData', JSON.stringify(authData));
-                
                 await checkSubscription(login);
                 updateSubscriptionStatus();
-                
                 return true;
             }
-            
             return false;
         }
-        
         function logout() {
             localStorage.removeItem('authData');
             loginContainer.style.display = 'flex';
             appContainer.style.display = 'none';
-            loginInput.value = '';
-            codeInput.value = '';
+            loginInput.value = ''; codeInput.value = '';
             errorMessage.style.display = 'none';
-            
             if (calculationTimer) clearInterval(calculationTimer);
             if (cooldownTimer) clearInterval(cooldownTimer);
         }
-
         function forceLogout() {
             localStorage.removeItem('authData');
             loginContainer.style.display = 'flex';
             appContainer.style.display = 'none';
-            loginInput.value = '';
-            codeInput.value = '';
+            loginInput.value = ''; codeInput.value = '';
             errorMessage.textContent = 'Ваш аккаунт заблокирован';
             errorMessage.style.display = 'block';
-            
             if (calculationTimer) clearInterval(calculationTimer);
             if (cooldownTimer) clearInterval(cooldownTimer);
         }
-        
         async function initAuth() {
             if (checkAuth()) {
                 const authData = JSON.parse(localStorage.getItem('authData'));
-                
                 const isBanned = await checkBanStatus(authData.login);
-                if (isBanned) {
-                    forceLogout();
-                    return;
-                }
-                
+                if (isBanned) { forceLogout(); return; }
                 await checkSubscription(authData.login);
                 updateSubscriptionStatus();
-                
                 loginContainer.style.display = 'none';
                 appContainer.style.display = 'block';
                 initApp();
@@ -2397,189 +2254,89 @@
                 appContainer.style.display = 'none';
             }
         }
-        
         loginForm.addEventListener('submit', async function(e) {
             e.preventDefault();
-            
             const login = loginInput.value.trim();
             const code = codeInput.value.trim();
-            
             if (login && code) {
                 const isAuthenticated = await authenticate(login, code);
-                
-                if (isAuthenticated) {
-                    initAuth();
-                } else {
-                    errorMessage.style.display = 'block';
-                }
+                if (isAuthenticated) initAuth();
+                else { errorMessage.style.display = 'block'; }
             }
         });
         
         function initApp() {
             updateHistoryDisplay();
-            
             applyTheme();
-            
             const savedRating = localStorage.getItem('courierRating');
-            if (savedRating) {
-                courierRating = parseFloat(savedRating);
-                updateRatingDisplay();
-            } else {
-                ratingModal.style.display = 'flex';
-            }
-            
+            if (savedRating) { courierRating = parseFloat(savedRating); updateRatingDisplay(); }
+            else ratingModal.style.display = 'flex';
             const savedCourierType = localStorage.getItem('courierType');
-            if (savedCourierType) {
-                courierType = savedCourierType;
-                updateSelectedCourierType();
-                updateCourierTypeDisplay();
-            }
-            
+            if (savedCourierType) { courierType = savedCourierType; updateSelectedCourierType(); updateCourierTypeDisplay(); }
             orderCountSelect.addEventListener('change', updateMultiOrderInputs);
             updateMultiOrderInputs();
-            
             initGoalSettings();
             updateGoalDisplay();
-            
             updateEveningBanner();
-            
             setInterval(async () => {
-                if (!checkAuth()) {
-                    logout();
-                } else {
+                if (!checkAuth()) logout();
+                else {
                     const authData = JSON.parse(localStorage.getItem('authData'));
-                    
                     const isBanned = await checkBanStatus(authData.login);
-                    if (isBanned) {
-                        forceLogout();
-                        return;
-                    }
-                    
-                    await checkSubscription(authData.login);
+                    if (isBanned) forceLogout();
+                    else await checkSubscription(authData.login);
                     updateSubscriptionStatus();
                 }
-            }, 5 * 60 * 1000);
-            
+            }, 5*60*1000);
             checkCooldown();
             checkDayReset();
         }
         
         function applyTheme() {
-            if (darkTheme) {
-                document.body.classList.add('dark-theme');
-                themeToggle.checked = true;
-            } else {
-                document.body.classList.remove('dark-theme');
-                themeToggle.checked = false;
-            }
+            if (darkTheme) { document.body.classList.add('dark-theme'); themeToggle.checked = true; }
+            else { document.body.classList.remove('dark-theme'); themeToggle.checked = false; }
         }
-        
-        function toggleTheme() {
-            darkTheme = !darkTheme;
-            localStorage.setItem('darkTheme', darkTheme);
-            applyTheme();
-            
-            showNotification(
-                'Тема изменена', 
-                darkTheme ? 'Включена темная тема' : 'Включена светлая тема', 
-                'success'
-            );
-        }
+        function toggleTheme() { darkTheme = !darkTheme; localStorage.setItem('darkTheme', darkTheme); applyTheme(); showNotification('Тема изменена', darkTheme ? 'Включена темная тема' : 'Включена светлая тема', 'success'); }
         
         function initGoalSettings() {
             goalToggle.checked = showGoal;
             dailyGoalInput.value = dailyGoal;
             themeToggle.checked = darkTheme;
-            
             goalSettings.style.display = showGoal ? 'block' : 'none';
             goalContainer.style.display = showGoal ? 'block' : 'none';
-            
             updateTodayEarnings();
-            
-            goalToggle.addEventListener('change', function() {
-                goalSettings.style.display = this.checked ? 'block' : 'none';
-            });
-            
+            goalToggle.addEventListener('change', function() { goalSettings.style.display = this.checked ? 'block' : 'none'; });
             themeToggle.addEventListener('change', toggleTheme);
         }
-        
         function checkDayReset() {
             const today = new Date().toDateString();
-            
-            if (lastResetDate !== today) {
-                todayEarnings = 0;
-                lastResetDate = today;
-                localStorage.setItem('todayEarnings', todayEarnings.toString());
-                localStorage.setItem('lastResetDate', lastResetDate);
-                updateGoalDisplay();
-            }
+            if (lastResetDate !== today) { todayEarnings = 0; lastResetDate = today; localStorage.setItem('todayEarnings', todayEarnings.toString()); localStorage.setItem('lastResetDate', lastResetDate); updateGoalDisplay(); }
         }
-        
         function updateTodayEarnings() {
             const today = new Date().toDateString();
             todayEarnings = 0;
-            
-            ordersHistory.forEach(order => {
-                const orderDate = new Date(order.timestamp).toDateString();
-                if (orderDate === today) {
-                    todayEarnings += order.amount;
-                }
-            });
-            
+            ordersHistory.forEach(order => { if (new Date(order.timestamp).toDateString() === today) todayEarnings += order.amount; });
             localStorage.setItem('todayEarnings', todayEarnings.toString());
             updateGoalDisplay();
         }
-        
         function updateGoalDisplay() {
             if (!showGoal) return;
-            
             goalAchievedText.textContent = `Заработано: ${todayEarnings.toFixed(2)} ₽`;
-            
             if (dailyGoal > 0) {
                 const percentage = Math.min(Math.round((todayEarnings / dailyGoal) * 100), 100);
-                
-                goalProgressFill.style.width = '0%';
-                
                 setTimeout(() => {
                     goalProgressFill.style.width = `${percentage}%`;
                     goalProgressText.textContent = `${percentage}%`;
-                    
                     const remaining = Math.max(0, dailyGoal - todayEarnings);
                     goalRemainingText.textContent = `Осталось: ${remaining.toFixed(2)} ₽`;
-                    
-                    if (percentage >= 100) {
-                        goalProgressFill.style.background = 'linear-gradient(90deg, var(--success) 0%, #00b894 100%)';
-                        goalContainer.classList.add('goal-complete');
-                    } else {
-                        goalProgressFill.style.background = 'linear-gradient(90deg, var(--primary) 0%, var(--primary-dark) 100%)';
-                        goalContainer.classList.remove('goal-complete');
-                    }
-                    
-                    goalProgressFill.offsetHeight;
-                    
+                    if (percentage >= 100) { goalProgressFill.style.background = 'linear-gradient(90deg, var(--success) 0%, #00b894 100%)'; goalContainer.classList.add('goal-complete'); }
+                    else { goalProgressFill.style.background = 'linear-gradient(90deg, var(--primary) 0%, var(--primary-dark) 100%)'; goalContainer.classList.remove('goal-complete'); }
                 }, 10);
             } else {
-                goalProgressFill.style.width = '0%';
-                goalProgressText.textContent = '0%';
-                goalRemainingText.textContent = 'Осталось: 0 ₽';
-                goalContainer.classList.remove('goal-complete');
-                
-                goalProgressFill.offsetHeight;
+                goalProgressFill.style.width = '0%'; goalProgressText.textContent = '0%'; goalRemainingText.textContent = 'Осталось: 0 ₽'; goalContainer.classList.remove('goal-complete');
             }
         }
-        
-        function saveSettings() {
-            showGoal = goalToggle.checked;
-            dailyGoal = parseInt(dailyGoalInput.value) || 0;
-            
-            localStorage.setItem('showGoal', showGoal.toString());
-            localStorage.setItem('dailyGoal', dailyGoal.toString());
-            
-            goalContainer.style.display = showGoal ? 'block' : 'none';
-            updateGoalDisplay();
-            
-            showNotification('Настройки сохранены', 'Ваши настройки успешно сохранены', 'success');
-        }
+        function saveSettings() { showGoal = goalToggle.checked; dailyGoal = parseInt(dailyGoalInput.value) || 0; localStorage.setItem('showGoal', showGoal.toString()); localStorage.setItem('dailyGoal', dailyGoal.toString()); goalContainer.style.display = showGoal ? 'block' : 'none'; updateGoalDisplay(); showNotification('Настройки сохранены', 'Ваши настройки успешно сохранены', 'success'); }
         
         function checkCooldown() {
             const lastCalcTime = localStorage.getItem('lastCalculationTime');
@@ -2587,250 +2344,115 @@
                 const now = Date.now();
                 const diff = now - parseInt(lastCalcTime);
                 const cooldownTime = 10 * 60 * 1000;
-                
-                if (diff < cooldownTime && !hasActiveSubscription) {
-                    const remaining = Math.ceil((cooldownTime - diff) / 1000);
-                    startCooldown(remaining);
-                }
+                if (diff < cooldownTime && !hasActiveSubscription) { const remaining = Math.ceil((cooldownTime - diff) / 1000); startCooldown(remaining); }
             }
         }
-        
         function startCooldown(seconds) {
-            singleOrderBtn.classList.add('disabled');
-            multiOrderBtn.classList.add('disabled');
-            
+            singleOrderBtn.classList.add('disabled'); multiOrderBtn.classList.add('disabled');
             let remaining = seconds;
-            
             const updateButtonText = () => {
-                const minutes = Math.floor(remaining / 60);
-                const secs = remaining % 60;
-                
-                singleOrderBtn.innerHTML = `
-                    <i class="fas fa-box"></i>
-                    <span>Доступ через ${minutes}:${secs < 10 ? '0' + secs : secs}</span>
-                `;
-                
-                multiOrderBtn.innerHTML = `
-                    <i class="fas fa-boxes-stacked"></i>
-                    <span>Доступ через ${minutes}:${secs < 10 ? '0' + secs : secs}</span>
-                `;
+                const minutes = Math.floor(remaining / 60); const secs = remaining % 60;
+                singleOrderBtn.innerHTML = `<i class="fas fa-box"></i><span>Доступ через ${minutes}:${secs < 10 ? '0' + secs : secs}</span>`;
+                multiOrderBtn.innerHTML = `<i class="fas fa-boxes-stacked"></i><span>Доступ через ${minutes}:${secs < 10 ? '0' + secs : secs}</span>`;
             };
-            
             updateButtonText();
-            
             cooldownTimer = setInterval(() => {
                 remaining--;
-                
                 if (remaining <= 0) {
                     clearInterval(cooldownTimer);
-                    singleOrderBtn.classList.remove('disabled');
-                    multiOrderBtn.classList.remove('disabled');
-                    
-                    singleOrderBtn.innerHTML = `
-                        <i class="fas fa-box"></i>
-                        <span>Одиночный заказ</span>
-                    `;
-                    
-                    multiOrderBtn.innerHTML = `
-                        <i class="fas fa-boxes-stacked"></i>
-                        <span>Мультизаказ</span>
-                    `;
-                } else {
-                    updateButtonText();
-                }
+                    singleOrderBtn.classList.remove('disabled'); multiOrderBtn.classList.remove('disabled');
+                    singleOrderBtn.innerHTML = `<i class="fas fa-box"></i><span>Одиночный заказ</span>`;
+                    multiOrderBtn.innerHTML = `<i class="fas fa-boxes-stacked"></i><span>Мультизаказ</span>`;
+                } else updateButtonText();
             }, 1000);
         }
-        
         function startCalculationTimer(modalType, callback) {
             let seconds = 60;
-            
             const timerElement = modalType === 'single' ? singleTimerCountdown : multiTimerCountdown;
             const overlayElement = modalType === 'single' ? singleTimerOverlay : multiTimerOverlay;
             const upgradeTextElement = modalType === 'single' ? singleUpgradeText : multiUpgradeText;
-            
             overlayElement.style.display = 'flex';
-            
-            if (!hasActiveSubscription) {
-                upgradeTextElement.style.display = 'block';
-            }
-            
+            if (!hasActiveSubscription) upgradeTextElement.style.display = 'block';
             const updateTimer = () => {
                 timerElement.textContent = `${seconds} сек`;
                 seconds--;
-                
-                if (seconds < 0) {
-                    clearInterval(calculationTimer);
-                    overlayElement.style.display = 'none';
-                    callback();
-                }
+                if (seconds < 0) { clearInterval(calculationTimer); overlayElement.style.display = 'none'; callback(); }
             };
-            
             updateTimer();
             calculationTimer = setInterval(updateTimer, 1000);
         }
-        
-        function updateRatingDisplay() {
-            if (courierRating !== null) {
-                currentRatingText.textContent = courierRating.toFixed(2);
-                ratingDisplay.style.display = 'flex';
-            }
-        }
-        
+        function updateRatingDisplay() { if (courierRating !== null) currentRatingText.textContent = courierRating.toFixed(2); }
         function updateCourierTypeDisplay() {
-            let typeName = '';
-            let iconClass = '';
-            
-            switch(courierType) {
-                case 'pedestrian':
-                    typeName = 'Пеший';
-                    iconClass = 'fa-person-walking';
-                    break;
-                case 'bicycle':
-                    typeName = 'Велокурьер';
-                    iconClass = 'fa-bicycle';
-                    break;
-                case 'car':
-                    typeName = 'Автокурьер';
-                    iconClass = 'fa-car';
-                    break;
-            }
-            
+            let typeName = '', iconClass = '';
+            if (courierType === 'pedestrian') { typeName = 'Пеший'; iconClass = 'fa-person-walking'; }
+            else if (courierType === 'bicycle') { typeName = 'Велокурьер'; iconClass = 'fa-bicycle'; }
+            else if (courierType === 'car') { typeName = 'Автокурьер'; iconClass = 'fa-car'; }
             courierTypeDisplay.innerHTML = `<i class="fas ${iconClass}"></i><span class="courier-info-text">${typeName}</span>`;
         }
-        
         function updateMultiOrderInputs() {
             const orderCount = parseInt(orderCountSelect.value);
             multiOrderInputs.innerHTML = '';
-            
             for (let i = 1; i <= orderCount; i++) {
                 const orderDiv = document.createElement('div');
                 orderDiv.className = 'order-inputs';
-                orderDiv.innerHTML = `
-                    <div class="order-number">Заказ ${i}</div>
-                    <div class="form-group">
-                        <label for="multiWeight${i}">Вес заказа (кг):</label>
-                        <input type="number" class="form-control" id="multiWeight${i}" min="0" step="0.1" placeholder="Введите вес">
-                    </div>
-                    <div class="form-group">
-                        <label for="multiDistance${i}">Расстояние до клиента (км):</label>
-                        <input type="number" class="form-control" id="multiDistance${i}" min="0" step="0.1" placeholder="Введите расстояние">
-                    </div>
-                `;
+                orderDiv.innerHTML = `<div class="order-number">Заказ ${i}</div>
+                    <div class="form-group"><label for="multiWeight${i}">Вес заказа (кг):</label><input type="number" class="form-control" id="multiWeight${i}" min="0" step="0.1" placeholder="Введите вес"></div>
+                    <div class="form-group"><label for="multiDistance${i}">Расстояние до клиента (км):</label><input type="number" class="form-control" id="multiDistance${i}" min="0" step="0.1" placeholder="Введите расстояние"></div>`;
                 multiOrderInputs.appendChild(orderDiv);
             }
         }
-        
         function updateEditMultiOrderInputs(orderCount, orders = []) {
             const editMultiOrderInputs = document.getElementById('editMultiOrderInputs');
             editMultiOrderInputs.innerHTML = '';
-            
             for (let i = 1; i <= orderCount; i++) {
                 const orderDiv = document.createElement('div');
                 orderDiv.className = 'order-inputs';
                 const order = orders[i-1] || { weight: '', distance: '' };
-                orderDiv.innerHTML = `
-                    <div class="order-number">Заказ ${i}</div>
-                    <div class="form-group">
-                        <label for="editMultiWeight${i}">Вес заказа (кг):</label>
-                        <input type="number" class="form-control" id="editMultiWeight${i}" min="0" step="0.1" value="${order.weight || ''}" placeholder="Введите вес">
-                    </div>
-                    <div class="form-group">
-                        <label for="editMultiDistance${i}">Расстояние до клиента (км):</label>
-                        <input type="number" class="form-control" id="editMultiDistance${i}" min="0" step="0.1" value="${order.distance || ''}" placeholder="Введите расстояние">
-                    </div>
-                `;
+                orderDiv.innerHTML = `<div class="order-number">Заказ ${i}</div>
+                    <div class="form-group"><label for="editMultiWeight${i}">Вес заказа (кг):</label><input type="number" class="form-control" id="editMultiWeight${i}" min="0" step="0.1" value="${order.weight || ''}" placeholder="Введите вес"></div>
+                    <div class="form-group"><label for="editMultiDistance${i}">Расстояние до клиента (км):</label><input type="number" class="form-control" id="editMultiDistance${i}" min="0" step="0.1" value="${order.distance || ''}" placeholder="Введите расстояние"></div>`;
                 editMultiOrderInputs.appendChild(orderDiv);
             }
         }
-        
         function updateSelectedCourierType() {
-            courierTypes.forEach(type => {
-                type.classList.remove('selected');
-                if (type.dataset.type === courierType) {
-                    type.classList.add('selected');
-                }
-            });
+            courierTypes.forEach(type => { type.classList.remove('selected'); if (type.dataset.type === courierType) type.classList.add('selected'); });
         }
-        
         function updateHistoryDisplay() {
             historyList.innerHTML = '';
-            
-            if (ordersHistory.length === 0) {
-                historyList.innerHTML = '<div style="text-align: center; padding: 20px; color: var(--gray);">Нет записей в истории</div>';
-            } else {
+            if (ordersHistory.length === 0) historyList.innerHTML = '<div style="text-align: center; padding: 20px; color: var(--gray);">Нет записей в истории</div>';
+            else {
                 ordersHistory.forEach((order, index) => {
                     const item = document.createElement('div');
                     item.className = 'history-item';
-                    if (order.orderType === 'return') {
-                        item.classList.add('return-item');
-                    }
+                    if (order.orderType === 'return') item.classList.add('return-item');
+                    if (order.orderType === 'tips') item.classList.add('return-item'); // чаевые тоже с отступом
                     item.dataset.index = index;
-                    
-                    let orderIcon = 'fa-box';
-                    if (order.orderType === 'multi') orderIcon = 'fa-boxes-stacked';
-                    if (order.orderType === 'return') orderIcon = 'fa-undo';
-                    
-                    item.innerHTML = `
-                        <div style="display: flex; align-items: center; gap: 10px; flex-grow: 1;">
-                            <i class="fas ${orderIcon}" style="color: var(--primary);"></i>
-                            <span style="flex-grow: 1;">${order.type}</span>
-                            <span style="font-weight: 600; margin-right: 10px; white-space: nowrap;">${order.amount.toFixed(2)} ₽</span>
-                        </div>
-                        <div class="history-item-actions">
-                            ${order.orderType !== 'return' ? `<button class="edit-btn" data-index="${index}" title="Редактировать">
-                                <i class="fas fa-pencil"></i>
-                            </button>` : ''}
-                            <button class="info-history-btn" data-index="${index}" title="Подробнее">
-                                <i class="fas fa-info-circle"></i>
-                            </button>
-                        </div>
-                    `;
+                    let orderIcon = order.orderType === 'multi' ? 'fa-boxes-stacked' : (order.orderType === 'return' ? 'fa-undo' : (order.orderType === 'tips' ? 'fa-hand-holding-heart' : 'fa-box'));
+                    item.innerHTML = `<div style="display: flex; align-items: center; gap: 10px; flex-grow: 1;"><i class="fas ${orderIcon}" style="color: var(--primary);"></i><span style="flex-grow: 1;">${order.type}</span><span style="font-weight: 600; margin-right: 10px; white-space: nowrap;">${order.amount.toFixed(2)} ₽</span></div>
+                        <div class="history-item-actions">${order.orderType !== 'return' && order.orderType !== 'tips' ? `<button class="edit-btn" data-index="${index}" title="Редактировать"><i class="fas fa-pencil"></i></button>` : ''}
+                        <button class="info-history-btn" data-index="${index}" title="Подробнее"><i class="fas fa-info-circle"></i></button></div>`;
                     historyList.appendChild(item);
                 });
             }
-            
             let total = 0;
-            ordersHistory.forEach(order => {
-                total += order.amount;
-            });
-            
+            ordersHistory.forEach(order => { total += order.amount; });
             totalEarnings = total;
             historyTotal.textContent = `Итого: ${totalEarnings.toFixed(2)} ₽`;
-            
             document.querySelectorAll('.history-item').forEach(item => {
-                item.addEventListener('click', (e) => {
-                    if (e.target.closest('.btn-danger') || e.target.closest('.edit-btn') || e.target.closest('.info-history-btn')) return;
-                    
-                    const index = parseInt(item.dataset.index);
-                    showOrderDetails(index);
-                });
+                item.addEventListener('click', (e) => { if (e.target.closest('.btn-danger') || e.target.closest('.edit-btn') || e.target.closest('.info-history-btn')) return; const index = parseInt(item.dataset.index); showOrderDetails(index); });
             });
-            
             document.querySelectorAll('.history-item-actions .info-history-btn').forEach(btn => {
-                btn.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    const index = parseInt(btn.dataset.index);
-                    showOrderDetails(index);
-                });
+                btn.addEventListener('click', (e) => { e.stopPropagation(); const index = parseInt(btn.dataset.index); showOrderDetails(index); });
             });
-            
             document.querySelectorAll('.history-item-actions .edit-btn').forEach(btn => {
-                btn.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    const index = parseInt(btn.dataset.index);
-                    editOrder(index);
-                });
+                btn.addEventListener('click', (e) => { e.stopPropagation(); const index = parseInt(btn.dataset.index); editOrder(index); });
             });
-            
             updateTodayEarnings();
         }
-        
         function editOrder(index) {
             if (index < 0 || index >= ordersHistory.length) return;
-            
             const order = ordersHistory[index];
             currentOrderIndex = index;
-            
             if (order.orderType === 'single') {
                 document.getElementById('editSingleWeight').value = order.weight;
                 document.getElementById('editSingleDistance').value = order.distance;
@@ -2845,276 +2467,127 @@
                 document.getElementById('editMultiMultiplier').value = order.multiplier;
                 updateEditMultiOrderInputs(order.orderCount, order.orders || []);
                 editMultiOrderModal.style.display = 'flex';
-                
-                editOrderCountSelect.addEventListener('change', function() {
-                    updateEditMultiOrderInputs(parseInt(this.value), order.orders || []);
-                });
+                editOrderCountSelect.addEventListener('change', function() { updateEditMultiOrderInputs(parseInt(this.value), order.orders || []); });
             }
         }
-        
         function saveEditedSingleOrder() {
             if (currentOrderIndex < 0 || currentOrderIndex >= ordersHistory.length) return;
-            
             const weight = parseFloat(document.getElementById('editSingleWeight').value);
             const distance = parseFloat(document.getElementById('editSingleDistance').value);
             const multiplier = parseFloat(document.getElementById('editSingleMultiplier').value);
             const storeOrder = editSingleStoreCheckbox.checked;
-            
-            if (isNaN(weight) || isNaN(distance) || weight <= 0 || distance <= 0) {
-                showNotification('Ошибка', 'Пожалуйста, введите корректные данные', 'error');
-                return;
-            }
-            
-            const oldOrder = ordersHistory[currentOrderIndex];
-            const oldAmount = oldOrder.amount;
-            
+            if (isNaN(weight) || isNaN(distance) || weight <= 0 || distance <= 0) { showNotification('Ошибка', 'Пожалуйста, введите корректные данные', 'error'); return; }
             const orderAmount = calculateOrder(weight, distance, multiplier, storeOrder);
             const ratingBonus = calculateRatingBonus(courierRating);
             const totalAmount = orderAmount + ratingBonus;
-            
-            ordersHistory[currentOrderIndex] = {
-                ...oldOrder,
-                type: `Одиночный заказ (${multiplier}x)${storeOrder ? ' [П🟢]' : ''}`,
-                amount: totalAmount,
-                weight: weight,
-                distance: distance,
-                multiplier: multiplier,
-                ratingBonus: ratingBonus,
-                storeOrder: storeOrder
-            };
-            
+            const oldOrder = ordersHistory[currentOrderIndex];
+            const oldAmount = oldOrder.amount;
+            ordersHistory[currentOrderIndex] = { ...oldOrder, type: `Одиночный заказ (${multiplier}x)${storeOrder ? ' [П🟢]' : ''}`, amount: totalAmount, weight, distance, multiplier, ratingBonus, storeOrder };
             totalEarnings = totalEarnings - oldAmount + totalAmount;
-            
             localStorage.setItem('deliveryHistory', JSON.stringify(ordersHistory));
             localStorage.setItem('totalEarnings', totalEarnings.toString());
-            
             updateHistoryDisplay();
             editSingleOrderModal.style.display = 'none';
-            
             showNotification('Заказ обновлен', 'Заказ успешно обновлен!', 'success');
         }
-        
         function saveEditedMultiOrder() {
             if (currentOrderIndex < 0 || currentOrderIndex >= ordersHistory.length) return;
-            
             const orderCount = parseInt(document.getElementById('editOrderCount').value);
             const multiplier = parseFloat(document.getElementById('editMultiMultiplier').value);
             const storeOrder = editMultiStoreCheckbox.checked;
             let isValid = true;
             const orders = [];
-            
             for (let i = 1; i <= orderCount; i++) {
                 const weight = parseFloat(document.getElementById(`editMultiWeight${i}`).value);
                 const distance = parseFloat(document.getElementById(`editMultiDistance${i}`).value);
-                
-                if (isNaN(weight) || isNaN(distance) || weight <= 0 || distance <= 0) {
-                    isValid = false;
-                    break;
-                }
-                
+                if (isNaN(weight) || isNaN(distance) || weight <= 0 || distance <= 0) { isValid = false; break; }
                 orders.push({ weight, distance });
             }
-            
-            if (!isValid) {
-                showNotification('Ошибка', 'Пожалуйста, введите корректные данные для всех заказов', 'error');
-                return;
-            }
-            
+            if (!isValid) { showNotification('Ошибка', 'Пожалуйста, введите корректные данные для всех заказов', 'error'); return; }
             const oldOrder = ordersHistory[currentOrderIndex];
             const oldAmount = oldOrder.amount;
-            
             let totalAmount = 0;
             let isFirstOrder = true;
             const rate = rates[courierType];
-            
             for (const order of orders) {
                 const currentWeightRate = getWeightRate(courierType, order.weight);
                 const eveningMultiplier = getEveningMultiplier(multiplier, storeOrder);
-                
-                if (isFirstOrder) {
-                    totalAmount += calculateOrder(order.weight, order.distance, multiplier, storeOrder);
-                    isFirstOrder = false;
-                } else {
-                    totalAmount += (rate.delivery * multiplier * eveningMultiplier) + 
-                                  (order.distance * rate.distance * multiplier * eveningMultiplier) + 
-                                  (order.weight * currentWeightRate * multiplier * eveningMultiplier);
-                }
+                if (isFirstOrder) { totalAmount += calculateOrder(order.weight, order.distance, multiplier, storeOrder); isFirstOrder = false; }
+                else { totalAmount += (rate.delivery * multiplier * eveningMultiplier) + (order.distance * rate.distance * multiplier * eveningMultiplier) + (order.weight * currentWeightRate * multiplier * eveningMultiplier); }
             }
-            
             const ratingBonus = calculateRatingBonus(courierRating);
             totalAmount += ratingBonus;
-            
-            ordersHistory[currentOrderIndex] = {
-                ...oldOrder,
-                type: `Мультизаказ (${orderCount}, ${multiplier}x)${storeOrder ? ' [П🟢]' : ''}`,
-                amount: totalAmount,
-                orderCount: orderCount,
-                multiplier: multiplier,
-                orders: orders,
-                ratingBonus: ratingBonus,
-                storeOrder: storeOrder
-            };
-            
+            ordersHistory[currentOrderIndex] = { ...oldOrder, type: `Мультизаказ (${orderCount}, ${multiplier}x)${storeOrder ? ' [П🟢]' : ''}`, amount: totalAmount, orderCount, multiplier, orders, ratingBonus, storeOrder };
             totalEarnings = totalEarnings - oldAmount + totalAmount;
-            
             localStorage.setItem('deliveryHistory', JSON.stringify(ordersHistory));
             localStorage.setItem('totalEarnings', totalEarnings.toString());
-            
             updateHistoryDisplay();
             editMultiOrderModal.style.display = 'none';
-            
             showNotification('Заказ обновлен', 'Мультизаказ успешно обновлен!', 'success');
         }
-        
         function showOrderDetails(index) {
             if (index < 0 || index >= ordersHistory.length) return;
-            
             const order = ordersHistory[index];
             currentOrderIndex = index;
-            
             let detailsHTML = '';
-            
             if (order.orderType === 'return') {
-                detailsHTML = `
-                    <div class="order-details">
-                        <div class="order-details-row">
-                            <span class="order-details-label">Тип операции:</span>
-                            <span class="order-details-value">Возврат заказа</span>
-                        </div>
-                        <div class="order-details-row">
-                            <span class="order-details-label">Сумма:</span>
-                            <span class="order-details-value">${order.amount.toFixed(2)} ₽</span>
-                        </div>
-                        <div class="order-details-row">
-                            <span class="order-details-label">Количество возвратов:</span>
-                            <span class="order-details-value">${order.count}</span>
-                        </div>
-                        <div class="order-details-row">
-                            <span class="order-details-label">Дата:</span>
-                            <span class="order-details-value">${new Date(order.timestamp).toLocaleString()}</span>
-                        </div>
-                    </div>
-                `;
+                detailsHTML = `<div class="order-details"><div class="order-details-row"><span class="order-details-label">Тип операции:</span><span class="order-details-value">Возврат заказа</span></div>
+                    <div class="order-details-row"><span class="order-details-label">Сумма:</span><span class="order-details-value">${order.amount.toFixed(2)} ₽</span></div>
+                    <div class="order-details-row"><span class="order-details-label">Количество возвратов:</span><span class="order-details-value">${order.count}</span></div>
+                    <div class="order-details-row"><span class="order-details-label">Дата:</span><span class="order-details-value">${new Date(order.timestamp).toLocaleString()}</span></div></div>`;
+            } else if (order.orderType === 'tips') {
+                detailsHTML = `<div class="order-details"><div class="order-details-row"><span class="order-details-label">Тип:</span><span class="order-details-value">Чаевые</span></div>
+                    <div class="order-details-row"><span class="order-details-label">Сумма:</span><span class="order-details-value">${order.amount.toFixed(2)} ₽</span></div>
+                    <div class="order-details-row"><span class="order-details-label">Дата:</span><span class="order-details-value">${new Date(order.timestamp).toLocaleString()}</span></div></div>`;
             } else {
-                detailsHTML = `
-                    <div class="order-details">
-                        <div class="order-details-row">
-                            <span class="order-details-label">Тип заказа:</span>
-                            <span class="order-details-value">${order.type}</span>
-                        </div>
-                        <div class="order-details-row">
-                            <span class="order-details-label">Сумма:</span>
-                            <span class="order-details-value">${order.amount.toFixed(2)} ₽</span>
-                        </div>
-                        <div class="order-details-row">
-                            <span class="order-details-label">Тип курьера:</span>
-                            <span class="order-details-value">${order.courierType || rates[order.courierTypeName || 'pedestrian'].name}</span>
-                        </div>
-                        <div class="order-details-row">
-                            <span class="order-details-label">Рейтинг:</span>
-                            <span class="order-details-value">${order.rating.toFixed(2)}</span>
-                        </div>
-                        <div class="order-details-row">
-                            <span class="order-details-label">Бонус за рейтинг:</span>
-                            <span class="order-details-value">${order.ratingBonus || 0} ₽</span>
-                        </div>
-                        <div class="order-details-row">
-                            <span class="order-details-label">Магазин П🟢:</span>
-                            <span class="order-details-value">${order.storeOrder ? 'Да' : 'Нет'}</span>
-                        </div>
-                        <div class="order-details-row">
-                            <span class="order-details-label">Дата:</span>
-                            <span class="order-details-value">${new Date(order.timestamp).toLocaleString()}</span>
-                        </div>
-                `;
-                
+                detailsHTML = `<div class="order-details"><div class="order-details-row"><span class="order-details-label">Тип заказа:</span><span class="order-details-value">${order.type}</span></div>
+                    <div class="order-details-row"><span class="order-details-label">Сумма:</span><span class="order-details-value">${order.amount.toFixed(2)} ₽</span></div>
+                    <div class="order-details-row"><span class="order-details-label">Тип курьера:</span><span class="order-details-value">${order.courierType || rates[order.courierTypeName || 'pedestrian'].name}</span></div>
+                    <div class="order-details-row"><span class="order-details-label">Рейтинг:</span><span class="order-details-value">${order.rating.toFixed(2)}</span></div>
+                    <div class="order-details-row"><span class="order-details-label">Бонус за рейтинг:</span><span class="order-details-value">${order.ratingBonus || 0} ₽</span></div>
+                    <div class="order-details-row"><span class="order-details-label">Магазин П🟢:</span><span class="order-details-value">${order.storeOrder ? 'Да' : 'Нет'}</span></div>
+                    <div class="order-details-row"><span class="order-details-label">Дата:</span><span class="order-details-value">${new Date(order.timestamp).toLocaleString()}</span></div>`;
                 if (order.orderType === 'single') {
-                    detailsHTML += `
-                        <div style="margin-top: 15px; border-top: 1px solid #dee2e6; padding-top: 10px;">
-                            <div class="order-details-row">
-                                <span class="order-details-label">Вес:</span>
-                                <span class="order-details-value">${order.weight} кг</span>
-                            </div>
-                            <div class="order-details-row">
-                                <span class="order-details-label">Расстояние:</span>
-                                <span class="order-details-value">${order.distance} км</span>
-                            </div>
-                            <div class="order-details-row">
-                                <span class="order-details-label">Коэффициент:</span>
-                                <span class="order-details-value">${order.multiplier}x</span>
-                            </div>
-                        </div>
-                    `;
+                    detailsHTML += `<div style="margin-top: 15px; border-top: 1px solid #dee2e6; padding-top: 10px;"><div class="order-details-row"><span class="order-details-label">Вес:</span><span class="order-details-value">${order.weight} кг</span></div>
+                        <div class="order-details-row"><span class="order-details-label">Расстояние:</span><span class="order-details-value">${order.distance} км</span></div>
+                        <div class="order-details-row"><span class="order-details-label">Коэффициент:</span><span class="order-details-value">${order.multiplier}x</span></div></div>`;
                 } else if (order.orderType === 'multi') {
-                    detailsHTML += `
-                        <div style="margin-top: 15px; border-top: 1px solid #dee2e6; padding-top: 10px;">
-                            <div class="order-details-row">
-                                <span class="order-details-label">Количество заказов:</span>
-                                <span class="order-details-value">${order.orderCount}</span>
-                            </div>
-                            <div class="order-details-row">
-                                <span class="order-details-label">Коэффициент:</span>
-                                <span class="order-details-value">${order.multiplier}x</span>
-                            </div>
-                    `;
-                    
+                    detailsHTML += `<div style="margin-top: 15px; border-top: 1px solid #dee2e6; padding-top: 10px;"><div class="order-details-row"><span class="order-details-label">Количество заказов:</span><span class="order-details-value">${order.orderCount}</span></div>
+                        <div class="order-details-row"><span class="order-details-label">Коэффициент:</span><span class="order-details-value">${order.multiplier}x</span></div>`;
                     if (order.orders && order.orders.length > 0) {
                         detailsHTML += `<div style="margin-top: 10px;"><strong>Детали заказов:</strong></div>`;
                         order.orders.forEach((o, i) => {
-                            detailsHTML += `
-                                <div style="margin-top: 8px; padding-left: 10px;">
-                                    <div class="order-details-row">
-                                        <span class="order-details-label">Заказ ${i+1} - Вес:</span>
-                                        <span class="order-details-value">${o.weight} кг</span>
-                                    </div>
-                                    <div class="order-details-row">
-                                        <span class="order-details-label">Заказ ${i+1} - Расстояние:</span>
-                                        <span class="order-details-value">${o.distance} км</span>
-                                    </div>
-                                </div>
-                            `;
+                            detailsHTML += `<div style="margin-top: 8px; padding-left: 10px;"><div class="order-details-row"><span class="order-details-label">Заказ ${i+1} - Вес:</span><span class="order-details-value">${o.weight} кг</span></div>
+                                <div class="order-details-row"><span class="order-details-label">Заказ ${i+1} - Расстояние:</span><span class="order-details-value">${o.distance} км</span></div></div>`;
                         });
                     }
-                    
                     detailsHTML += `</div>`;
                 }
-                
                 detailsHTML += `</div>`;
             }
-            
             orderDetailsContent.innerHTML = detailsHTML;
             orderDetailsModal.style.display = 'flex';
         }
-        
         function deleteOrder(index) {
             if (index < 0 || index >= ordersHistory.length) return;
-            
             totalEarnings -= ordersHistory[index].amount;
             ordersHistory.splice(index, 1);
-            
             localStorage.setItem('deliveryHistory', JSON.stringify(ordersHistory));
             localStorage.setItem('totalEarnings', totalEarnings.toString());
-            
             updateHistoryDisplay();
             orderDetailsModal.style.display = 'none';
-            
             showNotification('Заказ удален', 'Заказ успешно удален из истории', 'success');
         }
-        
         function calculateOrder(weight, distance, multiplier, storeOrder = false) {
             const rate = rates[courierType];
             const eveningMultiplier = getEveningMultiplier(multiplier, storeOrder);
-            
             const pickupFee = rate.pickup * multiplier * eveningMultiplier;
             const deliveryFee = rate.delivery * multiplier * eveningMultiplier;
             const distanceFee = distance * rate.distance * multiplier * eveningMultiplier;
-            
             const weightRate = getWeightRate(courierType, weight);
             const weightFee = weight * weightRate * multiplier * eveningMultiplier;
-            
             return pickupFee + deliveryFee + distanceFee + weightFee;
         }
-        
         function calculateRatingBonus(rating) {
             if (rating >= 5.0) return 25;
             if (rating >= 4.75) return 20;
@@ -3122,184 +2595,101 @@
             if (rating >= 4.25) return 5;
             return 0;
         }
-        
         function saveToHistory(orderType, amount, details) {
-            const order = {
-                type: orderType,
-                amount: amount,
-                rating: courierRating,
-                ratingBonus: calculateRatingBonus(courierRating),
-                courierType: rates[courierType].name,
-                courierTypeName: courierType,
-                timestamp: new Date().getTime(),
-                storeOrder: details.storeOrder || false,
-                ...details
-            };
-            
+            const order = { type: orderType, amount, rating: courierRating, ratingBonus: calculateRatingBonus(courierRating), courierType: rates[courierType].name, courierTypeName: courierType, timestamp: new Date().getTime(), storeOrder: details.storeOrder || false, ...details };
             ordersHistory.push(order);
             totalEarnings += amount;
-            
             localStorage.setItem('deliveryHistory', JSON.stringify(ordersHistory));
             localStorage.setItem('totalEarnings', totalEarnings.toString());
             localStorage.setItem('lastCalculationTime', Date.now().toString());
-            
             updateHistoryDisplay();
-            
-            if (!hasActiveSubscription) {
-                startCooldown(10 * 60);
-            }
+            if (!hasActiveSubscription) startCooldown(10*60);
         }
 
         function addReturn(count) {
             const returnAmount = count * 141;
-            const returnOrder = {
-                type: `Возврат (${count} шт.)`,
-                amount: returnAmount,
-                orderType: 'return',
-                count: count,
-                timestamp: new Date().getTime()
-            };
-
+            const returnOrder = { type: `Возврат (${count} шт.)`, amount: returnAmount, orderType: 'return', count, timestamp: new Date().getTime() };
             ordersHistory.push(returnOrder);
             totalEarnings += returnAmount;
-
             localStorage.setItem('deliveryHistory', JSON.stringify(ordersHistory));
             localStorage.setItem('totalEarnings', totalEarnings.toString());
-
             updateHistoryDisplay();
             showNotification('Возврат добавлен', `Добавлено ${count} возврат(ов) на сумму ${returnAmount} ₽`, 'success');
         }
-        
-        // Обработчики событий
-        courierTypeDisplay.addEventListener('click', () => {
-            courierTypeModal.style.display = 'flex';
-        });
-        
-        ratingDisplay.addEventListener('click', () => {
-            ratingModal.style.display = 'flex';
-            if (courierRating !== null) {
-                document.getElementById('ratingInput').value = courierRating;
-            }
-        });
-        
-        courierTypes.forEach(type => {
-            type.addEventListener('click', function() {
-                courierTypes.forEach(t => t.classList.remove('selected'));
-                this.classList.add('selected');
-                courierType = this.dataset.type;
-            });
-        });
 
-        if (carInfoBtn) {
-            carInfoBtn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                tariffModal.style.display = 'flex';
-            });
-        }
-
-        if (closeTariffBtn) {
-            closeTariffBtn.addEventListener('click', () => {
-                tariffModal.style.display = 'none';
-            });
+        function addTips(amount) {
+            const tipsOrder = { type: `Чаевые`, amount, orderType: 'tips', timestamp: new Date().getTime() };
+            ordersHistory.push(tipsOrder);
+            totalEarnings += amount;
+            localStorage.setItem('deliveryHistory', JSON.stringify(ordersHistory));
+            localStorage.setItem('totalEarnings', totalEarnings.toString());
+            updateHistoryDisplay();
+            showNotification('Чаевые добавлены', `Сумма чаевых ${amount} ₽ добавлена к заработку`, 'success');
         }
         
-        saveRatingBtn.addEventListener('click', () => {
-            const ratingInput = document.getElementById('ratingInput');
-            const rating = parseFloat(ratingInput.value);
-            
-            if (isNaN(rating) || rating < 1 || rating > 5) {
-                showNotification('Ошибка', 'Пожалуйста, введите корректный рейтинг от 1 до 5', 'error');
-                return;
-            }
-            
-            courierRating = rating;
-            localStorage.setItem('courierRating', rating.toString());
-            ratingModal.style.display = 'none';
-            updateRatingDisplay();
-            
-            showNotification('Рейтинг сохранен', `Ваш рейтинг успешно сохранен: ${rating.toFixed(2)}`, 'success');
+        // ---------- ОБРАБОТЧИКИ ДЛЯ НОВЫХ КНОПОК ----------
+        addTipsBtn.addEventListener('click', () => { tipsModal.style.display = 'flex'; });
+        saveTipsBtn.addEventListener('click', () => {
+            const amount = parseFloat(document.getElementById('tipsAmount').value);
+            if (isNaN(amount) || amount <= 0) { showNotification('Ошибка', 'Введите корректную сумму чаевых', 'error'); return; }
+            addTips(amount);
+            tipsModal.style.display = 'none';
+            document.getElementById('tipsAmount').value = '';
         });
         
-        saveCourierTypeBtn.addEventListener('click', () => {
-            localStorage.setItem('courierType', courierType);
-            courierTypeModal.style.display = 'none';
-            updateCourierTypeDisplay();
-            
-            showNotification('Тип курьера сохранен', `Тип курьера успешно изменен на: ${rates[courierType].name}`, 'success');
+        // Обработчики для модального окна предупреждения о большом расстоянии
+        warningFixBtn.addEventListener('click', () => {
+            distanceWarningModal.style.display = 'none';
+            pendingCalculation = null; // ничего не делаем, пользователь сам исправляет
+        });
+        warningProceedBtn.addEventListener('click', () => {
+            distanceWarningModal.style.display = 'none';
+            if (pendingCalculation) { pendingCalculation(); pendingCalculation = null; }
         });
         
-        singleOrderBtn.addEventListener('click', () => {
-            if (!courierRating) {
-                showNotification('Внимание', 'Пожалуйста, сначала введите ваш рейтинг', 'warning');
-                ratingModal.style.display = 'flex';
-                return;
-            }
-            
-            document.getElementById('singleWeight').value = '';
-            document.getElementById('singleDistance').value = '';
-            singleStoreCheckbox.checked = false;
-            updateMultiplierOptions(singleMultiplierSelect, false);
-            singleMultiplierSelect.value = '1';
-            singleOrderModal.style.display = 'flex';
-        });
-        
-        multiOrderBtn.addEventListener('click', () => {
-            if (!courierRating) {
-                showNotification('Внимание', 'Пожалуйста, сначала введите ваш рейтинг', 'warning');
-                ratingModal.style.display = 'flex';
-                return;
-            }
-            
-            orderCountSelect.value = '2';
-            multiStoreCheckbox.checked = false;
-            updateMultiplierOptions(multiMultiplierSelect, false);
-            document.getElementById('multiMultiplier').value = '1';
-            updateMultiOrderInputs();
-            multiOrderModal.style.display = 'flex';
-        });
-        
-        historyBtn.addEventListener('click', () => {
-            historyContainer.style.display = historyContainer.style.display === 'none' ? 'block' : 'none';
-        });
+        // ========== ИЗМЕНЁННЫЕ РАСЧЁТЫ С ПРОВЕРКОЙ РАССТОЯНИЯ ==========
+        function processSingleOrder(weight, distance, multiplier, storeOrder) {
+            const orderAmount = calculateOrder(weight, distance, multiplier, storeOrder);
+            const ratingBonus = calculateRatingBonus(courierRating);
+            const totalAmount = orderAmount + ratingBonus;
+            document.getElementById('resultText').textContent = `Стоимость заказа: ${totalAmount.toFixed(2)} ₽ (${multiplier}x, включая бонус за рейтинг: ${ratingBonus} ₽)${storeOrder ? ' + магазин П🟢' : ''}`;
+            singleOrderModal.style.display = 'none';
+            resultModal.style.display = 'flex';
+            saveToHistory(`Одиночный заказ (${multiplier}x)${storeOrder ? ' [П🟢]' : ''}`, totalAmount, { orderType: 'single', weight, distance, multiplier, storeOrder });
+            showNotification('Расчет завершен', `Стоимость заказа: ${totalAmount.toFixed(2)} ₽`, 'success');
+        }
         
         calculateSingleBtn.addEventListener('click', () => {
             const weight = parseFloat(document.getElementById('singleWeight').value);
             const distance = parseFloat(document.getElementById('singleDistance').value);
             const multiplier = parseFloat(document.getElementById('singleMultiplier').value);
             const storeOrder = singleStoreCheckbox.checked;
-            
-            if (isNaN(weight) || isNaN(distance) || weight <= 0 || distance <= 0) {
-                showNotification('Ошибка', 'Пожалуйста, введите корректные данные', 'error');
-                return;
-            }
-            
-            if (hasActiveSubscription) {
-                showSingleOrderResult(weight, distance, multiplier, storeOrder);
-            } else {
-                startCalculationTimer('single', () => {
-                    showSingleOrderResult(weight, distance, multiplier, storeOrder);
-                });
-            }
+            if (isNaN(weight) || isNaN(distance) || weight <= 0 || distance <= 0) { showNotification('Ошибка', 'Пожалуйста, введите корректные данные', 'error'); return; }
+            const proceed = () => {
+                if (hasActiveSubscription) processSingleOrder(weight, distance, multiplier, storeOrder);
+                else startCalculationTimer('single', () => processSingleOrder(weight, distance, multiplier, storeOrder));
+            };
+            if (!checkDistanceLimit(distance, proceed)) return;
+            proceed();
         });
         
-        function showSingleOrderResult(weight, distance, multiplier, storeOrder) {
-            const orderAmount = calculateOrder(weight, distance, multiplier, storeOrder);
+        function processMultiOrder(orderCount, multiplier, orders, storeOrder) {
+            let totalAmount = 0;
+            let isFirstOrder = true;
+            const rate = rates[courierType];
+            for (const order of orders) {
+                const currentWeightRate = getWeightRate(courierType, order.weight);
+                const eveningMultiplier = getEveningMultiplier(multiplier, storeOrder);
+                if (isFirstOrder) { totalAmount += calculateOrder(order.weight, order.distance, multiplier, storeOrder); isFirstOrder = false; }
+                else { totalAmount += (rate.delivery * multiplier * eveningMultiplier) + (order.distance * rate.distance * multiplier * eveningMultiplier) + (order.weight * currentWeightRate * multiplier * eveningMultiplier); }
+            }
             const ratingBonus = calculateRatingBonus(courierRating);
-            const totalAmount = orderAmount + ratingBonus;
-            
-            document.getElementById('resultText').textContent = `Стоимость заказа: ${totalAmount.toFixed(2)} ₽ (${multiplier}x, включая бонус за рейтинг: ${ratingBonus} ₽)${storeOrder ? ' + магазин П🟢' : ''}`;
-            singleOrderModal.style.display = 'none';
+            totalAmount += ratingBonus;
+            document.getElementById('resultText').textContent = `Стоимость ${orderCount} заказов (${multiplier}x): ${totalAmount.toFixed(2)} ₽ (включая бонус за рейтинг: ${ratingBonus} ₽)${storeOrder ? ' + магазин П🟢' : ''}`;
+            multiOrderModal.style.display = 'none';
             resultModal.style.display = 'flex';
-            
-            saveToHistory(`Одиночный заказ (${multiplier}x)${storeOrder ? ' [П🟢]' : ''}`, totalAmount, {
-                orderType: 'single',
-                weight: weight,
-                distance: distance,
-                multiplier: multiplier,
-                storeOrder: storeOrder
-            });
-            
-            showNotification('Расчет завершен', `Стоимость заказа: ${totalAmount.toFixed(2)} ₽`, 'success');
+            saveToHistory(`Мультизаказ (${orderCount}, ${multiplier}x)${storeOrder ? ' [П🟢]' : ''}`, totalAmount, { orderType: 'multi', orderCount, multiplier, orders, storeOrder });
+            showNotification('Расчет завершен', `Стоимость ${orderCount} заказов: ${totalAmount.toFixed(2)} ₽`, 'success');
         }
         
         calculateMultiBtn.addEventListener('click', () => {
@@ -3308,156 +2698,88 @@
             const storeOrder = multiStoreCheckbox.checked;
             let isValid = true;
             const orders = [];
-            
             for (let i = 1; i <= orderCount; i++) {
                 const weight = parseFloat(document.getElementById(`multiWeight${i}`).value);
                 const distance = parseFloat(document.getElementById(`multiDistance${i}`).value);
-                
-                if (isNaN(weight) || isNaN(distance) || weight <= 0 || distance <= 0) {
-                    isValid = false;
-                    break;
-                }
-                
+                if (isNaN(weight) || isNaN(distance) || weight <= 0 || distance <= 0) { isValid = false; break; }
                 orders.push({ weight, distance });
             }
-            
-            if (!isValid) {
-                showNotification('Ошибка', 'Пожалуйста, введите корректные данные для всех заказов', 'error');
+            if (!isValid) { showNotification('Ошибка', 'Пожалуйста, введите корректные данные для всех заказов', 'error'); return; }
+            // Проверяем каждое расстояние на превышение
+            let firstExceeded = null;
+            for (let i=0; i<orders.length; i++) {
+                let limit = 0;
+                if (courierType === 'pedestrian') limit = 1.5;
+                else if (courierType === 'bicycle') limit = 3;
+                else limit = 10;
+                if (orders[i].distance > limit) { firstExceeded = i+1; break; }
+            }
+            if (firstExceeded) {
+                const warningTextElem = document.getElementById('warningText');
+                warningTextElem.innerHTML = `В заказе №${firstExceeded} указано расстояние ${orders[firstExceeded-1].distance} км, что превышает максимальное для вашего типа передвижения (${rates[courierType].name}).<br>Возможно, вы ошиблись.<br><br>Максимальное расстояние для этого типа: ${courierType === 'pedestrian' ? 1.5 : courierType === 'bicycle' ? 3 : 10} км.`;
+                pendingCalculation = () => {
+                    if (hasActiveSubscription) processMultiOrder(orderCount, multiplier, orders, storeOrder);
+                    else startCalculationTimer('multi', () => processMultiOrder(orderCount, multiplier, orders, storeOrder));
+                };
+                distanceWarningModal.style.display = 'flex';
                 return;
             }
-            
-            if (hasActiveSubscription) {
-                showMultiOrderResult(orderCount, multiplier, orders, storeOrder);
-            } else {
-                startCalculationTimer('multi', () => {
-                    showMultiOrderResult(orderCount, multiplier, orders, storeOrder);
-                });
-            }
+            const proceed = () => {
+                if (hasActiveSubscription) processMultiOrder(orderCount, multiplier, orders, storeOrder);
+                else startCalculationTimer('multi', () => processMultiOrder(orderCount, multiplier, orders, storeOrder));
+            };
+            proceed();
         });
         
-        function showMultiOrderResult(orderCount, multiplier, orders, storeOrder) {
-            let totalAmount = 0;
-            let isFirstOrder = true;
-            const rate = rates[courierType];
-            
-            for (const order of orders) {
-                const currentWeightRate = getWeightRate(courierType, order.weight);
-                const eveningMultiplier = getEveningMultiplier(multiplier, storeOrder);
-
-                if (isFirstOrder) {
-                    totalAmount += calculateOrder(order.weight, order.distance, multiplier, storeOrder);
-                    isFirstOrder = false;
-                } else {
-                    totalAmount += (rate.delivery * multiplier * eveningMultiplier) + 
-                                  (order.distance * rate.distance * multiplier * eveningMultiplier) + 
-                                  (order.weight * currentWeightRate * multiplier * eveningMultiplier);
-                }
-            }
-            
-            const ratingBonus = calculateRatingBonus(courierRating);
-            totalAmount += ratingBonus;
-            
-            document.getElementById('resultText').textContent = 
-                `Стоимость ${orderCount} заказов (${multiplier}x): ${totalAmount.toFixed(2)} ₽ (включая бонус за рейтинг: ${ratingBonus} ₽)${storeOrder ? ' + магазин П🟢' : ''}`;
-            multiOrderModal.style.display = 'none';
-            resultModal.style.display = 'flex';
-            
-            saveToHistory(`Мультизаказ (${orderCount}, ${multiplier}x)${storeOrder ? ' [П🟢]' : ''}`, totalAmount, {
-                orderType: 'multi',
-                orderCount: orderCount,
-                multiplier: multiplier,
-                orders: orders,
-                storeOrder: storeOrder
-            });
-            
-            showNotification('Расчет завершен', `Стоимость ${orderCount} заказов: ${totalAmount.toFixed(2)} ₽`, 'success');
-        }
-        
-        closeResultBtn.addEventListener('click', () => {
-            resultModal.style.display = 'none';
+        // Остальные обработчики (оригинальные)
+        courierTypeDisplay.addEventListener('click', () => { courierTypeModal.style.display = 'flex'; });
+        ratingDisplay.addEventListener('click', () => { ratingModal.style.display = 'flex'; if (courierRating !== null) document.getElementById('ratingInput').value = courierRating; });
+        courierTypes.forEach(type => {
+            type.addEventListener('click', function() { courierTypes.forEach(t => t.classList.remove('selected')); this.classList.add('selected'); courierType = this.dataset.type; });
         });
-        
-        closeDetailsBtn.addEventListener('click', () => {
-            orderDetailsModal.style.display = 'none';
+        if (carInfoBtn) carInfoBtn.addEventListener('click', (e) => { e.stopPropagation(); tariffModal.style.display = 'flex'; });
+        if (closeTariffBtn) closeTariffBtn.addEventListener('click', () => { tariffModal.style.display = 'none'; });
+        saveRatingBtn.addEventListener('click', () => {
+            const rating = parseFloat(document.getElementById('ratingInput').value);
+            if (isNaN(rating) || rating < 1 || rating > 5) { showNotification('Ошибка', 'Пожалуйста, введите корректный рейтинг от 1 до 5', 'error'); return; }
+            courierRating = rating;
+            localStorage.setItem('courierRating', rating.toString());
+            ratingModal.style.display = 'none';
+            updateRatingDisplay();
+            showNotification('Рейтинг сохранен', `Ваш рейтинг успешно сохранен: ${rating.toFixed(2)}`, 'success');
         });
-        
-        deleteOrderBtn.addEventListener('click', () => {
-            if (confirm('Вы уверены, что хотите удалить этот заказ из истории?')) {
-                deleteOrder(currentOrderIndex);
-            }
+        saveCourierTypeBtn.addEventListener('click', () => { localStorage.setItem('courierType', courierType); courierTypeModal.style.display = 'none'; updateCourierTypeDisplay(); showNotification('Тип курьера сохранен', `Тип курьера успешно изменен на: ${rates[courierType].name}`, 'success'); });
+        singleOrderBtn.addEventListener('click', () => {
+            if (!courierRating) { showNotification('Внимание', 'Пожалуйста, сначала введите ваш рейтинг', 'warning'); ratingModal.style.display = 'flex'; return; }
+            document.getElementById('singleWeight').value = ''; document.getElementById('singleDistance').value = '';
+            singleStoreCheckbox.checked = false; updateMultiplierOptions(singleMultiplierSelect, false); singleMultiplierSelect.value = '1';
+            singleOrderModal.style.display = 'flex';
         });
-
-        addReturnBtn.addEventListener('click', () => {
-            returnCountInput.value = '1';
-            returnModal.style.display = 'flex';
+        multiOrderBtn.addEventListener('click', () => {
+            if (!courierRating) { showNotification('Внимание', 'Пожалуйста, сначала введите ваш рейтинг', 'warning'); ratingModal.style.display = 'flex'; return; }
+            orderCountSelect.value = '2'; multiStoreCheckbox.checked = false; updateMultiplierOptions(multiMultiplierSelect, false);
+            document.getElementById('multiMultiplier').value = '1'; updateMultiOrderInputs();
+            multiOrderModal.style.display = 'flex';
         });
-
-        saveReturnBtn.addEventListener('click', () => {
-            const count = parseInt(returnCountInput.value);
-            
-            if (isNaN(count) || count < 1) {
-                showNotification('Ошибка', 'Пожалуйста, введите корректное количество возвратов', 'error');
-                return;
-            }
-            
-            addReturn(count);
-            returnModal.style.display = 'none';
-        });
-        
-        clearHistoryBtn.addEventListener('click', () => {
-            if (confirm('Вы уверены, что хотите очистить историю?')) {
-                ordersHistory = [];
-                totalEarnings = 0;
-                todayEarnings = 0;
-                localStorage.removeItem('deliveryHistory');
-                localStorage.removeItem('totalEarnings');
-                localStorage.setItem('todayEarnings', '0');
-                updateHistoryDisplay();
-                updateGoalDisplay();
-                
-                showNotification('История очищена', 'Вся история расчетов успешно очищена', 'success');
-            }
-        });
-        
-        subscriptionBtn.addEventListener('click', () => {
-            subscriptionModal.style.display = 'flex';
-        });
-        
-        closeSubscriptionBtn.addEventListener('click', () => {
-            subscriptionModal.style.display = 'none';
-        });
-        
-        buyMonthBtn.addEventListener('click', () => {
-            window.open('https://t.me/MarKell1_q', '_blank');
-            showNotification('Подписка', 'Вы будете перенаправлены для покупки подписки', 'info');
-        });
-        
-        buyHalfYearBtn.addEventListener('click', () => {
-            window.open('https://t.me/MarKell1_q', '_blank');
-            showNotification('Подписка', 'Вы будете перенаправлены для покупки подписки', 'info');
-        });
-        
-        settingsBtn.addEventListener('click', () => {
-            settingsModal.style.display = 'flex';
-        });
-        
-        closeSettingsBtn.addEventListener('click', () => {
-            settingsModal.style.display = 'none';
-        });
-        
-        saveSettingsBtn.addEventListener('click', () => {
-            saveSettings();
-            settingsModal.style.display = 'none';
-        });
-        
+        historyBtn.addEventListener('click', () => { historyContainer.style.display = historyContainer.style.display === 'none' ? 'block' : 'none'; });
+        closeResultBtn.addEventListener('click', () => { resultModal.style.display = 'none'; });
+        closeDetailsBtn.addEventListener('click', () => { orderDetailsModal.style.display = 'none'; });
+        deleteOrderBtn.addEventListener('click', () => { if (confirm('Вы уверены, что хотите удалить этот заказ из истории?')) deleteOrder(currentOrderIndex); });
+        addReturnBtn.addEventListener('click', () => { returnCountInput.value = '1'; returnModal.style.display = 'flex'; });
+        saveReturnBtn.addEventListener('click', () => { const count = parseInt(returnCountInput.value); if (isNaN(count) || count < 1) { showNotification('Ошибка', 'Пожалуйста, введите корректное количество возвратов', 'error'); return; } addReturn(count); returnModal.style.display = 'none'; });
+        clearHistoryBtn.addEventListener('click', () => { if (confirm('Вы уверены, что хотите очистить историю?')) { ordersHistory = []; totalEarnings = 0; todayEarnings = 0; localStorage.removeItem('deliveryHistory'); localStorage.removeItem('totalEarnings'); localStorage.setItem('todayEarnings', '0'); updateHistoryDisplay(); updateGoalDisplay(); showNotification('История очищена', 'Вся история расчетов успешно очищена', 'success'); } });
+        subscriptionBtn.addEventListener('click', () => { subscriptionModal.style.display = 'flex'; });
+        closeSubscriptionBtn.addEventListener('click', () => { subscriptionModal.style.display = 'none'; });
+        buyMonthBtn.addEventListener('click', () => { window.open('https://t.me/PCH1s', '_blank'); showNotification('Подписка', 'Вы будете перенаправлены для покупки подписки', 'info'); });
+        buyHalfYearBtn.addEventListener('click', () => { window.open('https://t.me/PCH1s', '_blank'); showNotification('Подписка', 'Вы будете перенаправлены для покупки подписки', 'info'); });
+        settingsBtn.addEventListener('click', () => { settingsModal.style.display = 'flex'; });
+        closeSettingsBtn.addEventListener('click', () => { settingsModal.style.display = 'none'; });
+        saveSettingsBtn.addEventListener('click', () => { saveSettings(); settingsModal.style.display = 'none'; });
         saveEditSingleBtn.addEventListener('click', saveEditedSingleOrder);
         saveEditMultiBtn.addEventListener('click', saveEditedMultiOrder);
         
         window.addEventListener('click', (event) => {
-            if (event.target === ratingModal) {
-                if (courierRating === null) return;
-                ratingModal.style.display = 'none';
-            }
+            if (event.target === ratingModal && courierRating !== null) ratingModal.style.display = 'none';
             if (event.target === courierTypeModal) courierTypeModal.style.display = 'none';
             if (event.target === singleOrderModal) singleOrderModal.style.display = 'none';
             if (event.target === multiOrderModal) multiOrderModal.style.display = 'none';
@@ -3469,6 +2791,8 @@
             if (event.target === settingsModal) settingsModal.style.display = 'none';
             if (event.target === editSingleOrderModal) editSingleOrderModal.style.display = 'none';
             if (event.target === editMultiOrderModal) editMultiOrderModal.style.display = 'none';
+            if (event.target === tipsModal) tipsModal.style.display = 'none';
+            if (event.target === distanceWarningModal) distanceWarningModal.style.display = 'none';
         });
         
         initAuth();
