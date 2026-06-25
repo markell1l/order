@@ -1416,11 +1416,6 @@
             font-size: 0.95rem;
         }
         
-        .report-item-summary {
-            font-size: 0.8rem;
-            color: var(--gray);
-        }
-        
         .report-item-actions {
             display: flex;
             gap: 8px;
@@ -2884,23 +2879,12 @@
                 item.innerHTML = `
                     <div class="report-item-info">
                         <div class="report-item-date">${report.dateDisplay}</div>
-                        <div class="report-item-summary">Заказов: ${report.totalOrders}, Вес: ${report.totalWeight.toFixed(1)} кг, Километраж: ${report.totalDistance.toFixed(1)} км, Итого: ${report.totalAmount.toFixed(2)} ₽</div>
                     </div>
                     <div class="report-item-actions">
-                        <button class="info-history-btn" data-index="${realIndex}" title="Просмотреть"><i class="fas fa-eye"></i></button>
                         <button class="btn btn-danger btn-sm" data-index="${realIndex}" style="padding: 4px 8px; font-size: 0.7rem;" title="Удалить"><i class="fas fa-trash"></i></button>
                     </div>
                 `;
                 reportsListContainer.appendChild(item);
-            });
-            
-            // Обработчики для кнопок просмотра
-            document.querySelectorAll('#reportsListContainer .info-history-btn').forEach(btn => {
-                btn.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    const index = parseInt(btn.dataset.index);
-                    showReportDetail(index);
-                });
             });
             
             // Обработчики для кнопок удаления
