@@ -6,7 +6,6 @@
     <title>Калькулятор доставки</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* ========== ОРИГИНАЛЬНЫЕ СТИЛИ (БЕЗ ИЗМЕНЕНИЙ) ========== */
         :root {
             --primary: #4361ee;
             --primary-dark: #3a0ca3;
@@ -19,14 +18,12 @@
             --gray: #6c757d;
             --white: #ffffff;
             --bg-gradient: linear-gradient(135deg, #4361ee 0%, #3a0ca3 100%);
-            
             --dark-bg: #121212;
             --dark-surface: #1e1e1e;
             --dark-surface-light: #2d2d2d;
             --dark-text: #f0f0f0;
             --dark-text-secondary: #b0b0b0;
             --dark-border: #404040;
-            
             --evening-banner-bg: #f8961e;
             --evening-banner-text: #ffffff;
         }
@@ -168,16 +165,10 @@
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s;
-            position: relative;
         }
         
         .login-btn:hover {
             background: var(--primary-dark);
-        }
-        
-        .login-btn:disabled {
-            opacity: 0.7;
-            cursor: not-allowed;
         }
         
         .error-message {
@@ -204,43 +195,6 @@
         .privacy-policy a:hover {
             color: var(--primary-dark);
             text-decoration: underline;
-        }
-        
-        /* Стили для прогресс-бара на экране входа */
-        .login-progress {
-            margin-top: 15px;
-            display: none;
-        }
-        
-        .login-progress-bar {
-            width: 100%;
-            height: 6px;
-            background: #e0e0e0;
-            border-radius: 10px;
-            overflow: hidden;
-            margin-top: 8px;
-        }
-        
-        .login-progress-fill {
-            height: 100%;
-            width: 0%;
-            background: var(--primary);
-            border-radius: 10px;
-            transition: width 0.4s ease;
-        }
-        
-        .login-progress-text {
-            font-size: 0.85rem;
-            color: var(--gray);
-            text-align: center;
-        }
-        
-        body.dark-theme .login-progress-bar {
-            background: var(--dark-border);
-        }
-        
-        body.dark-theme .login-progress-text {
-            color: var(--dark-text-secondary);
         }
         
         .app-header {
@@ -386,36 +340,6 @@
             background: var(--dark-border);
         }
         
-        .report-btn {
-            grid-column: span 2;
-            background: var(--success);
-            color: white;
-            border: none;
-            padding: 12px;
-            border-radius: 12px;
-            font-size: 0.9rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-        
-        .report-btn:hover {
-            background: #00b4d8;
-            transform: translateY(-2px);
-        }
-        
-        body.dark-theme .report-btn {
-            background: #0d7a8f;
-            color: var(--dark-text);
-        }
-        
-        body.dark-theme .report-btn:hover {
-            background: #0f9bb5;
-        }
-        
         .modal {
             display: none;
             position: fixed;
@@ -494,33 +418,6 @@
             background-color: var(--dark-surface-light);
             border-color: var(--dark-border);
             color: var(--dark-text);
-        }
-        
-        .store-checkbox {
-            display: flex;
-            align-items: center;
-            margin-bottom: 15px;
-            gap: 10px;
-            padding: 10px 0;
-        }
-        
-        .store-checkbox input[type="checkbox"] {
-            width: 18px;
-            height: 18px;
-            cursor: pointer;
-            accent-color: var(--primary);
-        }
-        
-        .store-checkbox label {
-            margin-bottom: 0;
-            cursor: pointer;
-            font-weight: 500;
-            color: var(--dark);
-        }
-        
-        .store-checkbox label i {
-            color: #00a86b;
-            margin-left: 4px;
         }
         
         .form-control:disabled {
@@ -822,7 +719,6 @@
             display: flex;
             gap: 10px;
             margin-bottom: 15px;
-            flex-wrap: wrap;
         }
 
         .return-btn {
@@ -837,8 +733,6 @@
             display: flex;
             align-items: center;
             gap: 8px;
-            flex: 1;
-            justify-content: center;
         }
 
         .return-btn:hover {
@@ -854,9 +748,29 @@
             background-color: rgba(76, 201, 240, 0.2);
         }
         
-        /* Кнопка подписки больше не плавает, она внутри настроек */
         .subscription-btn {
-            display: none; /* убрали плавающую кнопку */
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--primary);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            z-index: 100;
+            transition: all 0.3s;
+        }
+        
+        .subscription-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
         }
         
         .subscription-modal {
@@ -1401,7 +1315,36 @@
             color: var(--warning);
         }
         
-        /* Стили для расчетных листов */
+        .report-btn {
+            grid-column: span 2;
+            background: var(--success);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 12px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .report-btn:hover {
+            background: #00b4d8;
+            transform: translateY(-2px);
+        }
+        
+        body.dark-theme .report-btn {
+            background: #0d7a8f;
+            color: var(--dark-text);
+        }
+        
+        body.dark-theme .report-btn:hover {
+            background: #0f9bb5;
+        }
+        
         .reports-list {
             max-height: 400px;
             overflow-y: auto;
@@ -1486,140 +1429,32 @@
             text-align: right;
             font-size: 1.1rem;
         }
-
-        /* Стили для экрана настроек (отдельная страница) */
-        .settings-page {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: var(--white);
-            z-index: 1500;
-            overflow-y: auto;
-            padding: 20px;
-            box-sizing: border-box;
-        }
         
-        body.dark-theme .settings-page {
-            background-color: var(--dark-bg);
-        }
-        
-        .settings-page-header {
+        .store-checkbox {
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            padding-bottom: 15px;
-            border-bottom: 1px solid #dee2e6;
-            margin-bottom: 20px;
-        }
-        
-        body.dark-theme .settings-page-header {
-            border-bottom-color: var(--dark-border);
-        }
-        
-        .settings-page-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--dark);
-        }
-        
-        body.dark-theme .settings-page-title {
-            color: var(--dark-text);
-        }
-        
-        .settings-close-btn {
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            color: var(--gray);
-            cursor: pointer;
-            padding: 5px 10px;
-        }
-        
-        .settings-close-btn:hover {
-            color: var(--dark);
-        }
-        
-        body.dark-theme .settings-close-btn:hover {
-            color: var(--dark-text);
-        }
-        
-        .settings-section {
-            margin-bottom: 25px;
-        }
-        
-        .settings-section-title {
-            font-weight: 600;
-            font-size: 1.1rem;
             margin-bottom: 15px;
-            color: var(--primary);
+            gap: 10px;
+            padding: 10px 0;
         }
         
-        .settings-item {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 12px 0;
-            border-bottom: 1px solid #f0f0f0;
+        .store-checkbox input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+            accent-color: var(--primary);
         }
         
-        body.dark-theme .settings-item {
-            border-bottom-color: var(--dark-border);
-        }
-        
-        .settings-item:last-child {
-            border-bottom: none;
-        }
-        
-        .settings-item-label {
+        .store-checkbox label {
+            margin-bottom: 0;
+            cursor: pointer;
             font-weight: 500;
             color: var(--dark);
         }
         
-        body.dark-theme .settings-item-label {
-            color: var(--dark-text);
-        }
-        
-        .settings-btn-inline {
-            background: var(--primary);
-            color: white;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 0.9rem;
-            transition: background 0.2s;
-        }
-        
-        .settings-btn-inline:hover {
-            background: var(--primary-dark);
-        }
-        
-        .settings-btn-inline-secondary {
-            background: var(--light);
-            color: var(--dark);
-            border: 1px solid #dee2e6;
-            padding: 8px 16px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 0.9rem;
-            transition: all 0.2s;
-        }
-        
-        body.dark-theme .settings-btn-inline-secondary {
-            background: var(--dark-surface-light);
-            color: var(--dark-text);
-            border-color: var(--dark-border);
-        }
-        
-        .settings-btn-inline-secondary:hover {
-            background: #e9ecef;
-        }
-        
-        body.dark-theme .settings-btn-inline-secondary:hover {
-            background: var(--dark-border);
+        .store-checkbox label i {
+            color: #00a86b;
+            margin-left: 4px;
         }
         
         @media (max-width: 480px) {
@@ -1642,6 +1477,14 @@
 
             .history-actions {
                 flex-direction: column;
+            }
+            
+            .subscription-btn {
+                bottom: 15px;
+                right: 15px;
+                width: 45px;
+                height: 45px;
+                font-size: 1rem;
             }
             
             .settings-btn {
@@ -1731,13 +1574,7 @@
                     <label for="codeInput">Проверочный код:</label>
                     <input type="password" id="codeInput" placeholder="Введите проверочный код" required>
                 </div>
-                <button type="submit" class="login-btn" id="loginBtn">Войти</button>
-                <div class="login-progress" id="loginProgress">
-                    <div class="login-progress-text" id="loginProgressText">Проверка данных...</div>
-                    <div class="login-progress-bar">
-                        <div class="login-progress-fill" id="loginProgressFill"></div>
-                    </div>
-                </div>
+                <button type="submit" class="login-btn">Войти</button>
                 <div class="error-message" id="errorMessage">Неверный логин или проверочный код</div>
                 <div class="privacy-policy">
                     Входя в приложение, Вы принимаете <a href="https://markell1l.github.io/order/privacy-policy.html" target="_blank">политику конфиденциальности</a>
@@ -1791,14 +1628,13 @@
                 <i class="fas fa-boxes-stacked"></i>
                 <span>Мультизаказ</span>
             </button>
-            <!-- Расчётные листы сверху, история снизу -->
-            <button class="report-btn" id="reportBtn">
-                <i class="fas fa-file-invoice"></i>
-                <span>Расчетные листы</span>
-            </button>
             <button class="history-btn" id="historyBtn">
                 <i class="fas fa-history"></i>
                 <span>История заказов</span>
+            </button>
+            <button class="report-btn" id="reportBtn">
+                <i class="fas fa-file-invoice"></i>
+                <span>Расчетные листы</span>
             </button>
         </div>
         
@@ -1827,9 +1663,89 @@
         </div>
     </div>
     
-    <!-- Кнопка подписки убрана с главного экрана -->
+    <div class="subscription-btn" id="subscriptionBtn">
+        <i class="fas fa-crown"></i>
+    </div>
     
-    <!-- Модальные окна -->
+    <div class="modal" id="settingsModal">
+        <div class="modal-content">
+            <div class="modal-header">Настройки</div>
+            <div class="modal-body">
+                <div class="toggle-container">
+                    <div class="toggle-label">Темная тема:</div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="themeToggle">
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+                
+                <div class="toggle-container">
+                    <div class="toggle-label">Показывать цель по заработку:</div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="goalToggle">
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+                
+                <div id="goalSettings" style="display: none;">
+                    <div class="form-group">
+                        <label for="dailyGoalInput">Цель на день (₽):</label>
+                        <input type="number" class="form-control" id="dailyGoalInput" min="0" step="10" value="0">
+                    </div>
+                    <div class="form-group">
+                        <p style="font-size: 0.9rem; color: var(--gray);">
+                            <i class="fas fa-info-circle"></i> Цель поможет отслеживать ваш прогресс за день
+                        </p>
+                    </div>
+                </div>
+                
+                <button class="btn btn-primary" id="saveSettingsBtn">Сохранить</button>
+                <button class="btn" id="closeSettingsBtn" style="margin-top: 10px; background: transparent; border: 1px solid #dee2e6;">Закрыть</button>
+            </div>
+        </div>
+    </div>
+    
+    <div class="subscription-modal" id="subscriptionModal">
+        <div class="subscription-content">
+            <div class="subscription-header">Подписка</div>
+            <div class="subscription-body">
+                <div class="subscription-status" id="subscriptionStatus">
+                    <div class="status-main">
+                        <div class="status-indicator status-inactive" id="statusIndicator"></div>
+                        <span id="statusText">Подписка не активна</span>
+                    </div>
+                    <div class="subscription-days" id="subscriptionDaysText"></div>
+                </div>
+                
+                <div class="subscription-plans">
+                    <div class="subscription-plan">
+                        <div class="plan-header">
+                            <div class="plan-name">Месячная подписка</div>
+                            <div class="plan-price">150 ₽</div>
+                        </div>
+                        <div class="plan-desc">
+                            Полный доступ ко всем функциям на 1 месяц. Без ограничений на расчеты.
+                        </div>
+                        <button class="btn btn-primary" id="buyMonthBtn">Купить</button>
+                    </div>
+                    
+                    <div class="subscription-plan">
+                        <div class="plan-header">
+                            <div class="plan-name">Полугодовая подписка</div>
+                            <div class="plan-price">400 ₽</div>
+                        </div>
+                        <div class="plan-desc">
+                            Полный доступ ко всем функции на 6 месяцев. Самая выгодная подписка.
+                        </div>
+                        <button class="btn btn-primary" id="buyHalfYearBtn">Купить</button>
+                    </div>
+                </div>
+                
+                <button class="btn" id="closeSubscriptionBtn" style="border: 1px solid #dee2e6; background: transparent;">Закрыть</button>
+            </div>
+        </div>
+    </div>
+    
     <div class="modal" id="ratingModal">
         <div class="modal-content">
             <div class="modal-header">Ваш рейтинг</div>
@@ -2120,7 +2036,6 @@
         </div>
     </div>
 
-    <!-- Модальное окно для расчетных листов -->
     <div class="modal" id="reportsModal">
         <div class="modal-content">
             <div class="modal-header">Расчетные листы</div>
@@ -2136,7 +2051,6 @@
         </div>
     </div>
 
-    <!-- Модальное окно для просмотра расчетного листа -->
     <div class="modal" id="reportDetailModal">
         <div class="modal-content">
             <div class="modal-header">Расчетный лист</div>
@@ -2150,121 +2064,17 @@
         </div>
     </div>
     
-    <!-- Модальное окно подписки (вызывается из настроек) -->
-    <div class="subscription-modal" id="subscriptionModal">
-        <div class="subscription-content">
-            <div class="subscription-header">Подписка</div>
-            <div class="subscription-body">
-                <div class="subscription-status" id="subscriptionStatus">
-                    <div class="status-main">
-                        <div class="status-indicator status-inactive" id="statusIndicator"></div>
-                        <span id="statusText">Подписка не активна</span>
-                    </div>
-                    <div class="subscription-days" id="subscriptionDaysText"></div>
-                </div>
-                
-                <div class="subscription-plans">
-                    <div class="subscription-plan">
-                        <div class="plan-header">
-                            <div class="plan-name">Месячная подписка</div>
-                            <div class="plan-price">150 ₽</div>
-                        </div>
-                        <div class="plan-desc">
-                            Полный доступ ко всем функциям на 1 месяц. Без ограничений на расчеты.
-                        </div>
-                        <button class="btn btn-primary" id="buyMonthBtn">Купить</button>
-                    </div>
-                    
-                    <div class="subscription-plan">
-                        <div class="plan-header">
-                            <div class="plan-name">Полугодовая подписка</div>
-                            <div class="plan-price">400 ₽</div>
-                        </div>
-                        <div class="plan-desc">
-                            Полный доступ ко всем функции на 6 месяцев. Самая выгодная подписка.
-                        </div>
-                        <button class="btn btn-primary" id="buyHalfYearBtn">Купить</button>
-                    </div>
-                </div>
-                
-                <button class="btn" id="closeSubscriptionBtn" style="border: 1px solid #dee2e6; background: transparent;">Закрыть</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- ОТДЕЛЬНЫЙ ЭКРАН НАСТРОЕК -->
-    <div class="settings-page" id="settingsPage">
-        <div class="settings-page-header">
-            <span class="settings-page-title">Настройки</span>
-            <button class="settings-close-btn" id="settingsCloseBtn"><i class="fas fa-times"></i></button>
-        </div>
-        
-        <div class="settings-section">
-            <div class="settings-section-title">Внешний вид</div>
-            <div class="settings-item">
-                <span class="settings-item-label">Темная тема</span>
-                <label class="toggle-switch">
-                    <input type="checkbox" id="themeToggleSettings">
-                    <span class="toggle-slider"></span>
-                </label>
-            </div>
-        </div>
-        
-        <div class="settings-section">
-            <div class="settings-section-title">Цель по заработку</div>
-            <div class="settings-item">
-                <span class="settings-item-label">Показывать цель</span>
-                <label class="toggle-switch">
-                    <input type="checkbox" id="goalToggleSettings">
-                    <span class="toggle-slider"></span>
-                </label>
-            </div>
-            <div id="goalSettingsContainer" style="display: none;">
-                <div class="form-group" style="margin-top: 15px;">
-                    <label for="dailyGoalInputSettings">Цель на день (₽):</label>
-                    <input type="number" class="form-control" id="dailyGoalInputSettings" min="0" step="10" value="0">
-                </div>
-                <div class="form-group">
-                    <p style="font-size: 0.9rem; color: var(--gray);">
-                        <i class="fas fa-info-circle"></i> Цель поможет отслеживать ваш прогресс за день
-                    </p>
-                </div>
-            </div>
-        </div>
-        
-        <div class="settings-section">
-            <div class="settings-section-title">Подписка</div>
-            <div class="settings-item">
-                <span class="settings-item-label">Статус подписки</span>
-                <button class="settings-btn-inline" id="openSubscriptionFromSettings">Управлять</button>
-            </div>
-        </div>
-        
-        <div style="margin-top: 20px;">
-            <button class="btn btn-primary" id="saveSettingsFromPage">Сохранить настройки</button>
-        </div>
-    </div>
-    
     <script>
-        // ---------------------------------- ДОБАВЛЕНИЕ НОВЫХ ПЕРЕМЕННЫХ ----------------------------------
-        let pendingCalculation = null;      // для хранения продолжения при подтверждении большого расстояния
-        let settingsPendingTheme = false;   // для отслеживания изменения темы до сохранения
+        // ========== ОРИГИНАЛЬНЫЙ КОД (ПОЛНОСТЬЮ РАБОЧИЙ) ==========
         
-        // ===============================================================================================
-        // ОСТАЛЬНОЙ КОД (оригинальный) с незначительными вставками для поддержки новых функций
-        // ===============================================================================================
+        let pendingCalculation = null;
         
-        // Элементы DOM
         const loginContainer = document.getElementById('loginContainer');
         const appContainer = document.getElementById('appContainer');
         const loginForm = document.getElementById('loginForm');
         const loginInput = document.getElementById('loginInput');
         const codeInput = document.getElementById('codeInput');
         const errorMessage = document.getElementById('errorMessage');
-        const loginBtn = document.getElementById('loginBtn');
-        const loginProgress = document.getElementById('loginProgress');
-        const loginProgressFill = document.getElementById('loginProgressFill');
-        const loginProgressText = document.getElementById('loginProgressText');
         
         const subscriptionBtn = document.getElementById('subscriptionBtn');
         const subscriptionModal = document.getElementById('subscriptionModal');
@@ -2276,15 +2086,12 @@
         const closeSubscriptionBtn = document.getElementById('closeSubscriptionBtn');
         
         const settingsBtn = document.getElementById('settingsBtn');
-        const settingsPage = document.getElementById('settingsPage');
-        const settingsCloseBtn = document.getElementById('settingsCloseBtn');
-        const themeToggleSettings = document.getElementById('themeToggleSettings');
-        const goalToggleSettings = document.getElementById('goalToggleSettings');
-        const dailyGoalInputSettings = document.getElementById('dailyGoalInputSettings');
-        const goalSettingsContainer = document.getElementById('goalSettingsContainer');
-        const saveSettingsFromPage = document.getElementById('saveSettingsFromPage');
-        const openSubscriptionFromSettings = document.getElementById('openSubscriptionFromSettings');
-        
+        const settingsModal = document.getElementById('settingsModal');
+        const goalToggle = document.getElementById('goalToggle');
+        const goalSettings = document.getElementById('goalSettings');
+        const dailyGoalInput = document.getElementById('dailyGoalInput');
+        const saveSettingsBtn = document.getElementById('saveSettingsBtn');
+        const closeSettingsBtn = document.getElementById('closeSettingsBtn');
         const goalContainer = document.getElementById('goalContainer');
         const goalProgressFill = document.getElementById('goalProgressFill');
         const goalProgressText = document.getElementById('goalProgressText');
@@ -2362,7 +2169,6 @@
         const multiTimerCountdown = document.getElementById('multiTimerCountdown');
         const multiUpgradeText = document.getElementById('multiUpgradeText');
         
-        // Новые элементы для расчетных листов
         const reportBtn = document.getElementById('reportBtn');
         const reportsModal = document.getElementById('reportsModal');
         const reportsListContainer = document.getElementById('reportsListContainer');
@@ -2374,7 +2180,6 @@
         const closeReportDetailBtn = document.getElementById('closeReportDetailBtn');
         const createReportBtn = document.getElementById('createReportBtn');
         
-        // Переменные приложения
         let courierRating = null;
         let courierType = 'pedestrian';
         let ordersHistory = JSON.parse(localStorage.getItem('deliveryHistory')) || [];
@@ -2396,7 +2201,6 @@
         
         let darkTheme = localStorage.getItem('darkTheme') === 'true' || false;
         
-        // Переменные для расчетных листов
         let reports = JSON.parse(localStorage.getItem('deliveryReports')) || [];
         let currentReportIndex = -1;
         
@@ -2408,7 +2212,6 @@
 
         const multiplierMap = { normal: [1, 1.1, 1.25, 1.5], store: [1.1, 1.2, 1.35, 1.6] };
 
-        // ---------- НОВАЯ ФУНКЦИЯ: проверка расстояния и вызов предупреждения ----------
         function checkDistanceLimit(distance, callback) {
             let limit = 0;
             switch(courierType) {
@@ -2613,35 +2416,9 @@
             const login = loginInput.value.trim();
             const code = codeInput.value.trim();
             if (login && code) {
-                // Показываем прогресс
-                loginBtn.disabled = true;
-                loginProgress.style.display = 'block';
-                loginProgressFill.style.width = '0%';
-                loginProgressText.textContent = 'Проверка данных...';
-                
-                // Имитация прогресса
-                let progress = 0;
-                const progressInterval = setInterval(() => {
-                    progress += Math.random() * 15 + 5;
-                    if (progress > 90) progress = 90;
-                    loginProgressFill.style.width = progress + '%';
-                }, 200);
-                
                 const isAuthenticated = await authenticate(login, code);
-                clearInterval(progressInterval);
-                loginProgressFill.style.width = '100%';
-                loginProgressText.textContent = 'Готово!';
-                
-                setTimeout(() => {
-                    loginProgress.style.display = 'none';
-                    loginBtn.disabled = false;
-                    if (isAuthenticated) {
-                        initAuth();
-                    } else {
-                        errorMessage.style.display = 'block';
-                        loginProgressFill.style.width = '0%';
-                    }
-                }, 400);
+                if (isAuthenticated) initAuth();
+                else { errorMessage.style.display = 'block'; }
             }
         });
         
@@ -2671,33 +2448,23 @@
             }, 5*60*1000);
             checkCooldown();
             checkDayReset();
-            
-            // Настройки страницы: синхронизация с основными переменными
-            themeToggleSettings.checked = darkTheme;
-            goalToggleSettings.checked = showGoal;
-            dailyGoalInputSettings.value = dailyGoal;
-            goalSettingsContainer.style.display = showGoal ? 'block' : 'none';
         }
         
         function applyTheme() {
-            if (darkTheme) { document.body.classList.add('dark-theme'); themeToggle.checked = true; themeToggleSettings.checked = true; }
-            else { document.body.classList.remove('dark-theme'); themeToggle.checked = false; themeToggleSettings.checked = false; }
+            if (darkTheme) { document.body.classList.add('dark-theme'); themeToggle.checked = true; }
+            else { document.body.classList.remove('dark-theme'); themeToggle.checked = false; }
         }
-        function toggleTheme() {
-            darkTheme = !darkTheme;
-            localStorage.setItem('darkTheme', darkTheme);
-            applyTheme();
-            showNotification('Тема изменена', darkTheme ? 'Включена темная тема' : 'Включена светлая тема', 'success');
-        }
+        function toggleTheme() { darkTheme = !darkTheme; localStorage.setItem('darkTheme', darkTheme); applyTheme(); showNotification('Тема изменена', darkTheme ? 'Включена темная тема' : 'Включена светлая тема', 'success'); }
         
         function initGoalSettings() {
             goalToggle.checked = showGoal;
             dailyGoalInput.value = dailyGoal;
-            goalToggleSettings.checked = showGoal;
-            dailyGoalInputSettings.value = dailyGoal;
-            goalSettingsContainer.style.display = showGoal ? 'block' : 'none';
+            themeToggle.checked = darkTheme;
+            goalSettings.style.display = showGoal ? 'block' : 'none';
             goalContainer.style.display = showGoal ? 'block' : 'none';
             updateTodayEarnings();
+            goalToggle.addEventListener('change', function() { goalSettings.style.display = this.checked ? 'block' : 'none'; });
+            themeToggle.addEventListener('change', toggleTheme);
         }
         function checkDayReset() {
             const today = new Date().toDateString();
@@ -2727,30 +2494,7 @@
                 goalProgressFill.style.width = '0%'; goalProgressText.textContent = '0%'; goalRemainingText.textContent = 'Осталось: 0 ₽'; goalContainer.classList.remove('goal-complete');
             }
         }
-        
-        // Функция сохранения настроек с экрана настроек
-        function saveSettingsFromPageHandler() {
-            // Применяем тему если она была изменена
-            const newTheme = themeToggleSettings.checked;
-            if (newTheme !== darkTheme) {
-                darkTheme = newTheme;
-                localStorage.setItem('darkTheme', darkTheme);
-                applyTheme();
-                showNotification('Тема изменена', darkTheme ? 'Включена темная тема' : 'Включена светлая тема', 'success');
-            }
-            
-            showGoal = goalToggleSettings.checked;
-            dailyGoal = parseInt(dailyGoalInputSettings.value) || 0;
-            localStorage.setItem('showGoal', showGoal.toString());
-            localStorage.setItem('dailyGoal', dailyGoal.toString());
-            goalContainer.style.display = showGoal ? 'block' : 'none';
-            goalToggle.checked = showGoal;
-            dailyGoalInput.value = dailyGoal;
-            goalSettingsContainer.style.display = showGoal ? 'block' : 'none';
-            updateGoalDisplay();
-            showNotification('Настройки сохранены', 'Ваши настройки успешно сохранены', 'success');
-            settingsPage.style.display = 'none';
-        }
+        function saveSettings() { showGoal = goalToggle.checked; dailyGoal = parseInt(dailyGoalInput.value) || 0; localStorage.setItem('showGoal', showGoal.toString()); localStorage.setItem('dailyGoal', dailyGoal.toString()); goalContainer.style.display = showGoal ? 'block' : 'none'; updateGoalDisplay(); showNotification('Настройки сохранены', 'Ваши настройки успешно сохранены', 'success'); }
         
         function checkCooldown() {
             const lastCalcTime = localStorage.getItem('lastCalculationTime');
@@ -3041,7 +2785,6 @@
             showNotification('Чаевые добавлены', `Сумма чаевых ${amount} ₽ добавлена к заработку`, 'success');
         }
         
-        // ---------- ФУНКЦИИ ДЛЯ РАБОТЫ С РАСЧЕТНЫМИ ЛИСТАМИ ----------
         function generateReport() {
             const today = new Date();
             const todayStr = today.toDateString();
@@ -3194,7 +2937,6 @@
             }
         }
         
-        // ---------- ОБРАБОТЧИКИ ДЛЯ НОВЫХ КНОПОК ----------
         addTipsBtn.addEventListener('click', () => { tipsModal.style.display = 'flex'; });
         saveTipsBtn.addEventListener('click', () => {
             const amount = parseFloat(document.getElementById('tipsAmount').value);
@@ -3223,7 +2965,6 @@
         closeReportDetailBtn.addEventListener('click', () => { reportDetailModal.style.display = 'none'; });
         createReportBtn.addEventListener('click', generateReport);
         
-        // ========== ИЗМЕНЁННЫЕ РАСЧЁТЫ С ПРОВЕРКОЙ РАССТОЯНИЯ ==========
         function processSingleOrder(weight, distance, multiplier, storeOrder) {
             const orderAmount = calculateOrder(weight, distance, multiplier, storeOrder);
             const ratingBonus = calculateRatingBonus(courierRating);
@@ -3306,54 +3047,6 @@
             proceed();
         });
         
-        // Обработчики для настроек (отдельный экран)
-        settingsBtn.addEventListener('click', () => {
-            // Синхронизируем значения перед открытием
-            themeToggleSettings.checked = darkTheme;
-            goalToggleSettings.checked = showGoal;
-            dailyGoalInputSettings.value = dailyGoal;
-            goalSettingsContainer.style.display = showGoal ? 'block' : 'none';
-            settingsPage.style.display = 'block';
-        });
-        settingsCloseBtn.addEventListener('click', () => { settingsPage.style.display = 'none'; });
-        
-        // Тумблер темы в настройках — НЕ МЕНЯЕТ тему сразу, только при сохранении
-        themeToggleSettings.addEventListener('change', function() {
-            // Просто сохраняем состояние, тема не меняется до сохранения
-            settingsPendingTheme = this.checked;
-        });
-        
-        // Тумблер цели тоже сохраняется при сохранении
-        goalToggleSettings.addEventListener('change', function() {
-            goalSettingsContainer.style.display = this.checked ? 'block' : 'none';
-        });
-        
-        // Сохранение настроек со страницы
-        saveSettingsFromPage.addEventListener('click', saveSettingsFromPageHandler);
-        
-        // Открыть подписку из настроек — теперь окно подписки открывается поверх страницы настроек
-        openSubscriptionFromSettings.addEventListener('click', () => {
-            // Закрываем страницу настроек и открываем подписку
-            settingsPage.style.display = 'none';
-            subscriptionModal.style.display = 'flex';
-            // При закрытии подписки возвращаемся в настройки?
-            // Для удобства сделаем так: при закрытии подписки остаёмся на главном экране
-            // Но пользователь может снова открыть настройки
-        });
-        
-        // При закрытии подписки — просто закрываем, пользователь остаётся на главном экране
-        closeSubscriptionBtn.addEventListener('click', () => { 
-            subscriptionModal.style.display = 'none'; 
-        });
-        
-        // Также при клике вне окна подписки — закрываем
-        window.addEventListener('click', (event) => {
-            if (event.target === subscriptionModal) {
-                subscriptionModal.style.display = 'none';
-            }
-        });
-        
-        // Остальные обработчики (оригинальные)
         courierTypeDisplay.addEventListener('click', () => { courierTypeModal.style.display = 'flex'; });
         ratingDisplay.addEventListener('click', () => { ratingModal.style.display = 'flex'; if (courierRating !== null) document.getElementById('ratingInput').value = courierRating; });
         courierTypes.forEach(type => {
@@ -3390,9 +3083,13 @@
         addReturnBtn.addEventListener('click', () => { returnCountInput.value = '1'; returnModal.style.display = 'flex'; });
         saveReturnBtn.addEventListener('click', () => { const count = parseInt(returnCountInput.value); if (isNaN(count) || count < 1) { showNotification('Ошибка', 'Пожалуйста, введите корректное количество возвратов', 'error'); return; } addReturn(count); returnModal.style.display = 'none'; });
         clearHistoryBtn.addEventListener('click', () => { if (confirm('Вы уверены, что хотите очистить историю?')) { ordersHistory = []; totalEarnings = 0; todayEarnings = 0; localStorage.removeItem('deliveryHistory'); localStorage.removeItem('totalEarnings'); localStorage.setItem('todayEarnings', '0'); updateHistoryDisplay(); updateGoalDisplay(); showNotification('История очищена', 'Вся история расчетов успешно очищена', 'success'); } });
-        // Кнопка подписки больше не на главном экране
+        subscriptionBtn.addEventListener('click', () => { subscriptionModal.style.display = 'flex'; });
+        closeSubscriptionBtn.addEventListener('click', () => { subscriptionModal.style.display = 'none'; });
         buyMonthBtn.addEventListener('click', () => { window.open('https://t.me/PCH1s', '_blank'); showNotification('Подписка', 'Вы будете перенаправлены для покупки подписки', 'info'); });
         buyHalfYearBtn.addEventListener('click', () => { window.open('https://t.me/PCH1s', '_blank'); showNotification('Подписка', 'Вы будете перенаправлены для покупки подписки', 'info'); });
+        settingsBtn.addEventListener('click', () => { settingsModal.style.display = 'flex'; });
+        closeSettingsBtn.addEventListener('click', () => { settingsModal.style.display = 'none'; });
+        saveSettingsBtn.addEventListener('click', () => { saveSettings(); settingsModal.style.display = 'none'; });
         saveEditSingleBtn.addEventListener('click', saveEditedSingleOrder);
         saveEditMultiBtn.addEventListener('click', saveEditedMultiOrder);
         
@@ -3404,20 +3101,15 @@
             if (event.target === resultModal) resultModal.style.display = 'none';
             if (event.target === orderDetailsModal) orderDetailsModal.style.display = 'none';
             if (event.target === returnModal) returnModal.style.display = 'none';
+            if (event.target === subscriptionModal) subscriptionModal.style.display = 'none';
             if (event.target === tariffModal) tariffModal.style.display = 'none';
+            if (event.target === settingsModal) settingsModal.style.display = 'none';
             if (event.target === editSingleOrderModal) editSingleOrderModal.style.display = 'none';
             if (event.target === editMultiOrderModal) editMultiOrderModal.style.display = 'none';
             if (event.target === tipsModal) tipsModal.style.display = 'none';
             if (event.target === distanceWarningModal) distanceWarningModal.style.display = 'none';
             if (event.target === reportsModal) reportsModal.style.display = 'none';
             if (event.target === reportDetailModal) reportDetailModal.style.display = 'none';
-            // Настройки закрываются только кнопкой
-        });
-        
-        // Старый обработчик для themeToggle (на модальном окне) - больше не используется, но оставим чтобы не ломалось
-        themeToggle.addEventListener('change', function() {
-            // Синхронизируем с страницей настроек
-            themeToggleSettings.checked = this.checked;
         });
         
         initAuth();
